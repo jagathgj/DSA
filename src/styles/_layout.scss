@@ -172,9 +172,9 @@
 }
 
 .app-topbar__mobile-toggle {
-  display: none;
+  display: none !important;
   @include breakpoint-down(md) {
-    display: inline-flex;
+    display: inline-flex !important;
   }
 }
 
