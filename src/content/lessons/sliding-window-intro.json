@@ -1,0 +1,28 @@
+{
+  "id": "sliding-window-intro",
+  "moduleId": "sliding-window",
+  "title": "Sliding Window",
+  "subtitle": "Process contiguous chunks efficiently",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 12,
+  "xpReward": 90,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "What's a sliding window?",
+      "body": "When a problem asks about a **contiguous subarray** (or substring), don't recompute from scratch each time. Maintain a **window** with two pointers, slide it forward, and update your running totals as elements enter and leave."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🎬",
+      "title": "Looking through a moving frame",
+      "body": "Imagine a film strip and a fixed-size viewfinder. You slide the viewfinder one frame at a time. To know what's inside, you only need to add the new frame and drop the old one — not look at the whole strip."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Largest sum of any window of size k\nfunction maxWindowSum(arr, k) {\n  let sum = 0;\n  for (let i = 0; i < k; i++) sum += arr[i];\n  let best = sum;\n  for (let i = k; i < arr.length; i++) {\n    sum += arr[i] - arr[i - k];  // add new, drop old\n    best = Math.max(best, sum);\n  }\n  return best;\n}\n\nconsole.log(maxWindowSum([1, 4, 2, 10, 2, 3, 1, 0, 20], 4)); // 24",
+      "runnable": true
+    }
+  ]
+}

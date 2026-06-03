@@ -1,0 +1,117 @@
+{
+  "id": "big-o-omega-theta",
+  "moduleId": "big-o",
+  "title": "Big O, Ω, Θ, and Little o",
+  "subtitle": "Upper bounds, lower bounds, and tight bounds",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 14,
+  "xpReward": 90,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "More than just 'how slow can it get'",
+      "body": "**Big O** describes an upper bound: 'this algorithm takes *no more than* this long'.\n\nBut sometimes we need more precision:\n\n**Big O** → *at most* this long (upper bound)\n**Big Omega (Ω)** → *at least* this long (lower bound)\n**Big Theta (Θ)** → *exactly* this long, up to constants (tight bound)\n**little o** → *strictly less* than this (strict upper bound)\n\n📊 **In practice**: You'll see Big O 90% of the time. The others matter when you're being precise — especially in research papers and interviews when the interviewer asks 'is your bound tight?'"
+    },
+    {
+      "type": "diagram",
+      "variant": "ascii",
+      "caption": "How the four bounds relate",
+      "data": {
+        "text": "  f(n) = O(g(n))    →  f grows AT MOST as fast as g       (upper bound)\n  f(n) = Ω(g(n))    →  f grows AT LEAST as fast as g       (lower bound)\n  f(n) = Θ(g(n))    →  f grows EXACTLY as fast as g        (tight bound)\n  f(n) = o(g(n))    →  f grows STRICTLY slower than g     (strict upper)\n  f(n) = ω(g(n))    →  f grows STRICTLY faster than g     (strict lower)\n\n  Relationship:  Θ(g) = O(g) ∩ Ω(g)\n                 o(g) ⊂ O(g)  but never equal\n"
+      }
+    },
+    {
+      "type": "explanation",
+      "heading": "Understanding the notation",
+      "body": "Before diving into formal definitions, let's clarify what the symbols mean:\n\n**f(n)** = your algorithm's actual runtime (e.g., '3n² + 5n + 2 operations')\n**g(n)** = a simpler reference function (e.g., 'n²' or 'n log n')\n**c** = a constant multiplier (any positive number like 2, 10, 100)\n**n₀** = a threshold input size ('for all inputs bigger than this')\n**∃** = 'there exists' (at least one such value)\n\n📝 **Example**: When we say f(n) = O(n²), we're saying:\n'My algorithm f takes at most c·n² time for large enough inputs (n ≥ n₀)'\n\nThe constants c and n₀ let us ignore small inputs and constant factors — we only care about the growth rate as n gets huge."
+    },
+    {
+      "type": "explanation",
+      "heading": "Formal definitions",
+      "body": "Each notation has a precise mathematical definition:\n\n**Big O (upper bound)**\nf = O(g) if ∃ c, n₀: f(n) ≤ c·g(n) for n ≥ n₀\n*Translation*: f grows no faster than g (up to constants)\n\n**Big Omega (lower bound)**\nf = Ω(g) if ∃ c, n₀: f(n) ≥ c·g(n) for n ≥ n₀\n*Translation*: f grows at least as fast as g\n\n**Big Theta (tight bound)**\nf = Θ(g) if f = O(g) **and** f = Ω(g)\n*Translation*: f grows exactly as fast as g (same upper and lower bound)\n\n**Little o (strict upper bound)**\nf = o(g) if for every c > 0, ∃ n₀ such that f(n) < c·g(n) for n ≥ n₀\n*Translation*: f grows strictly slower than g\n\n💡 **Key insight**: The shift from O to little-o is the 'for every c' — the gap between f and g must keep growing, not stay constant."
+    },
+    {
+      "type": "walkthrough",
+      "title": "Linear search — all four bounds",
+      "steps": [
+        {
+          "text": "Linear search through an array of n items, looking for x. In the **worst case** (x not present), we scan all n.",
+          "code": "function linearSearch(arr, x) {\n  for (let i = 0; i < arr.length; i++) {\n    if (arr[i] === x) return i;\n  }\n  return -1;\n}"
+        },
+        {
+          "text": "Big O — upper bound: at most n comparisons. So linear search is **O(n)**.",
+          "highlight": "Worst-case time: O(n)"
+        },
+        {
+          "text": "Big Omega — lower bound: at minimum we always check at least 1 element. So it's **Ω(1)**. (Not very useful, but technically true.)",
+          "highlight": "Best-case time: Ω(1) — we get lucky on element 0"
+        },
+        {
+          "text": "Big Theta — only if upper and lower match. Since worst is O(n) and best is Ω(1), linear search is NOT Θ(n) on every input. It IS Θ(n) on the worst case specifically.",
+          "highlight": "Saying 'linear search is Θ(n)' is sloppy — clarify worst/best case."
+        },
+        {
+          "text": "Little o: n² grows strictly faster than n, so n = o(n²). Linear search is o(n²) — easily — but that's a loose statement."
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// A concrete table of growth rates side by side.\n// Big O is an upper bound — you can always quote a LOOSER one and be correct.\n\nconst pairs = [\n  ['f(n) = 3n + 5',     'O(n)',      'Ω(n)',      'Θ(n)',      'o(n²)'],\n  ['f(n) = n²',          'O(n²)',     'Ω(n²)',     'Θ(n²)',     'o(n³)'],\n  ['f(n) = log n',       'O(log n)',  'Ω(1)',      '—',         'o(n)'],\n  ['f(n) = n²',          'O(n³)',     '— (loose)', '—',         '— (n² ≠ o(n²))'],\n];\n\nconsole.log('Function              | Tight O      | Tight Ω      | Θ?            | Little-o');\nconsole.log('----------------------+--------------+--------------+---------------+----------');\nfor (const row of pairs) {\n  console.log(row.map((c, i) => c.padEnd(i === 0 ? 21 : 13)).join(' | '));\n}\n\n// Note row 4: any function is O of something bigger, but it's only Θ of itself.\n// Saying 'n² = O(n³)' is correct but loose — and n² is NOT o(n²),\n// because little-o requires a STRICT separation.",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "When does this matter in practice?",
+      "body": "**Interviews**: when asked 'what's the complexity?', most people say 'O(n)' and mean Θ(n). If your bound is loose, an interviewer might ask 'can you make that tight?'\n\n**Lower-bound proofs**: showing that ANY comparison-based sort must be Ω(n log n) — no algorithm can beat that. This is why we say merge sort is *optimal* among comparison sorts.\n\n**Algorithm design**: when you prove an algorithm is Θ(n log n), you've also proven you can't make it faster than that *with this approach*."
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "boot1",
+          "type": "mcq",
+          "question": "Which symbol expresses 'this algorithm takes at least this long'?",
+          "options": ["Big O", "Big Omega (Ω)", "Big Theta (Θ)", "little o"],
+          "correct": 1,
+          "explanation": "Omega is the lower bound — it says no matter how clever you are, you can't go faster than this."
+        },
+        {
+          "id": "boot2",
+          "type": "mcq",
+          "question": "If an algorithm is both O(n²) and Ω(n²), it is also...",
+          "options": ["O(n)", "Θ(n²)", "Ω(n³)", "o(n²)"],
+          "correct": 1,
+          "explanation": "Theta is the intersection of O and Ω — same upper and lower bound means the bound is tight."
+        },
+        {
+          "id": "boot3",
+          "type": "mcq",
+          "question": "Is f(n) = n = o(n²)?",
+          "options": [
+            "Yes — n grows strictly slower than n²",
+            "No — they're the same order",
+            "Only when n > 100",
+            "Only with a constant factor"
+          ],
+          "correct": 0,
+          "explanation": "n/n² = 1/n → 0 as n grows, so n is strictly dominated by n². n = o(n²) is correct."
+        },
+        {
+          "id": "boot4",
+          "type": "mcq",
+          "question": "Saying merge sort is 'Θ(n log n)' means:",
+          "options": [
+            "It runs in n log n seconds",
+            "It always takes proportional to n log n time (up to constants)",
+            "Its best case is n log n, worst is something else",
+            "It can never be faster than n log n in any case"
+          ],
+          "correct": 1,
+          "explanation": "Θ is tight — best, worst, and average are all asymptotically n log n."
+        }
+      ]
+    }
+  ]
+}

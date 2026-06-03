@@ -1,0 +1,43 @@
+{
+  "id": "longest-palindrome-substring",
+  "title": "Find Longest Palindrome in String",
+  "difficulty": "Medium",
+  "tags": [
+    "string",
+    "dynamic-programming"
+  ],
+  "description": "Given a string, find the longest palindromic substring.",
+  "examples": [
+    {
+      "input": "s = \"babad\"",
+      "output": "\"bab\" or \"aba\""
+    },
+    {
+      "input": "s = \"cbbd\"",
+      "output": "\"bb\""
+    }
+  ],
+  "starterCode": "function longestPalindrome(s) {\n  // your code here\n}",
+  "solution": "function longestPalindrome(s) {\n  if (!s) return '';\n  \n  let start = 0, maxLen = 0;\n  \n  const expandAroundCenter = (left, right) => {\n    while (left >= 0 && right < s.length && s[left] === s[right]) {\n      left--;\n      right++;\n    }\n    return right - left - 1;\n  };\n  \n  for (let i = 0; i < s.length; i++) {\n    const len1 = expandAroundCenter(i, i);\n    const len2 = expandAroundCenter(i, i + 1);\n    const len = Math.max(len1, len2);\n    \n    if (len > maxLen) {\n      maxLen = len;\n      start = i - Math.floor((len - 1) / 2);\n    }\n  }\n  \n  return s.substring(start, start + maxLen);\n}",
+  "hints": [
+    "Expand around center for each position",
+    "Check both odd and even length palindromes",
+    "Track longest palindrome found"
+  ],
+  "testCases": [
+    {
+      "input": [
+        "babad"
+      ],
+      "expected": "bab"
+    },
+    {
+      "input": [
+        "cbbd"
+      ],
+      "expected": "bb"
+    }
+  ],
+  "functionName": "longestPalindrome",
+  "xpReward": 140
+}

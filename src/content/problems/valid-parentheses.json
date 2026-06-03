@@ -1,0 +1,29 @@
+{
+  "id": "valid-parentheses",
+  "title": "Valid Parentheses",
+  "difficulty": "Easy",
+  "tags": ["stack", "string"],
+  "description": "Given a string `s` containing just the characters `(`, `)`, `{`, `}`, `[` and `]`, determine if the input string is valid.\n\nAn input string is valid if open brackets are closed by the same type of brackets, and in the correct order.",
+  "examples": [
+    { "input": "s = \"()\"", "output": "true" },
+    { "input": "s = \"()[]{}\"", "output": "true" },
+    { "input": "s = \"(]\"", "output": "false" }
+  ],
+  "starterCode": "function isValid(s) {\n  // your code here\n}",
+  "solution": "function isValid(s) {\n  const stack = [];\n  const pairs = { ')': '(', ']': '[', '}': '{' };\n  for (const c of s) {\n    if (c === '(' || c === '[' || c === '{') stack.push(c);\n    else if (stack.pop() !== pairs[c]) return false;\n  }\n  return stack.length === 0;\n}",
+  "hints": [
+    "Use a stack.",
+    "Push opening brackets. On a closing bracket, the top of the stack must be the matching opener.",
+    "If the stack is empty when you try to close, or non-empty at the end — invalid."
+  ],
+  "testCases": [
+    { "input": ["()"], "expected": true },
+    { "input": ["()[]{}"], "expected": true },
+    { "input": ["(]"], "expected": false },
+    { "input": ["([)]"], "expected": false },
+    { "input": ["{[]}"], "expected": true },
+    { "input": [""], "expected": true }
+  ],
+  "functionName": "isValid",
+  "xpReward": 80
+}

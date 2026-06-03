@@ -1,0 +1,53 @@
+{
+  "id": "trees-intro",
+  "moduleId": "trees",
+  "title": "Trees: Branching Structures",
+  "subtitle": "Hierarchies, family trees, file systems",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 14,
+  "xpReward": 90,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "What's a tree?",
+      "body": "A **tree** is data that branches. There's a **root** at the top, and every node can have **children**. A node with no children is a **leaf**. Unlike a real tree, computer science trees grow downward."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🌳",
+      "title": "Your family tree",
+      "body": "You at the top. Your two parents below. Their parents below that. Each person has zero or more children. The structure branches. That's exactly a tree in code."
+    },
+    {
+      "type": "diagram",
+      "variant": "tree",
+      "caption": "A binary tree — each node has at most two children",
+      "data": {
+        "root": {
+          "value": 10,
+          "left": { "value": 5, "left": { "value": 3 }, "right": { "value": 7 } },
+          "right": { "value": 15, "left": { "value": 12 }, "right": { "value": 20 } }
+        }
+      }
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "class TreeNode {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nconst root = new TreeNode(10);\nroot.left = new TreeNode(5);\nroot.right = new TreeNode(15);\n\nconsole.log(root.value, root.left.value, root.right.value);",
+      "runnable": true
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "t1",
+          "type": "mcq",
+          "question": "A node with no children is called a:",
+          "options": ["root", "branch", "leaf", "stem"],
+          "correct": 2,
+          "explanation": "Leaves are nodes at the end of branches — no children below them."
+        }
+      ]
+    }
+  ]
+}

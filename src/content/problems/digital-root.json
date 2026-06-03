@@ -1,0 +1,28 @@
+{
+  "id": "digital-root",
+  "title": "Find Digital Root of a Number",
+  "difficulty": "Easy",
+  "tags": ["math"],
+  "description": "The digital root of a number is the recursive sum of all its digits. Keep summing the digits until you get a single digit.\n\nFor example: 38 → 3+8=11 → 1+1=2",
+  "examples": [
+    { "input": "n = 38", "output": "2", "explanation": "3 + 8 = 11, 1 + 1 = 2" },
+    { "input": "n = 123", "output": "6", "explanation": "1 + 2 + 3 = 6" },
+    { "input": "n = 9875", "output": "2", "explanation": "9+8+7+5=29, 2+9=11, 1+1=2" }
+  ],
+  "starterCode": "function digitalRoot(n) {\n  // your code here\n}",
+  "solution": "function digitalRoot(n) {\n  // Mathematical approach: digital root = 1 + ((n-1) % 9)\n  // Special case: if n is 0, return 0\n  if (n === 0) return 0;\n  return 1 + ((n - 1) % 9);\n  \n  // Iterative approach:\n  // while (n >= 10) {\n  //   let sum = 0;\n  //   while (n > 0) {\n  //     sum += n % 10;\n  //     n = Math.floor(n / 10);\n  //   }\n  //   n = sum;\n  // }\n  // return n;\n}",
+  "hints": [
+    "You can solve this iteratively by repeatedly summing digits.",
+    "There's a mathematical formula: 1 + ((n-1) % 9) for n > 0.",
+    "The digital root is related to the number modulo 9."
+  ],
+  "testCases": [
+    { "input": [38], "expected": 2 },
+    { "input": [123], "expected": 6 },
+    { "input": [9875], "expected": 2 },
+    { "input": [0], "expected": 0 },
+    { "input": [9], "expected": 9 }
+  ],
+  "functionName": "digitalRoot",
+  "xpReward": 70
+}

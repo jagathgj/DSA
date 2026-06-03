@@ -1,0 +1,117 @@
+{
+  "id": "big-o-space",
+  "moduleId": "big-o",
+  "title": "Time vs Space Complexity",
+  "subtitle": "Memory has its own Big O",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 14,
+  "xpReward": 90,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "Two resources, two budgets",
+      "body": "Big O describes growth — but growth of *what*? So far we've talked about **time** (operations performed). The same notation describes **space** (memory used). Both matter; sometimes they trade off.\n\nA fast algorithm that needs 10 GB of memory might be useless on a phone. A tiny-memory algorithm that takes a week is useless for real-time."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Three implementations of 'reverse an array'.\n// Same time complexity. Very different space.\n\n// (1) Two-pointer in-place swap — O(1) extra space\nfunction reverseInPlace(arr) {\n  let l = 0, r = arr.length - 1;\n  while (l < r) {\n    [arr[l], arr[r]] = [arr[r], arr[l]];\n    l++; r--;\n  }\n  return arr;\n}\n\n// (2) Build a new array — O(n) extra space\nfunction reverseCopy(arr) {\n  const out = [];\n  for (let i = arr.length - 1; i >= 0; i--) {\n    out.push(arr[i]);\n  }\n  return out;\n}\n\n// (3) Recursive — O(n) extra space (call stack frames!)\nfunction reverseRecursive(arr) {\n  if (arr.length <= 1) return arr;\n  return [arr[arr.length - 1], ...reverseRecursive(arr.slice(0, -1))];\n}\n\n// All O(n) time. But:\n//   (1) uses O(1) extra memory  ← best for big arrays\n//   (2) uses O(n) — doubles peak memory\n//   (3) uses O(n) — and has stack-overflow risk for large n\n\nconsole.log(reverseInPlace([1, 2, 3, 4, 5]));\nconsole.log(reverseCopy([1, 2, 3, 4, 5]));\nconsole.log(reverseRecursive([1, 2, 3, 4, 5]));",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "What counts as 'space'?",
+      "body": "Space complexity measures **extra memory** the algorithm uses beyond the input. The input array doesn't count — we needed it anyway. What counts:\n\n* New arrays, objects, maps, sets you allocate\n* Recursion stack frames (a recursive function calling itself n deep uses O(n) stack)\n* Local variables that grow with input size\n\nWhat doesn't count: a fixed number of integer variables, loop counters, the input itself."
+    },
+    {
+      "type": "walkthrough",
+      "title": "Analyzing space step by step",
+      "steps": [
+        {
+          "text": "Look at this function. What's the time complexity, and what's the space complexity?",
+          "code": "function hasDuplicates(arr) {\n  const seen = new Set();\n  for (const x of arr) {\n    if (seen.has(x)) return true;\n    seen.add(x);\n  }\n  return false;\n}"
+        },
+        {
+          "text": "Time: we loop through arr once. Set lookup/insert is O(1) on average. So total **O(n) time**."
+        },
+        {
+          "text": "Space: in the worst case (no duplicates) we add all n items to the Set. That's **O(n) space**.",
+          "highlight": "Time: O(n), Space: O(n)"
+        },
+        {
+          "text": "Compare to the O(1)-space alternative: sort first, then scan adjacent pairs.",
+          "code": "function hasDuplicatesSorted(arr) {\n  arr.sort((a, b) => a - b);  // O(n log n) time\n  for (let i = 1; i < arr.length; i++) {\n    if (arr[i] === arr[i - 1]) return true;\n  }\n  return false;\n}"
+        },
+        {
+          "text": "This is O(n log n) time but O(1) extra space — we modified the input in place. Classic trade-off: slower in time, frugal in space.",
+          "highlight": "Time: O(n log n), Space: O(1)"
+        }
+      ]
+    },
+    {
+      "type": "diagram",
+      "variant": "ascii",
+      "caption": "Common space complexities",
+      "data": {
+        "text": "  Algorithm                       | Time          | Space\n  --------------------------------+---------------+--------\n  Array index access              | O(1)          | O(1)\n  Linear search                   | O(n)          | O(1)\n  Binary search (iterative)       | O(log n)      | O(1)\n  Binary search (recursive)       | O(log n)      | O(log n) ← stack\n  Bubble sort                     | O(n²)         | O(1)\n  Merge sort                      | O(n log n)    | O(n)     ← temp arrays\n  Quick sort                      | O(n log n)*   | O(log n) ← recursion\n  DFS on graph (recursive)        | O(V + E)      | O(V)\n  Memoized Fibonacci              | O(n)          | O(n)\n  Iterative Fibonacci             | O(n)          | O(1)\n"
+      }
+    },
+    {
+      "type": "explanation",
+      "heading": "Common space-mistake pitfalls",
+      "body": "Three things developers often forget:\n\n1. **Recursion uses stack space.** Even when there's no explicit array, every recursive call adds a frame. Deep recursion → O(depth) memory and potential stack-overflow crashes.\n2. **String concatenation in loops.** In some languages, `s += x` inside a loop can be O(n²) time AND O(n²) total allocations. Use arrays + `join`.\n3. **Slicing/copying inside a loop.** `arr.slice(i)` inside a loop turns an O(n) algorithm into O(n²) time and O(n²) memory churn."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Iterative Fibonacci — keeps only the last two values.\n// O(n) time, O(1) space.\nfunction fibIterative(n) {\n  if (n < 2) return n;\n  let a = 0, b = 1;\n  for (let i = 2; i <= n; i++) {\n    [a, b] = [b, a + b];\n  }\n  return b;\n}\n\n// Memoized recursive Fibonacci.\n// O(n) time, O(n) space — both for the memo and the call stack.\nfunction fibMemo(n, memo = {}) {\n  if (n < 2) return n;\n  if (memo[n] !== undefined) return memo[n];\n  return (memo[n] = fibMemo(n - 1, memo) + fibMemo(n - 2, memo));\n}\n\n// Naive recursive Fibonacci — DON'T DO THIS.\n// O(2ⁿ) time. O(n) space (recursion depth).\nfunction fibNaive(n) {\n  if (n < 2) return n;\n  return fibNaive(n - 1) + fibNaive(n - 2);\n}\n\nconsole.log('Iterative fib(30) =', fibIterative(30));\nconsole.log('Memoized fib(30) =', fibMemo(30));\nconsole.log('Naive recursive fib(30) =', fibNaive(30));\n// Try fib(50) with the naive version — it will hang.\n// The other two return instantly.",
+      "runnable": true
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "bos1",
+          "type": "mcq",
+          "question": "What's the space complexity of a recursive function that calls itself n times?",
+          "options": ["O(1)", "O(log n)", "O(n) — the call stack", "O(n²)"],
+          "correct": 2,
+          "explanation": "Each recursive call adds a frame to the stack. n deep recursion → O(n) extra space."
+        },
+        {
+          "id": "bos2",
+          "type": "mcq",
+          "question": "Which has BETTER space complexity?",
+          "options": [
+            "Build a new sorted array → return it",
+            "Sort the input array in place → return it"
+          ],
+          "correct": 1,
+          "explanation": "In-place sorting uses O(1) extra space; building a new array uses O(n)."
+        },
+        {
+          "id": "bos3",
+          "type": "predict-output",
+          "question": "What's the space complexity of this function?",
+          "code": "function compress(s) {\n  const out = [];\n  for (let i = 0; i < s.length; i++) {\n    out.push(s[i].toUpperCase());\n  }\n  return out.join('');\n}",
+          "options": ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+          "correct": 2,
+          "explanation": "The `out` array grows to length n, then `join` creates a new string of length n. O(n) extra space."
+        },
+        {
+          "id": "bos4",
+          "type": "mcq",
+          "question": "Two algorithms both solve the problem in O(n log n) time. Algorithm A uses O(1) extra space, Algorithm B uses O(n). Which is preferable when n is huge?",
+          "options": [
+            "A — same speed, less memory",
+            "B — extra memory speeds it up",
+            "Doesn't matter, time complexity is what counts",
+            "B — the extra space is reserved for safety"
+          ],
+          "correct": 0,
+          "explanation": "Same Big O time, smaller Big O space — A is the clear winner for large inputs."
+        }
+      ]
+    }
+  ]
+}

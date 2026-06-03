@@ -1,0 +1,22 @@
+// =============================================================================
+// Carbon theme configuration
+// =============================================================================
+// We use Carbon's `themes` mixin to scope two themes by class:
+//   - Default (root): white (light)
+//   - .cds--g100: g100 dark theme (applied to <body> when dark mode is on)
+//
+// Components automatically pick up the tokens from their nearest theme scope.
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/themes';
+
+// Root sets the default light theme.
+:root,
+.cds--white {
+  @include theme.theme(themes.$white);
+}
+
+// Dark theme — applied to <body> via class toggle.
+.cds--g100 {
+  @include theme.theme(themes.$g100);
+}

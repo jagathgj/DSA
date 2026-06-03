@@ -1,0 +1,63 @@
+{
+  "id": "anagram-check",
+  "title": "Check if Two Strings are Anagrams",
+  "difficulty": "Easy",
+  "tags": [
+    "string",
+    "hash-map"
+  ],
+  "description": "Given two strings, determine if they are anagrams of each other.\n\nTwo strings are anagrams if they contain the same characters with the same frequencies.",
+  "examples": [
+    {
+      "input": "s1 = \"listen\", s2 = \"silent\"",
+      "output": "true"
+    },
+    {
+      "input": "s1 = \"hello\", s2 = \"world\"",
+      "output": "false"
+    },
+    {
+      "input": "s1 = \"anagram\", s2 = \"nagaram\"",
+      "output": "true"
+    }
+  ],
+  "starterCode": "function areAnagrams(s1, s2) {\n  // your code here\n}",
+  "solution": "function areAnagrams(s1, s2) {\n  if (s1.length !== s2.length) return false;\n  \n  const count = {};\n  \n  for (const char of s1) {\n    count[char] = (count[char] || 0) + 1;\n  }\n  \n  for (const char of s2) {\n    if (!count[char]) return false;\n    count[char]--;\n  }\n  \n  return true;\n}",
+  "hints": [
+    "If lengths differ, they can't be anagrams.",
+    "Count character frequencies in first string.",
+    "Verify second string has same character frequencies."
+  ],
+  "testCases": [
+    {
+      "input": [
+        "listen",
+        "silent"
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "hello",
+        "world"
+      ],
+      "expected": false
+    },
+    {
+      "input": [
+        "anagram",
+        "nagaram"
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "rat",
+        "car"
+      ],
+      "expected": false
+    }
+  ],
+  "functionName": "areAnagrams",
+  "xpReward": 70
+}

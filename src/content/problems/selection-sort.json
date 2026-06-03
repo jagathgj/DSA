@@ -1,0 +1,45 @@
+{
+  "id": "selection-sort",
+  "title": "Selection Sort",
+  "difficulty": "Easy",
+  "tags": [
+    "sorting",
+    "array"
+  ],
+  "description": "Implement selection sort algorithm. Find the minimum element and swap it with the first unsorted element. Repeat for remaining elements.\n\nTime: O(n²), Space: O(1)",
+  "examples": [
+    {
+      "input": "arr = [64, 25, 12, 22, 11]",
+      "output": "[11, 12, 22, 25, 64]"
+    }
+  ],
+  "starterCode": "function selectionSort(arr) {\n  // your code here\n}",
+  "solution": "function selectionSort(arr) {\n  for (let i = 0; i < arr.length - 1; i++) {\n    let minIdx = i;\n    for (let j = i + 1; j < arr.length; j++) {\n      if (arr[j] < arr[minIdx]) minIdx = j;\n    }\n    [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];\n  }\n  return arr;\n}",
+  "hints": [
+    "Find minimum in unsorted portion",
+    "Swap with first unsorted element",
+    "Repeat for each position"
+  ],
+  "testCases": [
+    {
+      "input": [
+        [
+          64,
+          25,
+          12,
+          22,
+          11
+        ]
+      ],
+      "expected": [
+        11,
+        12,
+        22,
+        25,
+        64
+      ]
+    }
+  ],
+  "functionName": "selectionSort",
+  "xpReward": 80
+}

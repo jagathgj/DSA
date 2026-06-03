@@ -1,0 +1,115 @@
+{
+  "id": "big-o-cases",
+  "moduleId": "big-o",
+  "title": "Best, Average, Worst, Expected",
+  "subtitle": "The same algorithm has different complexities depending on input",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 15,
+  "xpReward": 90,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "One algorithm, many complexities",
+      "body": "When we say 'quicksort is O(n log n)', that's almost true. Quicksort is O(n²) on already-sorted input. Linear search is O(1) if your target is the very first element. The complexity depends on what input you give it.\n\nWe distinguish four flavors:\n\n* **Best case** — the friendliest input. Often a misleading number.\n* **Worst case** — the most hostile input. The safety guarantee.\n* **Average case** — the expected behavior over 'typical' inputs.\n* **Expected case** — for randomized algorithms, averaged over the algorithm's own coin flips.\n\nMost of the time, when an engineer says 'big O', they mean **worst case**."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Linear search on a 10-element array.\n// Same algorithm — three completely different outcomes.\n\nfunction linearSearch(arr, target) {\n  let comparisons = 0;\n  for (let i = 0; i < arr.length; i++) {\n    comparisons++;\n    if (arr[i] === target) return { found: i, comparisons };\n  }\n  return { found: -1, comparisons };\n}\n\nconst arr = [4, 7, 2, 9, 1, 5, 8, 3, 6, 10];\n\n// BEST CASE — target is at index 0\nconsole.log('best:   ', linearSearch(arr, 4));\n\n// WORST CASE — target is at the end OR not present\nconsole.log('worst:  ', linearSearch(arr, 10));\nconsole.log('missing:', linearSearch(arr, 99));\n\n// AVERAGE — assume target is equally likely to be anywhere\n// Expected comparisons ≈ n/2 for a present target, n for missing.",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "Worst-case is the safety guarantee",
+      "body": "Why do most people default to worst-case? Because it's a *promise*. If you say 'this algorithm is O(n²) in the worst case', no input on Earth can make it slower than that (up to constants).\n\nBest case is rarely useful because the universe doesn't always serve up the friendliest input. Saying 'my sort is O(n) in the best case (already-sorted)' is technically true and almost never relevant."
+    },
+    {
+      "type": "diagram",
+      "variant": "ascii",
+      "caption": "Algorithms and their cases",
+      "data": {
+        "text": "  Algorithm           | Best       | Average    | Worst      | Practical?\n  --------------------+------------+------------+------------+------------\n  Linear search       | O(1)       | O(n)       | O(n)       | yes, simple\n  Binary search       | O(1)       | O(log n)   | O(log n)   | yes, needs sorted\n  Bubble sort         | O(n)       | O(n²)      | O(n²)      | no, demo only\n  Insertion sort      | O(n)       | O(n²)      | O(n²)      | yes, for small n\n  Merge sort          | O(n log n) | O(n log n) | O(n log n) | yes, always\n  Quick sort          | O(n log n) | O(n log n) | O(n²)*     | yes, w/ random pivot\n  Hash map lookup     | O(1)       | O(1)       | O(n)†      | yes, almost always\n\n  * Quicksort hits O(n²) on bad pivot choices — random pivots make it rare.\n  † Hash collisions can degrade to a linked list. With good hash + load\n    factor, this almost never happens in practice.\n"
+      }
+    },
+    {
+      "type": "walkthrough",
+      "title": "Why quicksort is 'usually O(n log n) but worst-case O(n²)'",
+      "steps": [
+        {
+          "text": "Quicksort picks a 'pivot', partitions the array into smaller-than and larger-than, then recurses on both halves.",
+          "code": "function quicksort(arr) {\n  if (arr.length <= 1) return arr;\n  const pivot = arr[0];\n  const left  = arr.slice(1).filter(x => x <= pivot);\n  const right = arr.slice(1).filter(x => x >  pivot);\n  return [...quicksort(left), pivot, ...quicksort(right)];\n}"
+        },
+        {
+          "text": "**Best case**: every pivot lands in the middle. Each recursion level processes all n items, and there are log n levels. → O(n log n)."
+        },
+        {
+          "text": "**Worst case**: every pivot is the smallest (or largest) element. The 'split' degenerates: one side is empty, the other has n-1 items. Now we have n levels, each doing O(n) work. → **O(n²)**.",
+          "highlight": "Trigger: pre-sorted array + pivoting on first element."
+        },
+        {
+          "text": "**Average case**: over random inputs (or with a random pivot), the splits are 'usually balanced enough'. Math says expected operations are still O(n log n). This is what 'expected case' means."
+        },
+        {
+          "text": "**Fix**: pick a random pivot, or use median-of-three. This makes the O(n²) case vanishingly rare. That's why real-world quicksort is fine."
+        }
+      ]
+    },
+    {
+      "type": "explanation",
+      "heading": "Amortized vs average — a subtle distinction",
+      "body": "Two close relatives of average case:\n\n**Amortized** — the average cost per operation across a *sequence* of operations. JavaScript's `arr.push()` is **amortized O(1)**: usually fast, occasionally slow when the underlying array has to grow. Over many pushes, the average is constant.\n\n**Expected** — randomness in the algorithm. Quicksort with a random pivot has *expected* O(n log n) over its own random coin flips, regardless of input.\n\nBoth give better-than-worst-case guarantees, but for different reasons."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Amortized analysis in action.\n// arr.push() resizes the internal buffer occasionally.\n// Most pushes are O(1). When the buffer doubles, that one push is O(n).\n// Over many pushes, the total cost is O(n) — averaging O(1) per push.\n\nfunction timeManyPushes(n) {\n  const arr = [];\n  const t0 = performance.now();\n  for (let i = 0; i < n; i++) arr.push(i);\n  const t1 = performance.now();\n  return t1 - t0;\n}\n\nconsole.log('1,000   pushes:', timeManyPushes(1000).toFixed(2),     'ms');\nconsole.log('10,000  pushes:', timeManyPushes(10000).toFixed(2),    'ms');\nconsole.log('100,000 pushes:', timeManyPushes(100000).toFixed(2),   'ms');\nconsole.log('1,000,000 pushes:', timeManyPushes(1000000).toFixed(2),'ms');\n\n// Each line is roughly 10× the previous — linear in n total,\n// constant per push (amortized).",
+      "runnable": true
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "boca1",
+          "type": "mcq",
+          "question": "When engineers say 'O(n²)' without specifying, they usually mean:",
+          "options": ["Best case", "Average case", "Worst case", "Expected case"],
+          "correct": 2,
+          "explanation": "By convention, Big O without qualification refers to worst-case complexity — it's the safety guarantee."
+        },
+        {
+          "id": "boca2",
+          "type": "mcq",
+          "question": "Quicksort's WORST case happens when:",
+          "options": [
+            "The array is random",
+            "The pivot is always the median",
+            "The pivot is always the smallest or largest element",
+            "The array is small"
+          ],
+          "correct": 2,
+          "explanation": "If the pivot keeps being an extreme, partitions are unbalanced (n-1 vs 0), and you get O(n²)."
+        },
+        {
+          "id": "boca3",
+          "type": "mcq",
+          "question": "JavaScript's `arr.push(x)` is described as 'amortized O(1)'. What does that mean?",
+          "options": [
+            "Each push is exactly O(1)",
+            "Most pushes are O(1); occasional ones are O(n), but averaged across many pushes it's O(1) each",
+            "It's O(1) only in the best case",
+            "It's O(n) but we pretend it's O(1)"
+          ],
+          "correct": 1,
+          "explanation": "Amortized analysis spreads the rare expensive operation across the many cheap ones."
+        },
+        {
+          "id": "boca4",
+          "type": "fill-blank",
+          "question": "A hash map lookup is O(1) on average, but in the worst case (lots of collisions) it can be O(___).",
+          "answers": ["n"],
+          "explanation": "Worst-case hash collisions chain into a linked list, making lookup linear."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "peak-element",
+  "title": "Find a Peak Element (O(log n))",
+  "difficulty": "Medium",
+  "tags": ["big-o", "log-n", "binary-search"],
+  "description": "A peak is an element strictly greater than its neighbors. For an array `nums` (assume `nums[-1] = nums[n] = -∞`), return the index of ANY peak.\n\nLinear scan works in O(n). But there's a clever O(log n) binary-search approach: even when the array isn't sorted, you can always find a peak by repeatedly halving.\n\n**The point**: binary search isn't only for sorted arrays. It works whenever you can rule out half the search space.",
+  "examples": [
+    { "input": "nums = [1, 2, 3, 1]", "output": "2", "explanation": "nums[2] = 3 is greater than both neighbors." },
+    { "input": "nums = [1, 2, 1, 3, 5, 6, 4]", "output": "5", "explanation": "Either index 1 or index 5 is a valid peak. Returning either is accepted." }
+  ],
+  "starterCode": "function findPeak(nums) {\n  // Binary search.\n  // Compare mid with mid+1:\n  //   - If nums[mid] > nums[mid+1], a peak exists in nums[0..mid].\n  //   - Otherwise it exists in nums[mid+1..n-1].\n  // Why? Walking 'uphill' must eventually hit a peak (the boundary is -∞).\n}\n",
+  "solution": "// O(log n) time, O(1) space.\nfunction findPeak(nums) {\n  let lo = 0, hi = nums.length - 1;\n  while (lo < hi) {\n    const mid = lo + Math.floor((hi - lo) / 2);\n    if (nums[mid] > nums[mid + 1]) {\n      // descending slope — peak is to the LEFT (or at mid)\n      hi = mid;\n    } else {\n      // ascending slope — peak is to the RIGHT\n      lo = mid + 1;\n    }\n  }\n  return lo;\n}\n",
+  "hints": [
+    "Don't try to sort — that's O(n log n) and not the point.",
+    "Pick any index i. Compare nums[i] and nums[i+1]. If we're going 'up', a peak must exist on the right. If 'down', on the left (or at i itself).",
+    "Binary search: shrink lo/hi by half each iteration."
+  ],
+  "testCases": [
+    { "input": [[1, 2, 3, 1]], "expected": 2, "description": "single peak in middle" },
+    { "input": [[1]], "expected": 0, "description": "single element is always a peak" },
+    { "input": [[1, 2]], "expected": 1, "description": "ascending — peak at end" },
+    { "input": [[2, 1]], "expected": 0, "description": "descending — peak at start" },
+    { "input": [[1, 2, 3, 4, 5]], "expected": 4, "description": "strictly ascending" },
+    { "input": [[5, 4, 3, 2, 1]], "expected": 0, "description": "strictly descending" }
+  ],
+  "functionName": "findPeak",
+  "xpReward": 140
+}

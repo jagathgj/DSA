@@ -1,0 +1,27 @@
+{
+  "id": "max-window-avg",
+  "title": "Max Window Average (Sliding Window O(n))",
+  "difficulty": "Easy",
+  "tags": ["big-o", "sliding-window", "array"],
+  "description": "Given an integer array `nums` and integer `k`, return the maximum average value of any contiguous subarray of length `k`.\n\n**The point**: a brute-force solution recomputes the sum of every window in O(k) each time → total O(n·k). A sliding window slides one element at a time, adding the new and subtracting the old, for O(n) total.",
+  "examples": [
+    { "input": "nums = [1, 12, -5, -6, 50, 3], k = 4", "output": "12.75", "explanation": "Window [12, -5, -6, 50] sums to 51, avg 12.75." },
+    { "input": "nums = [5], k = 1", "output": "5" }
+  ],
+  "starterCode": "function maxAverage(nums, k) {\n  // 1. Sum the first k elements as your starting window.\n  // 2. Slide right: subtract nums[i-k], add nums[i].\n  // 3. Track the max sum seen. Divide by k at the end.\n}\n",
+  "solution": "// O(n) time, O(1) space.\nfunction maxAverage(nums, k) {\n  // Initial window sum\n  let windowSum = 0;\n  for (let i = 0; i < k; i++) windowSum += nums[i];\n  let maxSum = windowSum;\n\n  // Slide one position at a time\n  for (let i = k; i < nums.length; i++) {\n    windowSum += nums[i] - nums[i - k];  // add new, drop old\n    if (windowSum > maxSum) maxSum = windowSum;\n  }\n  return maxSum / k;\n}\n",
+  "hints": [
+    "Brute force: for each starting index, sum k elements. That's O(n·k).",
+    "Notice that consecutive windows share k-1 elements. You can update the sum in O(1).",
+    "Maintain a 'window sum' variable. When you slide right by one, add nums[i] and subtract nums[i-k]."
+  ],
+  "testCases": [
+    { "input": [[1, 12, -5, -6, 50, 3], 4], "expected": 12.75, "description": "classic example" },
+    { "input": [[5], 1], "expected": 5, "description": "single-element window" },
+    { "input": [[0, 0, 0, 0, 0], 3], "expected": 0, "description": "all zeros" },
+    { "input": [[-1, -2, -3, -4], 2], "expected": -1.5, "description": "all negatives, smallest magnitude wins" },
+    { "input": [[1, 2, 3, 4, 5], 5], "expected": 3, "description": "k equals length" }
+  ],
+  "functionName": "maxAverage",
+  "xpReward": 110
+}

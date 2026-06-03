@@ -1,0 +1,48 @@
+// =============================================================================
+// DSA Quest — Carbon Design System styles entry point
+// =============================================================================
+// Sass requires every @use/@forward at the top of the file. Then we declare
+// theme scopes, global typography overrides, body styles, and finally the
+// app-layer partials.
+
+@use '@carbon/react/scss/reset';
+@use '@carbon/react/scss/themes';
+@use '@carbon/react/scss/theme';
+
+// Pull in Carbon component styles. (Trade-off: bundle size. For prod-grade
+// slimming, switch to per-component @use statements.)
+@use '@carbon/react';
+
+// App-level styles
+@use './layout';
+@use './components';
+
+// ----- Theme scopes -----
+// Carbon uses class scopes: default = light (white), .cds--g100 = dark.
+// The ThemeProvider toggles .cds--g100 on <body>.
+:root,
+.cds--white {
+  @include theme.theme(themes.$white);
+}
+
+.cds--g100 {
+  @include theme.theme(themes.$g100);
+}
+
+// ----- Global styles -----
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}

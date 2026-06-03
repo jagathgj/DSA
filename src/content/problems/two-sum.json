@@ -1,0 +1,25 @@
+{
+  "id": "two-sum",
+  "title": "Two Sum",
+  "difficulty": "Easy",
+  "tags": ["array", "hash-map"],
+  "description": "Given an array of integers `nums` and an integer `target`, return the indices of the two numbers that add up to `target`.\n\nYou may assume that each input has exactly one solution, and you may not use the same element twice. The order of the returned indices doesn't matter.",
+  "examples": [
+    { "input": "nums = [2,7,11,15], target = 9", "output": "[0,1]", "explanation": "nums[0] + nums[1] = 2 + 7 = 9." },
+    { "input": "nums = [3,2,4], target = 6", "output": "[1,2]" }
+  ],
+  "starterCode": "function twoSum(nums, target) {\n  // your code here\n}",
+  "solution": "function twoSum(nums, target) {\n  const seen = new Map();\n  for (let i = 0; i < nums.length; i++) {\n    const need = target - nums[i];\n    if (seen.has(need)) return [seen.get(need), i];\n    seen.set(nums[i], i);\n  }\n}",
+  "hints": [
+    "Brute force: try every pair. O(n²).",
+    "Can you remember numbers you've seen so each lookup is O(1)?",
+    "A hash map lets you check 'have I seen target - nums[i]?' instantly."
+  ],
+  "testCases": [
+    { "input": [[2, 7, 11, 15], 9], "expected": [0, 1] },
+    { "input": [[3, 2, 4], 6], "expected": [1, 2] },
+    { "input": [[3, 3], 6], "expected": [0, 1] }
+  ],
+  "functionName": "twoSum",
+  "xpReward": 100
+}

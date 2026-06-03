@@ -1,0 +1,22 @@
+{
+  "id": "searching-intro",
+  "moduleId": "searching",
+  "title": "Searching: Finding What You Need",
+  "subtitle": "Linear vs binary",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 8,
+  "xpReward": 60,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "Two ways to search",
+      "body": "**Linear search:** look at every element until you find it. Works on anything. O(n).\n\n**Binary search:** only works if the data is **sorted**, but it's wildly faster. O(log n)."
+    },
+    {
+      "type": "analogy",
+      "emoji": "📞",
+      "title": "Old phone book vs random list",
+      "body": "Find 'Patel' in a random list of names? You read every name (linear). Find 'Patel' in an alphabetical phone book? Open the middle, P comes after M, look right half, repeat (binary)."
+    }
+  ]
+}

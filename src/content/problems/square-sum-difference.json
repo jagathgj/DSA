@@ -1,0 +1,55 @@
+{
+  "id": "square-sum-difference",
+  "title": "Difference Between Square of Sum and Sum of Squares",
+  "difficulty": "Easy",
+  "tags": [
+    "math"
+  ],
+  "description": "Given a number `n`, find the difference between the square of the sum and the sum of the squares of the first n natural numbers.\n\nSquare of sum: (1+2+...+n)²\nSum of squares: 1²+2²+...+n²",
+  "examples": [
+    {
+      "input": "n = 3",
+      "output": "22",
+      "explanation": "(1+2+3)² - (1²+2²+3²) = 36 - 14 = 22"
+    },
+    {
+      "input": "n = 10",
+      "output": "2640"
+    }
+  ],
+  "starterCode": "function squareSumDifference(n) {\n  // your code here\n}",
+  "solution": "function squareSumDifference(n) {\n  const sum = (n * (n + 1)) / 2;\n  const sumOfSquares = (n * (n + 1) * (2 * n + 1)) / 6;\n  \n  return sum * sum - sumOfSquares;\n}",
+  "hints": [
+    "Use formulas: sum of first n numbers = n(n+1)/2",
+    "Sum of squares = n(n+1)(2n+1)/6",
+    "Calculate (sum)² - sumOfSquares"
+  ],
+  "testCases": [
+    {
+      "input": [
+        3
+      ],
+      "expected": 22
+    },
+    {
+      "input": [
+        10
+      ],
+      "expected": 2640
+    },
+    {
+      "input": [
+        1
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        100
+      ],
+      "expected": 25164150
+    }
+  ],
+  "functionName": "squareSumDifference",
+  "xpReward": 70
+}

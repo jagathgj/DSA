@@ -1,0 +1,27 @@
+{
+  "id": "swap-without-temp",
+  "title": "Swap Two Numbers Without Temp Variable",
+  "difficulty": "Easy",
+  "tags": ["math", "bit-manipulation"],
+  "description": "Given two numbers `a` and `b`, swap them without using a temporary variable.\n\nReturn an array `[b, a]` with the swapped values.",
+  "examples": [
+    { "input": "a = 5, b = 10", "output": "[10, 5]" },
+    { "input": "a = -3, b = 7", "output": "[7, -3]" },
+    { "input": "a = 0, b = 0", "output": "[0, 0]" }
+  ],
+  "starterCode": "function swapNumbers(a, b) {\n  // your code here\n}",
+  "solution": "function swapNumbers(a, b) {\n  // Method 1: Using arithmetic\n  a = a + b;\n  b = a - b;\n  a = a - b;\n  return [a, b];\n  \n  // Method 2: Using XOR (works for integers)\n  // a = a ^ b;\n  // b = a ^ b;\n  // a = a ^ b;\n  // return [a, b];\n  \n  // Method 3: Using destructuring (modern JS)\n  // [a, b] = [b, a];\n  // return [a, b];\n}",
+  "hints": [
+    "You can use arithmetic operations: a = a + b, then b = a - b, then a = a - b.",
+    "XOR operation has the property: x ^ x = 0 and x ^ 0 = x.",
+    "In modern JavaScript, you can use destructuring: [a, b] = [b, a]."
+  ],
+  "testCases": [
+    { "input": [5, 10], "expected": [10, 5] },
+    { "input": [-3, 7], "expected": [7, -3] },
+    { "input": [0, 0], "expected": [0, 0] },
+    { "input": [100, -100], "expected": [-100, 100] }
+  ],
+  "functionName": "swapNumbers",
+  "xpReward": 50
+}

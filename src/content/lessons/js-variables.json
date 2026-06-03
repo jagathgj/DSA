@@ -1,0 +1,63 @@
+{
+  "id": "js-variables",
+  "moduleId": "js-basics",
+  "title": "Variables: Labeled Boxes",
+  "subtitle": "How JavaScript remembers things",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 8,
+  "xpReward": 40,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "What is a variable?",
+      "body": "A **variable** is a labeled box where you keep a value so you can use it later. You give the box a name. You put something inside. When you need it back, you ask for it by name.\n\nIn JavaScript, you create a box with `let` or `const`."
+    },
+    {
+      "type": "analogy",
+      "emoji": "📦",
+      "title": "Think of a lunchbox",
+      "body": "Imagine you label a lunchbox 'Tuesday'. Inside, you put a sandwich. Anyone who reads the label and opens it gets your sandwich. That's exactly what a variable does — except instead of sandwiches, it stores numbers, words, lists, or anything else."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "let score = 10;\nconst playerName = \"Maya\";\n\nconsole.log(playerName);  // \"Maya\"\nconsole.log(score);       // 10\n\nscore = score + 5;        // change what's in the box\nconsole.log(score);       // 15",
+      "caption": "Use let when the value will change. Use const when it won't.",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "let vs const",
+      "body": "Use **`const`** by default — it means 'this box stays sealed'. If JavaScript catches you trying to change it, you get an error. That's a *good* thing: it stops bugs.\n\nReach for **`let`** only when you genuinely need to reassign the variable later (a counter, a running total, a moving position)."
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "v1",
+          "type": "mcq",
+          "question": "Which keyword should you use for a value that will never change?",
+          "options": ["var", "let", "const", "fixed"],
+          "correct": 2,
+          "explanation": "`const` declares a constant — you cannot reassign it after creating it."
+        },
+        {
+          "id": "v2",
+          "type": "predict-output",
+          "question": "What does this code print?",
+          "code": "let x = 4;\nx = x * 2;\nconsole.log(x);",
+          "options": ["4", "6", "8", "Error"],
+          "correct": 2,
+          "explanation": "x starts at 4, then is reassigned to 4 * 2 = 8."
+        },
+        {
+          "id": "v3",
+          "type": "fill-blank",
+          "question": "To create a variable named `age` that won't change, write: ___ age = 25;",
+          "answers": ["const"],
+          "explanation": "Since the value won't change, const is the right choice."
+        }
+      ]
+    }
+  ]
+}

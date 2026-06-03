@@ -1,0 +1,29 @@
+{
+  "id": "fib-memo",
+  "title": "Fibonacci — Make It O(n)",
+  "difficulty": "Easy",
+  "tags": ["big-o", "memoization", "recursion", "dp"],
+  "description": "Compute the nth Fibonacci number where fib(0) = 0, fib(1) = 1, fib(n) = fib(n-1) + fib(n-2).\n\nThe naive recursive version is **O(2ⁿ)** — completely impractical past n=40. Use memoization OR iteration to make it **O(n)**.\n\n**The point**: see how caching subproblem answers collapses exponential work into linear work. This is the foundational idea of dynamic programming.",
+  "examples": [
+    { "input": "n = 10", "output": "55" },
+    { "input": "n = 30", "output": "832040", "explanation": "The naive recursive version takes ~2 million calls; memoized takes 30." }
+  ],
+  "starterCode": "function fib(n) {\n  // Option A — memoized recursion:\n  //   cache the result of each fib(k) in a Map or array.\n  // Option B — iterative bottom-up:\n  //   keep only the last two values, walking from 2 to n.\n  // Either is O(n). Iterative uses O(1) space.\n}\n",
+  "solution": "// O(n) time, O(1) space — iterative.\nfunction fib(n) {\n  if (n < 2) return n;\n  let a = 0, b = 1;\n  for (let i = 2; i <= n; i++) {\n    [a, b] = [b, a + b];\n  }\n  return b;\n}\n\n// Memoized version (also O(n) time but O(n) space):\n// function fib(n, memo = {}) {\n//   if (n < 2) return n;\n//   if (memo[n] !== undefined) return memo[n];\n//   return (memo[n] = fib(n - 1, memo) + fib(n - 2, memo));\n// }\n",
+  "hints": [
+    "Recursive fib(n) recomputes fib(n-2) twice, fib(n-3) three times, fib(n-4) five times — Fibonacci-many times!",
+    "Memoization: cache each fib(k) the first time. Subsequent calls return instantly.",
+    "Iteratively, you only need the last two values. Walk from 2 to n updating (a, b) = (b, a+b)."
+  ],
+  "testCases": [
+    { "input": [0], "expected": 0 },
+    { "input": [1], "expected": 1 },
+    { "input": [2], "expected": 1 },
+    { "input": [10], "expected": 55 },
+    { "input": [20], "expected": 6765 },
+    { "input": [30], "expected": 832040 },
+    { "input": [50], "expected": 12586269025, "description": "would hang the naive recursive version" }
+  ],
+  "functionName": "fib",
+  "xpReward": 100
+}

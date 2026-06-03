@@ -1,0 +1,28 @@
+{
+  "id": "greedy-intro",
+  "moduleId": "greedy",
+  "title": "Greedy Algorithms",
+  "subtitle": "Pick the best local choice. Hope it works.",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 12,
+  "xpReward": 90,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "The greedy mindset",
+      "body": "A **greedy algorithm** makes the choice that looks best **right now**, without worrying about the future. For some problems, this works perfectly and is far simpler than exhaustive search. For others, it fails. Knowing when greedy works is the real skill."
+    },
+    {
+      "type": "analogy",
+      "emoji": "💰",
+      "title": "Making change with the fewest coins",
+      "body": "You owe 47 cents. Grab a quarter (25). Then 22 left — grab another quarter? No, 22 < 25. Grab a dime (10). 12 left. Another dime. 2 left. Two pennies. Done — six coins. Always grabbing the biggest coin you can: greedy."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "function minCoins(amount, coins) {\n  coins = [...coins].sort((a, b) => b - a);\n  let count = 0;\n  for (const c of coins) {\n    while (amount >= c) {\n      amount -= c;\n      count++;\n    }\n  }\n  return amount === 0 ? count : -1;\n}\n\nconsole.log(minCoins(47, [25, 10, 5, 1])); // 6",
+      "runnable": true
+    }
+  ]
+}

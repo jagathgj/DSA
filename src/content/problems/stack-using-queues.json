@@ -1,0 +1,57 @@
+{
+  "id": "stack-using-queues",
+  "title": "Implement Stack Using Queues",
+  "difficulty": "Easy",
+  "tags": [
+    "stack",
+    "queue",
+    "design"
+  ],
+  "description": "Implement a stack using two queues. Support push, pop, top, and empty operations.",
+  "examples": [
+    {
+      "input": "push(1), push(2), top(), pop(), empty()",
+      "output": "2, 2, false"
+    }
+  ],
+  "starterCode": "class MyStack {\n  constructor() {\n    // your code here\n  }\n  \n  push(x) {\n    // your code here\n  }\n  \n  pop() {\n    // your code here\n  }\n  \n  top() {\n    // your code here\n  }\n  \n  empty() {\n    // your code here\n  }\n}",
+  "solution": "class MyStack {\n  constructor() {\n    this.q1 = [];\n    this.q2 = [];\n  }\n  \n  push(x) {\n    this.q2.push(x);\n    while (this.q1.length) this.q2.push(this.q1.shift());\n    [this.q1, this.q2] = [this.q2, this.q1];\n  }\n  \n  pop() {\n    return this.q1.shift();\n  }\n  \n  top() {\n    return this.q1[0];\n  }\n  \n  empty() {\n    return this.q1.length === 0;\n  }\n}",
+  "hints": [
+    "Use two queues",
+    "On push, add to q2 then move all from q1 to q2",
+    "Swap queues so q1 has elements in stack order"
+  ],
+  "testCases": [
+    {
+      "input": [
+        [
+          "push",
+          "push",
+          "top",
+          "pop",
+          "empty"
+        ],
+        [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [],
+          [],
+          []
+        ]
+      ],
+      "expected": [
+        null,
+        null,
+        2,
+        2,
+        false
+      ]
+    }
+  ],
+  "functionName": "MyStack",
+  "xpReward": 100
+}

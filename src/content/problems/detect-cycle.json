@@ -1,0 +1,45 @@
+{
+  "id": "detect-cycle",
+  "title": "Detect Loop in Linked List",
+  "difficulty": "Easy",
+  "tags": [
+    "linked-list",
+    "two-pointers"
+  ],
+  "description": "Given head of a linked list, determine if it has a cycle using Floyd's cycle detection (tortoise and hare).",
+  "examples": [
+    {
+      "input": "head = 3->2->0->-4 (cycle back to 2)",
+      "output": "true"
+    }
+  ],
+  "starterCode": "function hasCycle(head) {\n  // your code here\n}",
+  "solution": "function hasCycle(head) {\n  let slow = head, fast = head;\n  \n  while (fast && fast.next) {\n    slow = slow.next;\n    fast = fast.next.next;\n    if (slow === fast) return true;\n  }\n  \n  return false;\n}",
+  "hints": [
+    "Use two pointers: slow (1 step) and fast (2 steps)",
+    "If they meet, there's a cycle",
+    "If fast reaches null, no cycle"
+  ],
+  "testCases": [
+    {
+      "input": [
+        {
+          "val": 3,
+          "next": {
+            "val": 2,
+            "next": {
+              "val": 0,
+              "next": {
+                "val": -4,
+                "next": null
+              }
+            }
+          }
+        }
+      ],
+      "expected": false
+    }
+  ],
+  "functionName": "hasCycle",
+  "xpReward": 90
+}

@@ -1,0 +1,63 @@
+{
+  "id": "merge-intervals",
+  "title": "Merge Overlapping Intervals",
+  "difficulty": "Medium",
+  "tags": [
+    "array",
+    "sorting"
+  ],
+  "description": "Given array of intervals, merge all overlapping intervals.",
+  "examples": [
+    {
+      "input": "intervals = [[1,3],[2,6],[8,10],[15,18]]",
+      "output": "[[1,6],[8,10],[15,18]]"
+    }
+  ],
+  "starterCode": "function merge(intervals) {\n  // your code here\n}",
+  "solution": "function merge(intervals) {\n  if (!intervals.length) return [];\n  \n  intervals.sort((a, b) => a[0] - b[0]);\n  const result = [intervals[0]];\n  \n  for (let i = 1; i < intervals.length; i++) {\n    const last = result[result.length - 1];\n    if (intervals[i][0] <= last[1]) {\n      last[1] = Math.max(last[1], intervals[i][1]);\n    } else {\n      result.push(intervals[i]);\n    }\n  }\n  \n  return result;\n}",
+  "hints": [
+    "Sort intervals by start time",
+    "Merge if current overlaps with last",
+    "Otherwise add as new interval"
+  ],
+  "testCases": [
+    {
+      "input": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            8,
+            10
+          ],
+          [
+            15,
+            18
+          ]
+        ]
+      ],
+      "expected": [
+        [
+          1,
+          6
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          15,
+          18
+        ]
+      ]
+    }
+  ],
+  "functionName": "merge",
+  "xpReward": 120
+}

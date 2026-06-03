@@ -1,0 +1,28 @@
+{
+  "id": "missing-number",
+  "title": "Missing Number — O(n) Time, O(1) Space",
+  "difficulty": "Easy",
+  "tags": ["big-o", "math", "bit-manipulation"],
+  "description": "An array contains n distinct numbers from the range [0, n] — exactly one number is missing. Return the missing one.\n\nExample: `[3, 0, 1]` is missing 2 (range is 0..3).\n\n**The point**: a Set solution is O(n) time AND O(n) space. Math (`sum 0..n minus sum(arr)`) or XOR gets you to **O(n) time, O(1) space**.",
+  "examples": [
+    { "input": "nums = [3, 0, 1]", "output": "2" },
+    { "input": "nums = [9, 6, 4, 2, 3, 5, 7, 0, 1]", "output": "8" }
+  ],
+  "starterCode": "function missingNumber(nums) {\n  // Approach 1 — sum trick:\n  //   expected = 0 + 1 + 2 + ... + n = n(n+1)/2\n  //   actual   = sum of nums\n  //   missing  = expected - actual\n  // Approach 2 — XOR trick:\n  //   XOR every index 0..n with every value in nums.\n  //   Pairs cancel; only the missing index survives.\n}\n",
+  "solution": "// O(n) time, O(1) space — Gauss-sum method.\nfunction missingNumber(nums) {\n  const n = nums.length;\n  const expected = (n * (n + 1)) / 2;\n  let actual = 0;\n  for (const x of nums) actual += x;\n  return expected - actual;\n}\n\n// XOR alternative — no overflow risk:\n// function missingNumber(nums) {\n//   let x = nums.length;          // start with n\n//   for (let i = 0; i < nums.length; i++) {\n//     x ^= i ^ nums[i];           // XOR in every index 0..n-1 and every value\n//   }\n//   return x;\n// }\n",
+  "hints": [
+    "Brute force: for each number 0..n, check if it appears in nums. That's O(n²).",
+    "With a Set: O(n) time but O(n) extra space.",
+    "Math: the sum 0+1+...+n is n(n+1)/2. Subtract the actual sum to find the gap. O(1) extra space."
+  ],
+  "testCases": [
+    { "input": [[3, 0, 1]], "expected": 2 },
+    { "input": [[0, 1]], "expected": 2, "description": "missing the top of range" },
+    { "input": [[1]], "expected": 0, "description": "missing zero" },
+    { "input": [[0]], "expected": 1, "description": "missing 1, range [0,1]" },
+    { "input": [[9, 6, 4, 2, 3, 5, 7, 0, 1]], "expected": 8 },
+    { "input": [[0, 1, 2, 3, 4, 5, 6, 7, 9]], "expected": 8 }
+  ],
+  "functionName": "missingNumber",
+  "xpReward": 90
+}

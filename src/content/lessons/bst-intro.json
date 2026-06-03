@@ -1,0 +1,53 @@
+{
+  "id": "bst-intro",
+  "moduleId": "bst",
+  "title": "Binary Search Trees",
+  "subtitle": "Trees that stay sorted",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 14,
+  "xpReward": 100,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "The BST rule",
+      "body": "A **Binary Search Tree** is a tree with one simple rule at every node: **everything to the left is smaller, everything to the right is bigger**. That rule unlocks O(log n) lookup, insertion, and deletion — when the tree stays balanced."
+    },
+    {
+      "type": "analogy",
+      "emoji": "📖",
+      "title": "Like a dictionary",
+      "body": "Look up a word. Open the middle. Word is earlier? Look left half. Later? Look right half. Each step halves the search space. That's what a BST does at every level."
+    },
+    {
+      "type": "diagram",
+      "variant": "tree",
+      "caption": "Notice: left children are smaller, right children are larger.",
+      "data": {
+        "root": {
+          "value": 50,
+          "left": { "value": 30, "left": { "value": 20 }, "right": { "value": 40 } },
+          "right": { "value": 70, "left": { "value": 60 }, "right": { "value": 80 } }
+        }
+      }
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "function search(node, target) {\n  if (!node) return false;\n  if (node.value === target) return true;\n  if (target < node.value) return search(node.left, target);\n  return search(node.right, target);\n}",
+      "caption": "Classic BST search — recursion meets the sorting rule."
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "bst1",
+          "type": "mcq",
+          "question": "In a BST, where do values smaller than a node go?",
+          "options": ["Left subtree", "Right subtree", "Anywhere", "Removed"],
+          "correct": 0,
+          "explanation": "Left for smaller, right for larger. That invariant is the entire point."
+        }
+      ]
+    }
+  ]
+}

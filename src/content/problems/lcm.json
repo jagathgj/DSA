@@ -1,0 +1,69 @@
+{
+  "id": "lcm",
+  "title": "Find LCM of Two Numbers",
+  "difficulty": "Easy",
+  "tags": [
+    "math"
+  ],
+  "description": "Given two integers `a` and `b`, find their Least Common Multiple (LCM).\n\nThe LCM is the smallest positive integer that is divisible by both numbers.",
+  "examples": [
+    {
+      "input": "a = 4, b = 6",
+      "output": "12"
+    },
+    {
+      "input": "a = 21, b = 6",
+      "output": "42"
+    },
+    {
+      "input": "a = 5, b = 7",
+      "output": "35"
+    }
+  ],
+  "starterCode": "function lcm(a, b) {\n  // your code here\n}",
+  "solution": "function lcm(a, b) {\n  const gcd = (x, y) => {\n    while (y !== 0) {\n      [x, y] = [y, x % y];\n    }\n    return Math.abs(x);\n  };\n  \n  return Math.abs(a * b) / gcd(a, b);\n}",
+  "hints": [
+    "Use the formula: LCM(a, b) = (a × b) / GCD(a, b)",
+    "First implement or use the GCD function.",
+    "Handle the case where one or both numbers are 0."
+  ],
+  "testCases": [
+    {
+      "input": [
+        4,
+        6
+      ],
+      "expected": 12
+    },
+    {
+      "input": [
+        21,
+        6
+      ],
+      "expected": 42
+    },
+    {
+      "input": [
+        5,
+        7
+      ],
+      "expected": 35
+    },
+    {
+      "input": [
+        10,
+        15
+      ],
+      "expected": 30
+    },
+    {
+      "input": [
+        1,
+        5
+      ],
+      "expected": 5
+    }
+  ],
+  "functionName": "lcm",
+  "xpReward": 70
+}

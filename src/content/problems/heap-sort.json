@@ -1,0 +1,48 @@
+{
+  "id": "heap-sort",
+  "title": "Heap Sort",
+  "difficulty": "Medium",
+  "tags": [
+    "sorting",
+    "array",
+    "heap"
+  ],
+  "description": "Implement heap sort. Build max heap, repeatedly extract maximum and rebuild heap.\n\nTime: O(n log n), Space: O(1)",
+  "examples": [
+    {
+      "input": "arr = [12, 11, 13, 5, 6, 7]",
+      "output": "[5, 6, 7, 11, 12, 13]"
+    }
+  ],
+  "starterCode": "function heapSort(arr) {\n  // your code here\n}",
+  "solution": "function heapSort(arr) {\n  const n = arr.length;\n  \n  for (let i = Math.floor(n / 2) - 1; i >= 0; i--) heapify(arr, n, i);\n  \n  for (let i = n - 1; i > 0; i--) {\n    [arr[0], arr[i]] = [arr[i], arr[0]];\n    heapify(arr, i, 0);\n  }\n  \n  return arr;\n}\n\nfunction heapify(arr, n, i) {\n  let largest = i, left = 2 * i + 1, right = 2 * i + 2;\n  \n  if (left < n && arr[left] > arr[largest]) largest = left;\n  if (right < n && arr[right] > arr[largest]) largest = right;\n  \n  if (largest !== i) {\n    [arr[i], arr[largest]] = [arr[largest], arr[i]];\n    heapify(arr, n, largest);\n  }\n}",
+  "hints": [
+    "Build max heap from array",
+    "Extract max and place at end",
+    "Heapify remaining elements"
+  ],
+  "testCases": [
+    {
+      "input": [
+        [
+          12,
+          11,
+          13,
+          5,
+          6,
+          7
+        ]
+      ],
+      "expected": [
+        5,
+        6,
+        7,
+        11,
+        12,
+        13
+      ]
+    }
+  ],
+  "functionName": "heapSort",
+  "xpReward": 140
+}

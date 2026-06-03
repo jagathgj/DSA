@@ -1,0 +1,25 @@
+{
+  "id": "four-sum",
+  "title": "4Sum",
+  "difficulty": "Medium",
+  "tags": ["array", "two-pointers", "sorting"],
+  "description": "Given an array of integers `nums` and an integer `target`, return all unique quadruplets `[a, b, c, d]` such that a + b + c + d = target.\n\nThe solution set must not contain duplicate quadruplets.",
+  "examples": [
+    { "input": "nums = [1,0,-1,0,-2,2], target = 0", "output": "[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]" },
+    { "input": "nums = [2,2,2,2,2], target = 8", "output": "[[2,2,2,2]]" }
+  ],
+  "starterCode": "function fourSum(nums, target) {\n  // your code here\n}",
+  "solution": "function fourSum(nums, target) {\n  const result = [];\n  nums.sort((a, b) => a - b);\n  \n  for (let i = 0; i < nums.length - 3; i++) {\n    if (i > 0 && nums[i] === nums[i - 1]) continue;\n    \n    for (let j = i + 1; j < nums.length - 2; j++) {\n      if (j > i + 1 && nums[j] === nums[j - 1]) continue;\n      \n      let left = j + 1, right = nums.length - 1;\n      while (left < right) {\n        const sum = nums[i] + nums[j] + nums[left] + nums[right];\n        if (sum === target) {\n          result.push([nums[i], nums[j], nums[left], nums[right]]);\n          while (left < right && nums[left] === nums[left + 1]) left++;\n          while (left < right && nums[right] === nums[right - 1]) right--;\n          left++;\n          right--;\n        } else if (sum < target) {\n          left++;\n        } else {\n          right--;\n        }\n      }\n    }\n  }\n  return result;\n}",
+  "hints": [
+    "Similar to 3Sum, but with two fixed elements instead of one.",
+    "Sort the array first, then use two nested loops for the first two elements.",
+    "Use two pointers for the remaining two elements to achieve O(n³) time complexity."
+  ],
+  "testCases": [
+    { "input": [[1,0,-1,0,-2,2], 0], "expected": [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]] },
+    { "input": [[2,2,2,2,2], 8], "expected": [[2,2,2,2]] },
+    { "input": [[1,2,3,4], 10], "expected": [[1,2,3,4]] }
+  ],
+  "functionName": "fourSum",
+  "xpReward": 180
+}

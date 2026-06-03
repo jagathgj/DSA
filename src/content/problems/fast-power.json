@@ -1,0 +1,29 @@
+{
+  "id": "fast-power",
+  "title": "Fast Power (a^n)",
+  "difficulty": "Medium",
+  "tags": ["big-o", "log-n", "recursion", "math"],
+  "description": "Compute a^n for integer n ≥ 0. The naive `for` loop is O(n). Implement it in O(log n) using exponentiation-by-squaring.\n\n**The point of this problem**: see how halving the problem at each step (a^n = (a^(n/2))²) turns O(n) into O(log n). Same trick as binary search, applied to multiplication.",
+  "examples": [
+    { "input": "a = 2, n = 10", "output": "1024", "explanation": "2¹⁰ = 1024." },
+    { "input": "a = 3, n = 0", "output": "1", "explanation": "Anything to the 0 is 1." }
+  ],
+  "starterCode": "function fastPower(a, n) {\n  // Base case: a^0 = 1.\n  // Recursive split:\n  //   if n is even, a^n = (a^(n/2))²\n  //   if n is odd,  a^n = a · (a^((n-1)/2))²\n  // Each call halves n → log n calls total.\n}\n",
+  "solution": "// O(log n) time, O(log n) space (recursion).\n// Iterative O(log n) / O(1) is also possible — see comment at bottom.\nfunction fastPower(a, n) {\n  if (n === 0) return 1;\n  const half = fastPower(a, Math.floor(n / 2));\n  if (n % 2 === 0) return half * half;\n  else             return a * half * half;\n}\n\n// Iterative version (saves the stack):\n// function fastPower(a, n) {\n//   let result = 1;\n//   while (n > 0) {\n//     if (n & 1) result *= a;\n//     a *= a;\n//     n >>= 1;\n//   }\n//   return result;\n// }\n",
+  "hints": [
+    "Naive: multiply a by itself n-1 times. That's O(n) — too slow for big n.",
+    "Key insight: a⁸ = a⁴ · a⁴, and a⁴ = a² · a². You don't need to compute a⁴ twice if you remember it.",
+    "Recursion: compute half = a^(n/2). Then if n is even, return half*half. If odd, return a*half*half."
+  ],
+  "testCases": [
+    { "input": [2, 10], "expected": 1024, "description": "2^10" },
+    { "input": [2, 0], "expected": 1, "description": "anything^0 = 1" },
+    { "input": [3, 4], "expected": 81, "description": "odd intermediate steps" },
+    { "input": [5, 3], "expected": 125, "description": "odd exponent" },
+    { "input": [1, 100], "expected": 1, "description": "1 to any power" },
+    { "input": [2, 20], "expected": 1048576, "description": "larger exponent" },
+    { "input": [7, 1], "expected": 7, "description": "exponent 1" }
+  ],
+  "functionName": "fastPower",
+  "xpReward": 130
+}

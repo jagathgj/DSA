@@ -1,0 +1,67 @@
+{
+  "id": "fibonacci-nth",
+  "title": "Find Nth Fibonacci Number",
+  "difficulty": "Easy",
+  "tags": [
+    "math",
+    "recursion",
+    "dynamic-programming"
+  ],
+  "description": "Given a number `n`, return the nth Fibonacci number.\n\nThe Fibonacci sequence: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...",
+  "examples": [
+    {
+      "input": "n = 0",
+      "output": "0"
+    },
+    {
+      "input": "n = 1",
+      "output": "1"
+    },
+    {
+      "input": "n = 6",
+      "output": "8",
+      "explanation": "0, 1, 1, 2, 3, 5, 8"
+    }
+  ],
+  "starterCode": "function fibonacci(n) {\n  // your code here\n}",
+  "solution": "function fibonacci(n) {\n  if (n <= 1) return n;\n  \n  let a = 0, b = 1;\n  for (let i = 2; i <= n; i++) {\n    [a, b] = [b, a + b];\n  }\n  return b;\n}",
+  "hints": [
+    "Base cases: fib(0) = 0, fib(1) = 1",
+    "Use iteration with two variables to avoid recursion overhead.",
+    "Each number is the sum of the previous two."
+  ],
+  "testCases": [
+    {
+      "input": [
+        0
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        1
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        6
+      ],
+      "expected": 8
+    },
+    {
+      "input": [
+        10
+      ],
+      "expected": 55
+    },
+    {
+      "input": [
+        2
+      ],
+      "expected": 1
+    }
+  ],
+  "functionName": "fibonacci",
+  "xpReward": 70
+}

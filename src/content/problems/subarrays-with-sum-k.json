@@ -1,0 +1,25 @@
+{
+  "id": "subarrays-with-sum-k",
+  "title": "Print All Subarrays with Given Sum K",
+  "difficulty": "Medium",
+  "tags": ["array", "hash-map"],
+  "description": "Given an array of integers and a target sum `k`, find all subarrays that sum to `k`.\n\nReturn an array of subarrays, where each subarray is represented as `[start, end]` indices.",
+  "examples": [
+    { "input": "arr = [1, 2, 3, 4, 5], k = 5", "output": "[[0, 1], [1, 2], [4, 4]]", "explanation": "[1,2], [2,3], and [5]" },
+    { "input": "arr = [10, 2, -2, -20, 10], k = -10", "output": "[[0, 3], [1, 4]]" }
+  ],
+  "starterCode": "function subarraysWithSum(arr, k) {\n  // your code here\n}",
+  "solution": "function subarraysWithSum(arr, k) {\n  const result = [];\n  const sumMap = new Map();\n  sumMap.set(0, [-1]); // Handle subarrays starting from index 0\n  \n  let sum = 0;\n  for (let i = 0; i < arr.length; i++) {\n    sum += arr[i];\n    \n    if (sumMap.has(sum - k)) {\n      for (const start of sumMap.get(sum - k)) {\n        result.push([start + 1, i]);\n      }\n    }\n    \n    if (!sumMap.has(sum)) sumMap.set(sum, []);\n    sumMap.get(sum).push(i);\n  }\n  \n  return result;\n}",
+  "hints": [
+    "Use prefix sum technique with a hash map.",
+    "If sum - k exists in the map, we found a subarray.",
+    "Store all indices where each sum occurs to find all subarrays."
+  ],
+  "testCases": [
+    { "input": [[1, 2, 3, 4, 5], 5], "expected": [[0, 1], [1, 2], [4, 4]] },
+    { "input": [[10, 2, -2, -20, 10], -10], "expected": [[0, 3], [1, 4]] },
+    { "input": [[1, 1, 1], 2], "expected": [[0, 1], [1, 2]] }
+  ],
+  "functionName": "subarraysWithSum",
+  "xpReward": 140
+}

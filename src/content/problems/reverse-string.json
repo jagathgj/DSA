@@ -1,0 +1,26 @@
+{
+  "id": "reverse-string",
+  "title": "Reverse a String",
+  "difficulty": "Easy",
+  "tags": ["string", "two-pointers"],
+  "description": "Given a string `s`, return the string reversed.",
+  "examples": [
+    { "input": "s = \"hello\"", "output": "\"olleh\"" },
+    { "input": "s = \"\"", "output": "\"\"" }
+  ],
+  "starterCode": "function reverseString(s) {\n  // your code here\n}",
+  "solution": "function reverseString(s) {\n  return s.split('').reverse().join('');\n}",
+  "hints": [
+    "split('') turns a string into an array of characters.",
+    "Arrays have a reverse() method.",
+    "join('') turns the array back into a string."
+  ],
+  "testCases": [
+    { "input": ["hello"], "expected": "olleh" },
+    { "input": [""], "expected": "" },
+    { "input": ["a"], "expected": "a" },
+    { "input": ["racecar"], "expected": "racecar" }
+  ],
+  "functionName": "reverseString",
+  "xpReward": 50
+}

@@ -1,0 +1,35 @@
+{
+  "id": "sorting-merge",
+  "moduleId": "sorting",
+  "title": "Merge Sort: Divide and Conquer",
+  "subtitle": "The reliable workhorse",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 14,
+  "xpReward": 100,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "The strategy",
+      "body": "Split the array in half. Sort each half (recursively). Then **merge** the two sorted halves back together. The merge step is fast — just walk both halves and pick the smaller front each time."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "function mergeSort(arr) {\n  if (arr.length <= 1) return arr;\n  const mid = Math.floor(arr.length / 2);\n  const left = mergeSort(arr.slice(0, mid));\n  const right = mergeSort(arr.slice(mid));\n  return merge(left, right);\n}\n\nfunction merge(a, b) {\n  const out = [];\n  let i = 0, j = 0;\n  while (i < a.length && j < b.length) {\n    if (a[i] <= b[j]) out.push(a[i++]);\n    else out.push(b[j++]);\n  }\n  return [...out, ...a.slice(i), ...b.slice(j)];\n}\n\nconsole.log(mergeSort([5, 2, 8, 1, 9, 3]));",
+      "runnable": true
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "ms1",
+          "type": "mcq",
+          "question": "Merge sort's time complexity?",
+          "options": ["O(n)", "O(n log n)", "O(n²)", "O(log n)"],
+          "correct": 1,
+          "explanation": "log n levels of splitting × n work per level = O(n log n)."
+        }
+      ]
+    }
+  ]
+}

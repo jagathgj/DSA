@@ -1,0 +1,76 @@
+{
+  "id": "arrays-intro",
+  "moduleId": "arrays",
+  "title": "Arrays: Numbered Boxes",
+  "subtitle": "Your first real data structure",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 12,
+  "xpReward": 70,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "What's an array?",
+      "body": "An **array** is a row of numbered boxes. Each box holds one value. Each box has a position — called an **index** — starting from `0`, not `1`."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🏠",
+      "title": "Houses on a street",
+      "body": "Picture a short street where every house is numbered: 0, 1, 2, 3. Every house has a person inside. If I say 'go to house 2', you know exactly where to walk. That's an array — instant access by position."
+    },
+    {
+      "type": "diagram",
+      "variant": "array",
+      "caption": "An array of 4 numbers. Notice indices start at 0.",
+      "data": {
+        "values": [10, 20, 30, 40]
+      }
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "const nums = [10, 20, 30, 40];\n\nconsole.log(nums[0]);       // 10  — first element\nconsole.log(nums[2]);       // 30  — third element\nconsole.log(nums.length);   // 4   — how many elements\n\nnums[1] = 99;               // change a slot\nconsole.log(nums);          // [10, 99, 30, 40]",
+      "runnable": true
+    },
+    {
+      "type": "interactive",
+      "widget": "array-playground",
+      "caption": "Try it: add, remove, and search elements live."
+    },
+    {
+      "type": "explanation",
+      "heading": "What arrays are good at",
+      "body": "Arrays are **incredibly fast** at one thing: jumping to a position. Getting `arr[10000]` takes the same time as getting `arr[0]`. That's O(1).\n\nThey're **slow** at one thing: inserting or removing in the middle. Everything after the change has to shift over. That's O(n)."
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "a1",
+          "type": "mcq",
+          "question": "Given `const arr = [5, 10, 15];`, what does `arr[1]` give?",
+          "options": ["5", "10", "15", "undefined"],
+          "correct": 1,
+          "explanation": "Indices start at 0, so arr[1] is the SECOND element — 10."
+        },
+        {
+          "id": "a2",
+          "type": "predict-output",
+          "question": "What gets logged?",
+          "code": "const a = [1, 2, 3];\na[5] = 9;\nconsole.log(a.length);",
+          "options": ["3", "5", "6", "Error"],
+          "correct": 2,
+          "explanation": "Setting index 5 stretches the array — its length becomes 6 (with empty slots in between)."
+        },
+        {
+          "id": "a3",
+          "type": "mcq",
+          "question": "What's the time complexity of arr[i]?",
+          "options": ["O(1)", "O(n)", "O(log n)", "O(n²)"],
+          "correct": 0,
+          "explanation": "Array indexing is constant time — the computer goes directly to that memory slot."
+        }
+      ]
+    }
+  ]
+}

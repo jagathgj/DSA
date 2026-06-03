@@ -1,0 +1,109 @@
+{
+  "id": "big-o-bad-ones",
+  "moduleId": "big-o",
+  "title": "The Bad Ones: O(n²), O(2ⁿ), O(n!)",
+  "subtitle": "When code grinds to a halt — and how to recognize it",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 18,
+  "xpReward": 110,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "Knowing what to avoid",
+      "body": "You don't need to memorize every Big O class — but recognizing the BAD shapes saves you from accidentally writing them.\n\nIn this lesson we'll look at:\n\n* **O(n²)** — quadratic. Two nested loops over the same data.\n* **O(n³)** — cubic. Three nested loops. Often a sign you should use a smarter algorithm.\n* **O(2ⁿ)** — exponential. Brute-force search over all subsets, or naive recursion that branches twice.\n* **O(n!)** — factorial. Permutations. The traveling salesman in its purest, dumbest form.\n\nAll four are bad, but they're bad in different ways."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// ============================================================\n// O(n²) — every pair\n// ============================================================\n// Classic example: find all pairs that sum to a target.\n\nfunction allPairsSumTo(arr, target) {\n  const pairs = [];\n  for (let i = 0; i < arr.length; i++) {\n    for (let j = i + 1; j < arr.length; j++) {\n      if (arr[i] + arr[j] === target) pairs.push([arr[i], arr[j]]);\n    }\n  }\n  return pairs;\n}\n\nconsole.log(allPairsSumTo([1, 2, 3, 4, 5, 6], 7));\n// [[1, 6], [2, 5], [3, 4]]\n\n// Operations ≈ n(n-1)/2 ≈ n²/2. Still O(n²).\n//\n// There IS a smarter O(n) solution using a Set — for each x, check if (target - x) is in the set.\n// Sometimes the n² version is fine for small inputs. Sometimes it's a disaster.",
+      "runnable": true
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// ============================================================\n// O(n³) — every triple\n// ============================================================\n// Naive 'find three numbers that sum to target'.\n\nfunction allTriplesSumTo(arr, target) {\n  const triples = [];\n  for (let i = 0; i < arr.length; i++) {\n    for (let j = i + 1; j < arr.length; j++) {\n      for (let k = j + 1; k < arr.length; k++) {\n        if (arr[i] + arr[j] + arr[k] === target) {\n          triples.push([arr[i], arr[j], arr[k]]);\n        }\n      }\n    }\n  }\n  return triples;\n}\n\nconsole.log(allTriplesSumTo([1, 2, 3, 4, 5], 9));\n// [[1, 3, 5], [2, 3, 4]]\n\n// Triple nested loop → O(n³).\n// For n = 1000, that's 10⁹ ops — many seconds of CPU.\n// Smarter algorithm: sort + two-pointer → O(n²).",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "Spotting nested-loop complexity",
+      "body": "When you see nested loops, count them — but be careful:\n\n* Two loops, both up to n → **O(n²)**\n* Three loops, all up to n → **O(n³)**\n* Loops that range over different things multiply: a loop over an array of length n inside a loop over a string of length m → **O(n·m)**\n* A loop that **halves** its range each step is **O(log n)**, NOT O(n)\n* Two loops in *sequence* (not nested) add, but the bigger one wins: O(n) + O(n²) = O(n²)"
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// ============================================================\n// O(2ⁿ) — naive recursive Fibonacci\n// ============================================================\n// Each call branches into TWO recursive calls. Tree depth is n.\n// Total calls ≈ 2ⁿ. Vast amounts of redundant work.\n\nlet calls = 0;\nfunction fib(n) {\n  calls++;\n  if (n < 2) return n;\n  return fib(n - 1) + fib(n - 2);\n}\n\nfor (const n of [10, 20, 30]) {\n  calls = 0;\n  fib(n);\n  console.log(`fib(${n}) made ${calls.toLocaleString()} calls`);\n}\n\n// fib(10):     ~177 calls\n// fib(20):  ~21,000 calls\n// fib(30): ~2,690,000 calls\n//\n// Each +10 multiplies work by ~100. That's exponential growth.\n// fib(50) would take MINUTES; fib(100) literally trillions of years.",
+      "runnable": true
+    },
+    {
+      "type": "diagram",
+      "variant": "ascii",
+      "caption": "The fib(5) call tree — see how much recomputation happens",
+      "data": {
+        "text": "                       fib(5)\n                      /      \\\n                fib(4)        fib(3)\n               /     \\        /    \\\n           fib(3)  fib(2)  fib(2)  fib(1)\n           /   \\    / \\     / \\\n        fib(2) f(1) f(1) f(0) f(1) f(0)\n        /   \\\n      f(1) f(0)\n\n  fib(3) is computed twice. fib(2) three times. fib(1) five times. fib(0) three times.\n  At n=30, the same subproblems are recomputed millions of times.\n\n  Fix: MEMOIZE (cache the result of each fib(k)). Brings it down to O(n) time.\n"
+      }
+    },
+    {
+      "type": "explanation",
+      "heading": "Why O(2ⁿ) is a death sentence",
+      "body": "Exponential growth is the most punishing common complexity. Look at the numbers:\n\n* n = 10 → 2¹⁰ = 1,024 operations (fine)\n* n = 30 → 2³⁰ ≈ a billion (slow)\n* n = 50 → 2⁵⁰ ≈ a quadrillion (hours)\n* n = 100 → 2¹⁰⁰ ≈ more atoms than there are in the observable universe\n\nIf you see exponential behavior on a problem, **stop**. Look for:\n\n* **Memoization** — caching subproblem results (dynamic programming)\n* **Pruning** — skipping branches that can't possibly improve the answer\n* **Mathematical shortcut** — closed-form formula instead of brute force"
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// ============================================================\n// O(n!) — factorial, the worst common complexity\n// ============================================================\n// Generating every permutation of an array. n! permutations exist.\n\nfunction permutations(arr) {\n  if (arr.length <= 1) return [arr];\n  const result = [];\n  for (let i = 0; i < arr.length; i++) {\n    const rest = [...arr.slice(0, i), ...arr.slice(i + 1)];\n    for (const perm of permutations(rest)) {\n      result.push([arr[i], ...perm]);\n    }\n  }\n  return result;\n}\n\nconsole.log('permutations of [1,2,3]:', permutations([1, 2, 3]));\n// 6 permutations (3! = 6)\n\nconsole.log('count for [1,2,3,4]:',     permutations([1, 2, 3, 4]).length); // 24\nconsole.log('count for [1,2,3,4,5]:',   permutations([1, 2, 3, 4, 5]).length); // 120\n\n// Even n=12 would take ~half a billion permutations.\n// Real applications use SMARTER algorithms — e.g.\n// branch-and-bound for TSP, dynamic programming on bitmasks, etc.",
+      "runnable": true
+    },
+    {
+      "type": "diagram",
+      "variant": "ascii",
+      "caption": "How fast factorial grows",
+      "data": {
+        "text": "      n  |  n!                          |  approx\n   ------+------------------------------+----------\n      5  |  120                         |  microsecond\n     10  |  3,628,800                   |  30 ms\n     12  |  479,001,600                 |  5 s\n     14  |  87,178,291,200              |  15 min\n     16  |  20,922,789,888,000          |  2.5 days\n     20  |  2,432,902,008,176,640,000   |  770 years\n     25  |  ~1.5 × 10²⁵                 |  longer than universe age\n"
+      }
+    },
+    {
+      "type": "explanation",
+      "heading": "When are O(n²), O(2ⁿ), O(n!) acceptable?",
+      "body": "Not all bad complexities are bugs — sometimes the problem itself is hard.\n\n* **O(n²)** is fine for small n (a few thousand). Bubble sort and insertion sort are great for n ≤ ~50, and Timsort actually uses insertion sort for small subarrays.\n\n* **O(2ⁿ)** is sometimes necessary. Generating every subset of a 20-element set genuinely needs 2²⁰ ≈ 1M operations. Some NP-hard problems have no known polynomial-time algorithm.\n\n* **O(n!)** is rarely 'acceptable' but sometimes 'the only known approach' (e.g. brute-force TSP, scheduling problems). For n ≤ 10 it's fine.\n\nThe key: **know what you're getting into**. Bad complexity on large input is a bug. Bad complexity on tiny input is engineering."
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "bobad1",
+          "type": "mcq",
+          "question": "Which is fastest-growing?",
+          "options": ["O(n²)", "O(2ⁿ)", "O(n!)", "O(n log n)"],
+          "correct": 2,
+          "explanation": "n! > 2ⁿ > n² > n log n, for sufficiently large n."
+        },
+        {
+          "id": "bobad2",
+          "type": "predict-output",
+          "question": "What's the complexity of this function?",
+          "code": "function f(n) {\n  let count = 0;\n  for (let i = 0; i < n; i++) {\n    for (let j = 0; j < i; j++) {\n      count++;\n    }\n  }\n  return count;\n}",
+          "options": ["O(n)", "O(n log n)", "O(n²)", "O(n³)"],
+          "correct": 2,
+          "explanation": "Inner loop runs 0+1+2+...+(n-1) = n(n-1)/2 times → still O(n²)."
+        },
+        {
+          "id": "bobad3",
+          "type": "mcq",
+          "question": "Naive recursive Fibonacci is O(2ⁿ). What technique brings it down to O(n)?",
+          "options": ["Sorting", "Memoization (caching results)", "Compiling it", "Adding more recursion"],
+          "correct": 1,
+          "explanation": "Memoization stores each fib(k) the first time we compute it. Subsequent calls are O(1) lookups."
+        },
+        {
+          "id": "bobad4",
+          "type": "mcq",
+          "question": "For which n is brute-force O(n!) reasonable?",
+          "options": ["n ≤ 5", "n ≤ 10", "n ≤ 100", "Any n"],
+          "correct": 1,
+          "explanation": "10! = 3.6 million — still fast. 13! starts to push 6 billion. After ~12, O(n!) is impractical."
+        }
+      ]
+    }
+  ]
+}

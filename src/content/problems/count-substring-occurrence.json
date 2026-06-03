@@ -1,0 +1,28 @@
+{
+  "id": "count-substring-occurrence",
+  "title": "Count Number of Substring Occurrences",
+  "difficulty": "Easy",
+  "tags": ["string"],
+  "description": "Given a string `str` and a substring `sub`, count how many times the substring appears in the string.\n\nOverlapping occurrences should be counted.",
+  "examples": [
+    { "input": "str = \"aaaa\", sub = \"aa\"", "output": "3", "explanation": "Overlapping: positions 0, 1, 2" },
+    { "input": "str = \"hello world\", sub = \"o\"", "output": "2" },
+    { "input": "str = \"abcabc\", sub = \"abc\"", "output": "2" }
+  ],
+  "starterCode": "function countSubstring(str, sub) {\n  // your code here\n}",
+  "solution": "function countSubstring(str, sub) {\n  if (!sub || sub.length === 0) return 0;\n  \n  let count = 0;\n  let pos = 0;\n  \n  while ((pos = str.indexOf(sub, pos)) !== -1) {\n    count++;\n    pos++; // Move by 1 to count overlapping occurrences\n  }\n  \n  return count;\n}",
+  "hints": [
+    "Use indexOf() to find the position of the substring.",
+    "After finding a match, increment position by 1 (not by substring length) to count overlapping occurrences.",
+    "Continue searching until indexOf() returns -1."
+  ],
+  "testCases": [
+    { "input": ["aaaa", "aa"], "expected": 3 },
+    { "input": ["hello world", "o"], "expected": 2 },
+    { "input": ["abcabc", "abc"], "expected": 2 },
+    { "input": ["test", "xyz"], "expected": 0 },
+    { "input": ["", "a"], "expected": 0 }
+  ],
+  "functionName": "countSubstring",
+  "xpReward": 60
+}

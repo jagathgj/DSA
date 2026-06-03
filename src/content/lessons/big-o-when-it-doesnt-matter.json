@@ -1,0 +1,100 @@
+{
+  "id": "big-o-when-it-doesnt-matter",
+  "moduleId": "big-o",
+  "title": "When Big O Doesn't Matter",
+  "subtitle": "The advanced topic that interviewers rarely teach",
+  "difficulty": "Advanced",
+  "estimatedMinutes": 12,
+  "xpReward": 90,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "Big O is a tool, not a religion",
+      "body": "Engineers who've only studied for interviews can become Big-O zealots: 'this is O(n²), it's bad'. In real code, that's often wrong.\n\nBig O is **asymptotic** — it tells you what happens as inputs get huge. For small inputs, constants and cache behavior can dominate completely. An O(n²) algorithm with small constants can beat an O(n log n) algorithm with large constants — for the actual inputs you care about."
+    },
+    {
+      "type": "explanation",
+      "heading": "Reason 1: small n",
+      "body": "If n is bounded — say, you're processing a config file with ≤100 entries — your algorithm runs in essentially constant time anyway. Picking O(n) over O(n²) saves nothing perceptible. Pick whichever code is cleaner."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Real example: V8 (Chrome's JS engine) uses INSERTION SORT for small subarrays\n// inside its main sorting routine — even though insertion sort is O(n²)!\n//\n// Why? For tiny arrays (~10 items), the simplicity wins:\n// no recursion overhead, branch prediction is great, fits in cache.\n//\n// Insertion sort outperforms merge sort here despite being asymptotically worse.\n\nfunction insertionSort(arr) {\n  for (let i = 1; i < arr.length; i++) {\n    const cur = arr[i];\n    let j = i - 1;\n    while (j >= 0 && arr[j] > cur) {\n      arr[j + 1] = arr[j];\n      j--;\n    }\n    arr[j + 1] = cur;\n  }\n  return arr;\n}\n\nconsole.log(insertionSort([5, 2, 4, 6, 1, 3]));",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "Reason 2: constants matter at human scales",
+      "body": "Big O drops constant factors. In the real world, constants come from:\n\n* **Cache locality**: arrays beat linked lists by ~10× for the same Big O\n* **Branch prediction**: predictable loops beat unpredictable ones\n* **Memory allocation**: avoiding `new` calls in a hot loop matters\n* **System calls**: a single disk read costs ~100,000 in-memory operations\n\nAn O(n log n) algorithm with bad cache behavior can lose to an O(n²) one with great locality, for n in the tens of thousands."
+    },
+    {
+      "type": "explanation",
+      "heading": "Reason 3: the wrong thing to measure",
+      "body": "Sometimes time complexity isn't the bottleneck at all.\n\n* Your app makes 5 API calls. The network costs 50ms each. Whether your inner loop is O(n) or O(n log n) is invisible next to the 250ms of waiting.\n* You're processing 10 GB of data. The disk read dominates. Your O(n²) sort is fine if 'n' is the number of *files* (say, 100).\n* You're rendering a UI 60 times per second. Layout cost matters; sort cost almost never.\n\nMeasure where time actually goes. **Profile, don't predict.**"
+    },
+    {
+      "type": "explanation",
+      "heading": "Reason 4: readable code wins on small budgets",
+      "body": "If two implementations are both fast enough, pick the one your team will understand at 2am. A clever O(log n) approach using a custom segment tree is worse than a simple O(n) loop when n ≤ 100 and you have to maintain it for years."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// CONTRIVED but illustrative: same input, two implementations.\n// One is asymptotically better. The other is faster on real input.\n\n// Both find the max in an array.\n\n// Version A: clean O(n) loop.\nfunction maxLinear(arr) {\n  let m = arr[0];\n  for (let i = 1; i < arr.length; i++) {\n    if (arr[i] > m) m = arr[i];\n  }\n  return m;\n}\n\n// Version B: also O(n) but uses Math.max with spread,\n// which is bad for very large arrays (stack overflow risk).\nfunction maxSpread(arr) {\n  return Math.max(...arr);\n}\n\nconst small = Array.from({ length: 100 }, () => Math.random());\nconst big   = Array.from({ length: 100000 }, () => Math.random());\n\nconsole.log('small array, both fine');\nconsole.log('linear:', maxLinear(small));\nconsole.log('spread:', maxSpread(small));\n\nconsole.log('big array, both still fine — but spread allocates a new arg list');\nconsole.log('linear:', maxLinear(big).toFixed(4));\nconsole.log('spread:', maxSpread(big).toFixed(4));\n\n// Same Big O. Different real-world behavior.",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "When Big O DOES matter (most of the time)",
+      "body": "Don't take this lesson as 'ignore Big O'. It matters when:\n\n* **n could be huge** — anywhere user input or data size can grow unbounded\n* **You're inside a hot loop** — code that runs many times per request, or in a tight render loop\n* **You're choosing data structures** — array vs linked list vs hash map vs tree decisions are best made by complexity\n* **You're scaling up** — what worked on 1000 rows breaks on 1,000,000\n\nThe job is to know when each consideration applies. Big O is the *starting point* — it tells you what's possible. Then profile, measure, and optimize what you find."
+    },
+    {
+      "type": "diagram",
+      "variant": "ascii",
+      "caption": "When to actually care about Big O",
+      "data": {
+        "text": "  Situation                          | Does Big O matter?\n  -----------------------------------+-------------------\n  Bounded small input (n ≤ 100)      | almost never\n  User-facing list of <1000 items    | rarely\n  Backend processing user data       | yes\n  Database query against a big table | absolutely\n  Inside a per-frame render loop     | yes\n  One-shot startup code              | only if it's slow\n  Network/IO-bound operation         | profile first\n  Cryptography / hashing             | choose proven algos\n  Library code reused everywhere     | yes, design for n→∞\n"
+      }
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "boidm1",
+          "type": "mcq",
+          "question": "Which is the MOST important reason Big O can mislead?",
+          "options": [
+            "It ignores constants and cache behavior",
+            "It's hard to compute",
+            "It's not taught in school",
+            "Compilers ignore it"
+          ],
+          "correct": 0,
+          "explanation": "Real performance depends on hidden constants — cache, branch prediction, memory allocation. Big O drops them all."
+        },
+        {
+          "id": "boidm2",
+          "type": "mcq",
+          "question": "True or false: if Algorithm A is O(n) and Algorithm B is O(n²), A is always faster.",
+          "options": ["True", "False"],
+          "correct": 1,
+          "explanation": "False — only for sufficiently large n. For small n, the constants in A might dwarf B's quadratic growth."
+        },
+        {
+          "id": "boidm3",
+          "type": "mcq",
+          "question": "When is Big O analysis MOST important?",
+          "options": [
+            "When inputs are bounded and tiny",
+            "When inputs are user-controlled and can grow",
+            "When the code runs once at startup",
+            "When you're prototyping"
+          ],
+          "correct": 1,
+          "explanation": "Unbounded growth is when bad Big O bites. Bounded tiny input rarely benefits from elaborate optimization."
+        }
+      ]
+    }
+  ]
+}

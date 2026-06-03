@@ -1,0 +1,35 @@
+{
+  "id": "sorting-bubble",
+  "moduleId": "sorting",
+  "title": "Bubble Sort: The Friendly Loser",
+  "subtitle": "Slow but easy to understand",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 10,
+  "xpReward": 70,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "The idea",
+      "body": "Walk through the array. Compare each pair of neighbors. If they're out of order, swap them. Keep walking until no swaps happen — then you're done. Big values 'bubble' up to the end."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "function bubbleSort(arr) {\n  const a = [...arr];\n  for (let i = 0; i < a.length; i++) {\n    let swapped = false;\n    for (let j = 0; j < a.length - i - 1; j++) {\n      if (a[j] > a[j + 1]) {\n        [a[j], a[j + 1]] = [a[j + 1], a[j]];\n        swapped = true;\n      }\n    }\n    if (!swapped) break;\n  }\n  return a;\n}\n\nconsole.log(bubbleSort([5, 2, 8, 1, 9, 3]));",
+      "runnable": true
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "bs1",
+          "type": "mcq",
+          "question": "Bubble sort's worst-case time complexity?",
+          "options": ["O(n)", "O(n log n)", "O(n²)", "O(2ⁿ)"],
+          "correct": 2,
+          "explanation": "Two nested loops, both up to n — that's n × n = O(n²)."
+        }
+      ]
+    }
+  ]
+}

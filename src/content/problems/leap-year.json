@@ -1,0 +1,65 @@
+{
+  "id": "leap-year",
+  "title": "Check if Year is Leap Year",
+  "difficulty": "Easy",
+  "tags": [
+    "math"
+  ],
+  "description": "Given a year, determine if it is a leap year.\n\nA leap year is divisible by 4, except for century years which must be divisible by 400.",
+  "examples": [
+    {
+      "input": "year = 2020",
+      "output": "true"
+    },
+    {
+      "input": "year = 1900",
+      "output": "false",
+      "explanation": "Century year not divisible by 400"
+    },
+    {
+      "input": "year = 2000",
+      "output": "true"
+    }
+  ],
+  "starterCode": "function isLeapYear(year) {\n  // your code here\n}",
+  "solution": "function isLeapYear(year) {\n  return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);\n}",
+  "hints": [
+    "A year is a leap year if divisible by 4.",
+    "Exception: century years (divisible by 100) must also be divisible by 400.",
+    "Use logical operators to combine these conditions."
+  ],
+  "testCases": [
+    {
+      "input": [
+        2020
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        1900
+      ],
+      "expected": false
+    },
+    {
+      "input": [
+        2000
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        2021
+      ],
+      "expected": false
+    },
+    {
+      "input": [
+        2024
+      ],
+      "expected": true
+    }
+  ],
+  "functionName": "isLeapYear",
+  "xpReward": 50
+}

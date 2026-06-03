@@ -1,0 +1,84 @@
+{
+  "id": "recursion-intro",
+  "moduleId": "recursion",
+  "title": "Recursion: Functions That Call Themselves",
+  "subtitle": "Strange at first, beautiful once it clicks",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 18,
+  "xpReward": 100,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "The wild idea",
+      "body": "A **recursive function** is a function that calls itself. That sounds insane — how does it ever stop? The trick: every recursive function needs a **base case**, a condition that returns *without* recursing. Otherwise it loops forever."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🪆",
+      "title": "Russian nesting dolls",
+      "body": "You open a doll. Inside is a smaller doll. You open that. Inside is an even smaller doll. Eventually you reach the tiniest doll — that's solid, no more to open. That smallest doll is the base case. Each doll you opened along the way trusted that the next one would handle the rest."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "function countdown(n) {\n  if (n <= 0) {           // base case: stop\n    console.log(\"Done!\");\n    return;\n  }\n  console.log(n);\n  countdown(n - 1);       // recursive case: smaller problem\n}\n\ncountdown(3);\n// 3\n// 2\n// 1\n// Done!",
+      "runnable": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "How `factorial(4)` unrolls",
+      "steps": [
+        { "text": "factorial(4) needs 4 × factorial(3)", "code": "4 * factorial(3)" },
+        { "text": "factorial(3) needs 3 × factorial(2)", "code": "3 * factorial(2)" },
+        { "text": "factorial(2) needs 2 × factorial(1)", "code": "2 * factorial(1)" },
+        { "text": "factorial(1) hits the base case and returns 1", "code": "return 1" },
+        { "text": "Now answers travel back up: 2 × 1 = 2", "code": "2" },
+        { "text": "3 × 2 = 6", "code": "6" },
+        { "text": "4 × 6 = 24. Done.", "code": "24" }
+      ]
+    },
+    {
+      "type": "challenge",
+      "prompt": "Write `factorial(n)` using recursion. Reminder: 5! = 5 × 4 × 3 × 2 × 1 = 120, and 0! = 1.",
+      "starterCode": "function factorial(n) {\n  // your code here\n}",
+      "solution": "function factorial(n) {\n  if (n <= 1) return 1;\n  return n * factorial(n - 1);\n}",
+      "testCases": [
+        { "input": [0], "expected": 1 },
+        { "input": [1], "expected": 1 },
+        { "input": [5], "expected": 120 },
+        { "input": [7], "expected": 5040 }
+      ],
+      "hints": [
+        "Base case: when n is 0 or 1, factorial is 1.",
+        "Recursive case: factorial(n) = n * factorial(n - 1)."
+      ]
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "r1",
+          "type": "mcq",
+          "question": "What MUST every recursive function have?",
+          "options": [
+            "A loop",
+            "A base case that stops the recursion",
+            "An array parameter",
+            "More than one parameter"
+          ],
+          "correct": 1,
+          "explanation": "Without a base case, the function calls itself forever and crashes."
+        },
+        {
+          "id": "r2",
+          "type": "predict-output",
+          "question": "What does this print?",
+          "code": "function f(n) {\n  if (n === 0) return 0;\n  return n + f(n - 1);\n}\nconsole.log(f(3));",
+          "options": ["0", "3", "6", "Infinity"],
+          "correct": 2,
+          "explanation": "f(3) = 3 + f(2) = 3 + 2 + f(1) = 3 + 2 + 1 + f(0) = 6."
+        }
+      ]
+    }
+  ]
+}

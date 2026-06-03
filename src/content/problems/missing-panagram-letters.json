@@ -1,0 +1,53 @@
+{
+  "id": "missing-panagram-letters",
+  "title": "Find Missing Letters to Make Pangram",
+  "difficulty": "Easy",
+  "tags": [
+    "string",
+    "hash-set"
+  ],
+  "description": "A pangram is a sentence containing every letter of the alphabet at least once.\n\nGiven a string, return the missing letters needed to make it a pangram. Return an empty string if it's already a pangram.",
+  "examples": [
+    {
+      "input": "s = \"The quick brown fox jumps\"",
+      "output": "\"adglvyz\""
+    },
+    {
+      "input": "s = \"The quick brown fox jumps over the lazy dog\"",
+      "output": "\"\""
+    },
+    {
+      "input": "s = \"abc\"",
+      "output": "\"defghijklmnopqrstuvwxyz\""
+    }
+  ],
+  "starterCode": "function missingPangramLetters(s) {\n  // your code here\n}",
+  "solution": "function missingPangramLetters(s) {\n  const alphabet = 'abcdefghijklmnopqrstuvwxyz';\n  const present = new Set(s.toLowerCase().match(/[a-z]/g) || []);\n  \n  return alphabet.split('').filter(char => !present.has(char)).join('');\n}",
+  "hints": [
+    "Create a set of all letters present in the string (lowercase).",
+    "Compare against the full alphabet.",
+    "Return missing letters in alphabetical order."
+  ],
+  "testCases": [
+    {
+      "input": [
+        "The quick brown fox jumps"
+      ],
+      "expected": "adglvyz"
+    },
+    {
+      "input": [
+        "The quick brown fox jumps over the lazy dog"
+      ],
+      "expected": ""
+    },
+    {
+      "input": [
+        "abc"
+      ],
+      "expected": "defghijklmnopqrstuvwxyz"
+    }
+  ],
+  "functionName": "missingPangramLetters",
+  "xpReward": 80
+}

@@ -1,0 +1,67 @@
+{
+  "id": "roman-to-integer",
+  "title": "Convert Roman Numeral to Integer",
+  "difficulty": "Easy",
+  "tags": [
+    "string",
+    "hash-map"
+  ],
+  "description": "Given a roman numeral, convert it to an integer.\n\nRoman numerals are represented by seven symbols: I=1, V=5, X=10, L=50, C=100, D=500, M=1000.",
+  "examples": [
+    {
+      "input": "s = \"III\"",
+      "output": "3"
+    },
+    {
+      "input": "s = \"LVIII\"",
+      "output": "58",
+      "explanation": "L=50, V=5, III=3"
+    },
+    {
+      "input": "s = \"MCMXCIV\"",
+      "output": "1994",
+      "explanation": "M=1000, CM=900, XC=90, IV=4"
+    }
+  ],
+  "starterCode": "function romanToInt(s) {\n  // your code here\n}",
+  "solution": "function romanToInt(s) {\n  const map = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };\n  let result = 0;\n  \n  for (let i = 0; i < s.length; i++) {\n    const curr = map[s[i]];\n    const next = map[s[i + 1]];\n    \n    if (next && curr < next) {\n      result -= curr;\n    } else {\n      result += curr;\n    }\n  }\n  \n  return result;\n}",
+  "hints": [
+    "Create a map of roman symbols to their values.",
+    "If a smaller value appears before a larger value, subtract it.",
+    "Otherwise, add the value to the result."
+  ],
+  "testCases": [
+    {
+      "input": [
+        "III"
+      ],
+      "expected": 3
+    },
+    {
+      "input": [
+        "LVIII"
+      ],
+      "expected": 58
+    },
+    {
+      "input": [
+        "MCMXCIV"
+      ],
+      "expected": 1994
+    },
+    {
+      "input": [
+        "IV"
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        "IX"
+      ],
+      "expected": 9
+    }
+  ],
+  "functionName": "romanToInt",
+  "xpReward": 90
+}

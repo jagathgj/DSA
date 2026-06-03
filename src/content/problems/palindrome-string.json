@@ -1,0 +1,28 @@
+{
+  "id": "palindrome-string",
+  "title": "Check if String is Palindrome",
+  "difficulty": "Easy",
+  "tags": ["string", "two-pointers"],
+  "description": "Given a string `s`, determine if it is a palindrome. A palindrome reads the same forward and backward.\n\nConsider only alphanumeric characters and ignore cases.",
+  "examples": [
+    { "input": "s = \"racecar\"", "output": "true" },
+    { "input": "s = \"A man, a plan, a canal: Panama\"", "output": "true" },
+    { "input": "s = \"hello\"", "output": "false" }
+  ],
+  "starterCode": "function isPalindrome(s) {\n  // your code here\n}",
+  "solution": "function isPalindrome(s) {\n  // Remove non-alphanumeric and convert to lowercase\n  s = s.replace(/[^a-z0-9]/gi, '').toLowerCase();\n  \n  let left = 0, right = s.length - 1;\n  \n  while (left < right) {\n    if (s[left] !== s[right]) return false;\n    left++;\n    right--;\n  }\n  \n  return true;\n}",
+  "hints": [
+    "First, clean the string by removing non-alphanumeric characters and converting to lowercase.",
+    "Use two pointers: one at the start and one at the end.",
+    "Compare characters and move pointers inward until they meet."
+  ],
+  "testCases": [
+    { "input": ["racecar"], "expected": true },
+    { "input": ["A man, a plan, a canal: Panama"], "expected": true },
+    { "input": ["hello"], "expected": false },
+    { "input": [""], "expected": true },
+    { "input": ["a"], "expected": true }
+  ],
+  "functionName": "isPalindrome",
+  "xpReward": 70
+}

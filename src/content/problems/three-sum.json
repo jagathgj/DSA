@@ -1,0 +1,28 @@
+{
+  "id": "three-sum",
+  "title": "3Sum — From O(n³) to O(n²)",
+  "difficulty": "Medium",
+  "tags": ["big-o", "two-pointers", "sorting"],
+  "description": "Given an array of integers `nums`, return all UNIQUE triples `[a, b, c]` (sorted ascending within each triple) such that a + b + c = 0.\n\n**The point**: brute force is O(n³). Sort + two-pointer gets it to **O(n²)**. The transformation is one of the most-asked patterns in interviews.",
+  "examples": [
+    { "input": "nums = [-1, 0, 1, 2, -1, -4]", "output": "[[-1, -1, 2], [-1, 0, 1]]" },
+    { "input": "nums = [0, 0, 0]", "output": "[[0, 0, 0]]" }
+  ],
+  "starterCode": "function threeSum(nums) {\n  // 1. Sort the array — O(n log n).\n  // 2. For each i, two-pointer scan the rest looking for sum = -nums[i].\n  //    Skip duplicates of nums[i] to avoid duplicate triples.\n  //    Skip duplicate nums[left] / nums[right] after a match for the same reason.\n  // Total: O(n²).\n}\n",
+  "solution": "// O(n²) time, O(1) extra space (sorting in-place; output not counted).\nfunction threeSum(nums) {\n  const result = [];\n  nums.sort((a, b) => a - b);\n\n  for (let i = 0; i < nums.length - 2; i++) {\n    // Skip duplicate anchors\n    if (i > 0 && nums[i] === nums[i - 1]) continue;\n\n    let l = i + 1, r = nums.length - 1;\n    while (l < r) {\n      const sum = nums[i] + nums[l] + nums[r];\n      if (sum === 0) {\n        result.push([nums[i], nums[l], nums[r]]);\n        // Skip duplicates on both sides\n        while (l < r && nums[l] === nums[l + 1]) l++;\n        while (l < r && nums[r] === nums[r - 1]) r--;\n        l++; r--;\n      } else if (sum < 0) {\n        l++;\n      } else {\n        r--;\n      }\n    }\n  }\n  return result;\n}\n",
+  "hints": [
+    "Three nested loops give O(n³). Sorting first lets you do something smarter.",
+    "Fix the first element nums[i]. Now you need two numbers from the REST that sum to -nums[i].",
+    "On a sorted array, two-pointer finds a pair summing to a target in O(n). Combined with the outer loop, that's O(n²) total."
+  ],
+  "testCases": [
+    { "input": [[-1, 0, 1, 2, -1, -4]], "expected": [[-1, -1, 2], [-1, 0, 1]], "description": "classic" },
+    { "input": [[0, 0, 0]], "expected": [[0, 0, 0]], "description": "all zeros — one triple" },
+    { "input": [[0, 0, 0, 0]], "expected": [[0, 0, 0]], "description": "no duplicate triples" },
+    { "input": [[]], "expected": [], "description": "empty" },
+    { "input": [[1, 2, 3]], "expected": [], "description": "no zero-sum triple exists" },
+    { "input": [[-2, 0, 1, 1, 2]], "expected": [[-2, 0, 2], [-2, 1, 1]], "description": "two distinct triples" }
+  ],
+  "functionName": "threeSum",
+  "xpReward": 160
+}

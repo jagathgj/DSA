@@ -1,0 +1,51 @@
+{
+  "id": "radix-sort",
+  "title": "Radix Sort",
+  "difficulty": "Medium",
+  "tags": [
+    "sorting",
+    "array"
+  ],
+  "description": "Implement radix sort. Sort by each digit position using counting sort as subroutine.\n\nTime: O(d×(n+k)), Space: O(n+k)",
+  "examples": [
+    {
+      "input": "arr = [170, 45, 75, 90, 802, 24, 2, 66]",
+      "output": "[2, 24, 45, 66, 75, 90, 170, 802]"
+    }
+  ],
+  "starterCode": "function radixSort(arr) {\n  // your code here\n}",
+  "solution": "function radixSort(arr) {\n  const max = Math.max(...arr);\n  \n  for (let exp = 1; Math.floor(max / exp) > 0; exp *= 10) {\n    countingSortByDigit(arr, exp);\n  }\n  \n  return arr;\n}\n\nfunction countingSortByDigit(arr, exp) {\n  const output = new Array(arr.length);\n  const count = new Array(10).fill(0);\n  \n  for (const num of arr) count[Math.floor(num / exp) % 10]++;\n  for (let i = 1; i < 10; i++) count[i] += count[i - 1];\n  \n  for (let i = arr.length - 1; i >= 0; i--) {\n    const digit = Math.floor(arr[i] / exp) % 10;\n    output[count[digit] - 1] = arr[i];\n    count[digit]--;\n  }\n  \n  for (let i = 0; i < arr.length; i++) arr[i] = output[i];\n}",
+  "hints": [
+    "Sort by least significant digit first",
+    "Use counting sort for each digit",
+    "Process all digit positions"
+  ],
+  "testCases": [
+    {
+      "input": [
+        [
+          170,
+          45,
+          75,
+          90,
+          802,
+          24,
+          2,
+          66
+        ]
+      ],
+      "expected": [
+        2,
+        24,
+        45,
+        66,
+        75,
+        90,
+        170,
+        802
+      ]
+    }
+  ],
+  "functionName": "radixSort",
+  "xpReward": 140
+}

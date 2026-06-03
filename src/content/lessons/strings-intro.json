@@ -1,0 +1,64 @@
+{
+  "id": "strings-intro",
+  "moduleId": "strings",
+  "title": "Strings: Arrays of Characters",
+  "subtitle": "Text is more structured than you think",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 10,
+  "xpReward": 60,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "Strings are character arrays",
+      "body": "A **string** is just a sequence of characters. You can index into it like an array — `name[0]` gives the first letter. The difference: strings are **immutable**. You can't change a character in place; you build a new string."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🔤",
+      "title": "Beads on a string",
+      "body": "Imagine a necklace of letter beads. You can read each bead, count them, find a specific one. But you can't swap a bead without breaking the necklace and remaking it. That's how strings work in JavaScript."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "const word = \"hello\";\n\nconsole.log(word.length);        // 5\nconsole.log(word[0]);            // \"h\"\nconsole.log(word.toUpperCase()); // \"HELLO\" (new string)\nconsole.log(word);               // \"hello\" (original unchanged)\n\nconsole.log(word.includes(\"ell\")); // true\nconsole.log(word.split(\"\"));       // [\"h\",\"e\",\"l\",\"l\",\"o\"]",
+      "runnable": true
+    },
+    {
+      "type": "challenge",
+      "prompt": "Write `isPalindrome(s)` that returns true if s reads the same forwards and backwards.",
+      "starterCode": "function isPalindrome(s) {\n  // your code here\n}",
+      "solution": "function isPalindrome(s) {\n  return s === s.split('').reverse().join('');\n}",
+      "testCases": [
+        { "input": ["racecar"], "expected": true },
+        { "input": ["hello"], "expected": false },
+        { "input": ["a"], "expected": true },
+        { "input": [""], "expected": true },
+        { "input": ["abba"], "expected": true }
+      ],
+      "hints": [
+        "split('') turns a string into an array of characters.",
+        "Arrays have a reverse() method.",
+        "join('') turns an array back into a string."
+      ]
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "s1",
+          "type": "mcq",
+          "question": "Which is TRUE about JavaScript strings?",
+          "options": [
+            "You can change individual characters with str[0] = 'x'",
+            "Strings are mutable",
+            "Strings are immutable — methods return new strings",
+            "Strings can only hold ASCII"
+          ],
+          "correct": 2,
+          "explanation": "Strings can't be modified in place. Methods like toUpperCase() return a new string."
+        }
+      ]
+    }
+  ]
+}

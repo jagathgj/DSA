@@ -1,0 +1,71 @@
+{
+  "id": "arrays-operations",
+  "moduleId": "arrays",
+  "title": "Array Methods You'll Actually Use",
+  "subtitle": "push, pop, map, filter — the workhorses",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 14,
+  "xpReward": 80,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "JavaScript gives you tools",
+      "body": "JavaScript arrays come with built-in methods that handle the most common operations for you. Learning these is half of writing fluent JS."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "const stack = [1, 2, 3];\n\nstack.push(4);      // add to end:    [1, 2, 3, 4]\nstack.pop();        // remove last:  [1, 2, 3]\nstack.unshift(0);   // add to front: [0, 1, 2, 3]\nstack.shift();      // remove first: [1, 2, 3]\n\nconsole.log(stack);",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "Transform with map / filter / reduce",
+      "body": "These three methods let you transform arrays without writing loops by hand.\n\n• **`map`** — make a new array where each element is transformed.\n• **`filter`** — make a new array keeping only elements that pass a test.\n• **`reduce`** — boil the whole array down to a single value."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "const nums = [1, 2, 3, 4, 5];\n\nconst doubled = nums.map(n => n * 2);\nconsole.log(doubled);  // [2, 4, 6, 8, 10]\n\nconst evens = nums.filter(n => n % 2 === 0);\nconsole.log(evens);    // [2, 4]\n\nconst total = nums.reduce((sum, n) => sum + n, 0);\nconsole.log(total);    // 15",
+      "runnable": true
+    },
+    {
+      "type": "challenge",
+      "prompt": "Write a function `sumPositive(arr)` that returns the sum of all positive numbers in the array.",
+      "starterCode": "function sumPositive(arr) {\n  // your code here\n}",
+      "solution": "function sumPositive(arr) {\n  return arr.filter(n => n > 0).reduce((s, n) => s + n, 0);\n}",
+      "testCases": [
+        { "input": [[1, -2, 3, -4, 5]], "expected": 9 },
+        { "input": [[-1, -2, -3]], "expected": 0 },
+        { "input": [[]], "expected": 0 },
+        { "input": [[10, 20, 30]], "expected": 60 }
+      ],
+      "hints": [
+        "Use filter() to keep only positive numbers.",
+        "Then use reduce() to sum them up, starting from 0."
+      ]
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "ao1",
+          "type": "mcq",
+          "question": "Which method REMOVES the last element of an array?",
+          "options": ["shift", "unshift", "pop", "push"],
+          "correct": 2,
+          "explanation": "pop() removes and returns the last element. push() adds to the end."
+        },
+        {
+          "id": "ao2",
+          "type": "predict-output",
+          "question": "What does this print?",
+          "code": "const a = [1, 2, 3];\nconst b = a.map(x => x + 10);\nconsole.log(b);",
+          "options": ["[1, 2, 3]", "[11, 12, 13]", "[10, 20, 30]", "Error"],
+          "correct": 1,
+          "explanation": "map applies the function to each element. 1+10=11, 2+10=12, 3+10=13."
+        }
+      ]
+    }
+  ]
+}

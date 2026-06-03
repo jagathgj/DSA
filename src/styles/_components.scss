@@ -1,0 +1,2198 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/motion' as *;
+@use '@carbon/react/scss/theme' as *;
+
+// =============================================================================
+// BEM components — every reusable block lives here.
+// Color/text tokens use Carbon Sass variables ($layer-01, $text-primary, etc.)
+// which are compiled at build time based on the active theme.
+//
+// Naming: .dsa-block__element--modifier
+//   .dsa-surface         block
+//   .dsa-surface--accent modifier of block
+//   .dsa-stat__value     element of block
+// =============================================================================
+
+
+// -----------------------------------------------------------------------------
+// .dsa-surface — Carbon-style raised surface (the default tile)
+// -----------------------------------------------------------------------------
+.dsa-surface {
+  background: $layer-01;
+  border: 1px solid $border-subtle-01;
+  padding: $spacing-05;
+
+  &--accent { border-left: 3px solid $border-interactive; }
+  &--inset {
+    background: $layer-02;
+    border-color: $border-subtle-02;
+  }
+  &--padded { padding: $spacing-06; }
+  &--padded-lg { padding: $spacing-07 $spacing-06; }
+  &--centered { text-align: center; }
+  &--no-padding { padding: 0; }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-stack — vertical flex stack with configurable gap
+// .dsa-row   — horizontal flex row with wrap + gap
+// -----------------------------------------------------------------------------
+.dsa-stack {
+  display: flex;
+  flex-direction: column;
+
+  &--gap-2 { gap: $spacing-02; }
+  &--gap-3 { gap: $spacing-03; }
+  &--gap-4 { gap: $spacing-04; }
+  &--gap-5 { gap: $spacing-05; }
+  &--gap-6 { gap: $spacing-06; }
+  &--gap-7 { gap: $spacing-07; }
+}
+
+.dsa-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  &--gap-2 { gap: $spacing-02; }
+  &--gap-3 { gap: $spacing-03; }
+  &--gap-4 { gap: $spacing-04; }
+  &--gap-5 { gap: $spacing-05; }
+  &--gap-6 { gap: $spacing-06; }
+
+  &--start { align-items: flex-start; }
+  &--end   { align-items: flex-end; }
+  &--baseline { align-items: baseline; }
+  &--space-between { justify-content: space-between; }
+  &--end-x  { justify-content: flex-end; }
+  &--center { justify-content: center; }
+  &--no-wrap { flex-wrap: nowrap; }
+  &--inline { display: inline-flex; }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-grid — common grid configurations
+// -----------------------------------------------------------------------------
+.dsa-grid {
+  display: grid;
+
+  &--two   { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  &--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  &--four  { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  &--auto-fit-180 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  &--auto-fit-200 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  &--problem {
+    grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+    align-items: flex-start;
+  }
+  &--editor-console {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: start;
+  }
+
+  &--gap-3 { gap: $spacing-03; }
+  &--gap-4 { gap: $spacing-04; }
+  &--gap-5 { gap: $spacing-05; }
+  &--gap-6 { gap: $spacing-06; }
+
+  @media (max-width: 960px) {
+    &--three, &--four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    &--editor-console { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 540px) {
+    &--two, &--three, &--four { grid-template-columns: 1fr; }
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-stat-chip — small inline chip
+// -----------------------------------------------------------------------------
+.dsa-stat-chip {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  padding: $spacing-03 $spacing-04;
+  background: $layer-02;
+  border: 1px solid $border-subtle-02;
+
+  &__icon { color: $icon-interactive; }
+
+  &__label {
+    @include type-style('label-01');
+    color: $text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  &__value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    margin-top: 2px;
+    color: $text-primary;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-mini-stat — small metric for dashboard
+// -----------------------------------------------------------------------------
+.dsa-mini-stat {
+  padding: $spacing-03 $spacing-04;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-02;
+    @include type-style('label-01');
+    color: $text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__value {
+    margin-top: $spacing-02;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.125rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-page-header — top-of-page hero
+// -----------------------------------------------------------------------------
+.dsa-page-header {
+  margin-bottom: $spacing-07;
+}
+
+.dsa-page-header__title {
+  @include type-style('productive-heading-05');
+  font-family: 'IBM Plex Serif', serif;
+  font-weight: 600;
+  color: $text-primary;
+  margin: 0 0 $spacing-03;
+}
+
+.dsa-page-header__subtitle {
+  @include type-style('body-01');
+  color: $text-secondary;
+  max-width: 56rem;
+  margin: 0;
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-section-title — h2-style
+// -----------------------------------------------------------------------------
+.dsa-section-title {
+  @include type-style('heading-03');
+  font-family: 'IBM Plex Serif', serif;
+  font-weight: 600;
+  color: $text-primary;
+  margin: 0 0 $spacing-05;
+
+  &--small { @include type-style('heading-compact-02'); }
+  &--inline { margin-bottom: $spacing-03; }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-eyebrow — small uppercase label
+// -----------------------------------------------------------------------------
+.dsa-eyebrow {
+  @include type-style('label-01');
+  color: $text-secondary;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  &--accent { color: $icon-interactive; }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-prose — long-form lesson text
+// -----------------------------------------------------------------------------
+.dsa-prose {
+  @include type-style('body-02');
+  color: $text-primary;
+  line-height: 1.6;
+  max-width: 64ch;
+
+  p { margin-bottom: $spacing-05; }
+  strong { color: $text-primary; font-weight: 600; }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-code — inline + block code
+// -----------------------------------------------------------------------------
+.dsa-code-inline,
+.dsa-prose code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.875em;
+  background: $layer-02;
+  padding: 2px 6px;
+  border-radius: 2px;
+  color: $text-primary;
+}
+
+.dsa-code-block {
+  background: $layer-02;
+  border: 1px solid $border-subtle-02;
+  margin-bottom: $spacing-05;
+  padding: $spacing-05;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8125rem;
+  overflow-x: auto;
+  white-space: pre;
+  color: $text-primary;
+  line-height: 1.6;
+  margin: 0;
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-progress — slim flat progress bar
+// -----------------------------------------------------------------------------
+.dsa-progress-bar {
+  height: 0.5rem;
+  background: $layer-02;
+  position: relative;
+  overflow: hidden;
+
+  &--inline { flex: 1; max-width: 180px; }
+}
+
+.dsa-progress-bar__fill {
+  height: 100%;
+  background: $background-brand;
+  transition: width $duration-moderate-02 motion(standard, productive);
+
+  &--success { background: $support-success; }
+}
+
+.dsa-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6875rem;
+  color: $text-secondary;
+  margin-bottom: $spacing-02;
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-editor — frame around Monaco
+// -----------------------------------------------------------------------------
+.dsa-editor-frame {
+  border: 1px solid $border-subtle-01;
+  overflow: hidden;
+  background: $layer-01;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dsa-editor-frame__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-03 $spacing-05;
+  background: $layer-02;
+  border-bottom: 1px solid $border-subtle-02;
+  gap: $spacing-03;
+}
+
+.dsa-editor-frame__filename {
+  font-family: 'IBM Plex Mono', monospace;
+  @include type-style('label-01');
+  color: $text-secondary;
+}
+
+.dsa-editor-frame__actions {
+  display: flex;
+  gap: $spacing-02;
+}
+
+.dsa-editor-frame__editor {
+  flex: 1;
+  min-height: 300px;
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-console — code output panel
+// -----------------------------------------------------------------------------
+.dsa-console {
+  background: $layer-02;
+  border: 1px solid $border-subtle-02;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  padding: $spacing-05;
+  overflow: auto;
+  min-height: 12rem;
+  color: $text-primary;
+
+  &--lg {
+    min-height: 540px;
+    max-height: 540px;
+    border: none;
+  }
+
+  &--top-gap { margin-top: $spacing-02; }
+}
+
+.dsa-console__line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.6;
+
+  &--error { color: $support-error; }
+  &--result { color: $support-info; }
+  &--muted { color: $text-helper; font-style: italic; }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-achievement — single achievement card
+// -----------------------------------------------------------------------------
+.dsa-achievement {
+  background: $layer-01;
+  border: 1px solid $border-subtle-01;
+  padding: $spacing-05;
+  display: flex;
+  gap: $spacing-04;
+  align-items: flex-start;
+  transition: border-color $duration-fast-02 motion(standard, productive);
+
+  &--unlocked { border-left: 3px solid $border-interactive; }
+  &--locked   { opacity: 0.55; }
+
+  &__icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: $layer-02;
+    color: $text-secondary;
+
+    &--unlocked {
+      background: $background-brand;
+      color: $text-on-color;
+    }
+  }
+
+  &__body { min-width: 0; flex: 1; }
+
+  &__title {
+    @include type-style('heading-compact-01');
+    font-family: 'IBM Plex Serif', serif;
+    color: $text-primary;
+  }
+
+  &__desc {
+    @include type-style('body-compact-01');
+    color: $text-secondary;
+    margin-top: $spacing-02;
+  }
+
+  &__date {
+    @include type-style('label-01');
+    color: $icon-interactive;
+    margin-top: $spacing-03;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-toast — unlock notifications
+// -----------------------------------------------------------------------------
+.dsa-toast-stack {
+  position: fixed;
+  bottom: $spacing-06;
+  right: $spacing-06;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+  z-index: 100;
+  max-width: 24rem;
+  pointer-events: none;
+
+  @media (max-width: 540px) {
+    left: $spacing-05;
+    right: $spacing-05;
+    bottom: $spacing-05;
+  }
+}
+
+.dsa-toast {
+  background: $layer-01;
+  border: 1px solid $border-subtle-01;
+  border-left: 3px solid $border-interactive;
+  padding: $spacing-04 $spacing-05;
+  display: flex;
+  gap: $spacing-03;
+  align-items: flex-start;
+  box-shadow: 0 4px 12px $shadow;
+  pointer-events: auto;
+
+  &__icon { color: $icon-interactive; flex-shrink: 0; }
+  &__body { min-width: 0; }
+  &__eyebrow {
+    @include type-style('label-01');
+    color: $text-secondary;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  &__title {
+    @include type-style('heading-compact-01');
+    color: $text-primary;
+    font-family: 'IBM Plex Serif', serif;
+  }
+  &__desc {
+    @include type-style('body-compact-01');
+    color: $text-secondary;
+    margin-top: 2px;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-diagram — wraps inline diagrams
+// -----------------------------------------------------------------------------
+.dsa-diagram {
+  padding: $spacing-06 $spacing-05;
+  background: $layer-02;
+  border: 1px solid $border-subtle-02;
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+.dsa-diagram-caption {
+  @include type-style('body-compact-01');
+  color: $text-secondary;
+  margin-top: $spacing-03;
+  text-align: center;
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-module-card — roadmap module card
+// -----------------------------------------------------------------------------
+.dsa-module-card {
+  background: $layer-01;
+  border: 1px solid $border-subtle-01;
+
+  &--locked { opacity: 0.7; }
+
+  &__head {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: $spacing-05;
+    gap: $spacing-05;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    width: 100%;
+    text-align: left;
+    color: inherit;
+    transition: background $duration-fast-02 motion(standard, productive);
+    font-family: inherit;
+    font-size: inherit;
+
+    &:hover:not(:disabled) { background: $layer-hover-01; }
+    &:disabled { cursor: not-allowed; }
+  }
+
+  &__icon {
+    width: 3rem;
+    height: 3rem;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: $background-brand;
+    color: $text-on-color;
+
+    &--locked {
+      background: $layer-02;
+      color: $text-helper;
+    }
+
+    &--complete {
+      background: $support-success;
+      color: $text-on-color;
+    }
+  }
+
+  &__main { min-width: 0; flex: 1; }
+
+  &__title-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-03;
+  }
+
+  &__number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.625rem;
+    color: $text-secondary;
+  }
+
+  &__title {
+    @include type-style('heading-03');
+    font-family: 'IBM Plex Serif', serif;
+    font-weight: 600;
+    color: $text-primary;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__summary {
+    @include type-style('body-compact-01');
+    color: $text-secondary;
+    margin-top: $spacing-03;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__progress-row {
+    margin-top: $spacing-03;
+    display: flex;
+    align-items: center;
+    gap: $spacing-04;
+  }
+
+  &__progress-text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    color: $text-secondary;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__caret {
+    flex-shrink: 0;
+    color: $text-secondary;
+  }
+
+  &__body {
+    padding: $spacing-04 $spacing-05 $spacing-05;
+    border-top: 1px solid $border-subtle-02;
+  }
+
+  &__lesson {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-04 0;
+    border-bottom: 1px solid $border-subtle-02;
+    text-decoration: none;
+    color: $text-primary;
+
+    &:last-child { border-bottom: 0; }
+    &:hover { color: $link-primary; }
+  }
+
+  &__lesson-info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-03;
+    min-width: 0;
+  }
+
+  &__lesson-status {
+    flex-shrink: 0;
+
+    &--done { color: $support-success; }
+    &--pending { color: $text-helper; }
+  }
+
+  &__lesson-text { min-width: 0; }
+
+  &__lesson-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__lesson-subtitle {
+    font-size: 0.75rem;
+    color: $text-secondary;
+    margin-top: $spacing-02;
+    line-height: 1.4;
+  }
+
+  &__lesson-meta {
+    display: flex;
+    gap: $spacing-04;
+    flex-shrink: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    color: $text-secondary;
+    font-variant-numeric: tabular-nums;
+
+    &-xp { color: $icon-interactive; }
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-viz — visualizer toolbar + frame + foot
+// -----------------------------------------------------------------------------
+.dsa-viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+  align-items: center;
+  padding: $spacing-05;
+  background: $layer-01;
+  border: 1px solid $border-subtle-01;
+  margin-bottom: $spacing-04;
+}
+
+.dsa-viz-controls__select { min-width: 180px; }
+.dsa-viz-controls__select--wide { min-width: 220px; }
+.dsa-viz-controls__select--wider { min-width: 260px; }
+.dsa-viz-controls__field { min-width: 140px; }
+.dsa-viz-controls__slider { flex: 1; min-width: 180px; }
+
+.dsa-viz-frame {
+  background: $layer-01;
+  border: 1px solid $border-subtle-01;
+  padding: $spacing-06 $spacing-05;
+  overflow-x: auto;
+}
+
+.dsa-viz-frame__svg {
+  display: block;
+  margin: 0 auto;
+// SVG diagram element styles
+.dsa-svg-edge {
+  stroke: $border-strong-01;
+  stroke-width: 1.5;
+}
+
+.dsa-svg-node {
+  fill: $layer-01;
+  stroke: $border-strong-01;
+  stroke-width: 1.5;
+
+  &--highlight {
+    fill: $background-brand;
+    stroke: $background-brand;
+  }
+
+  &--visited {
+    fill: $support-success;
+    stroke: $support-success;
+  }
+
+  &--current {
+    fill: $background-brand;
+    stroke: $background-brand;
+  }
+}
+
+.dsa-svg-text {
+  fill: $text-primary;
+  font-family: 'IBM Plex Mono', monospace;
+
+  &--on-color {
+    fill: $text-on-color;
+  }
+}
+
+  max-width: 100%;
+}
+
+.dsa-viz-frame__note {
+  margin-top: $spacing-04;
+  text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: $text-secondary;
+  min-height: 20px;
+}
+
+.dsa-viz-frame__hint {
+  margin-top: $spacing-02;
+  font-size: 0.6875rem;
+  color: $text-helper;
+}
+
+.dsa-viz-info {
+  margin-top: $spacing-04;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: $spacing-03;
+  font-size: 0.75rem;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.dsa-viz-info__cell {
+  background: $layer-02;
+  border: 1px solid $border-subtle-02;
+  padding: $spacing-03 $spacing-04;
+}
+
+.dsa-viz-info__label {
+  @include type-style('label-01');
+  color: $text-secondary;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: $spacing-02;
+}
+
+.dsa-viz-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-03 $spacing-04;
+  background: $layer-01;
+  border: 1px solid $border-subtle-01;
+  border-top: none;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+}
+
+.dsa-viz-foot__buttons {
+  display: flex;
+  gap: $spacing-02;
+  flex-wrap: wrap;
+}
+
+.dsa-viz-foot__step {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: $text-secondary;
+  font-variant-numeric: tabular-nums;
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-walkthrough — step-by-step explainer
+// -----------------------------------------------------------------------------
+.dsa-walkthrough {
+  background: $layer-01;
+  border: 1px solid $border-subtle-01;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $border-subtle-02;
+    padding: $spacing-04 $spacing-05;
+  }
+
+  &__title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: $spacing-02;
+  }
+
+  &__step-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: $text-secondary;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__body { padding: $spacing-05; }
+
+  &__text {
+    line-height: 1.6;
+    margin: 0 0 $spacing-04;
+  }
+
+  &__highlight {
+    margin-top: $spacing-04;
+    -left:3px solid $border-interactive;
+    background: $layer-02;
+    padding: $spacing-03 $spacing-04;
+    font-size: 0.875rem;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid $border-subtle-02;
+    padding: $spacing-03 $spacing-04;
+  }
+}
+
+.dsa-walkthrough-dots {
+  display: flex;
+  gap: $spacing-02;
+}
+
+.dsa-walkthrough-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: $layer-02;
+  border: 1px solid $border-subtle-02;
+  cursor: pointer;
+  padding: 0;
+  transition: background $duration-fast-02 motion(standard, productive);
+
+  &--active {
+    background: $background-brand;
+    border-color: $border-interactive;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-quiz — multi-question quiz block
+// -----------------------------------------------------------------------------
+.dsa-quiz {
+  background: $layer-01;
+  border: 1px solid $border-subtle-01;
+
+  &__head {
+    padding: $spacing-04 $spacing-05;
+    border-bottom: 1px solid $border-subtle-02;
+  }
+
+  &__head-title {
+    font-family: 'IBM Plex Serif', serif;
+    font-weight: 600;
+    margin-top: $spacing-02;
+  }
+
+  &__question {
+    padding: $spacing-05;
+    border-bottom: 1px solid $border-subtle-02;
+  }
+
+  &__question-head {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-03;
+    margin-bottom: $spacing-04;
+  }
+
+  &__question-num {
+    display: inline-flex;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background: $layer-02;
+    font-size: 0.75rem;
+    font-family: 'IBM Plex Mono', monospace;
+    margin-top: 2px;
+  }
+
+  &__question-text { font-weight: 500; }
+
+  &__feedback {
+    margin-top: $spacing-04;
+    padding: $spacing-03 $spacing-04;
+    background: $layer-02;
+    font-size: 0.875rem;
+
+    &--correct { border-left: 3px solid $support-success; }
+    &--wrong   { border-left: 3px solid $support-error; }
+  }
+
+  &__feedback-head {
+    display: flex;
+    align-items: center;
+    gap: $spacing-02;
+    font-weight: 500;
+    margin-bottom: $spacing-02;
+
+    &--correct { color: $support-success; }
+    &--wrong   { color: $support-error; }
+  }
+
+  &__feedback-body { color: $text-secondary; }
+
+  &__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-04 $spacing-05;
+    border-top: 1px solid $border-subtle-02;
+  }
+
+  &__score {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.875rem;
+
+    &-value { font-weight: 600; }
+    &-value--all { color: $support-success; }
+  }
+
+  &__count {
+    font-size: 0.75rem;
+    color: $text-secondary;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-mcq — multiple-choice button list
+// -----------------------------------------------------------------------------
+.dsa-mcq {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-02;
+}
+
+.dsa-mcq__option {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  padding: $spacing-03 $spacing-04;
+  text-align: left;
+  font-size: 0.875rem;
+  cursor: pointer;
+  background: $layer-01;
+  color: $text-primary;
+  border: 1px solid $border-subtle-02;
+  transition: all $duration-fast-01 motion(standard, productive);
+  width: 100%;
+
+  &--selected {
+    background: $background-brand;
+    color: $text-on-color;
+    -color:$border-interactive;
+  }
+
+  &:disabled:not(.dsa-mcq__option--selected) {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.dsa-mcq__bullet {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid $border-strong-01;
+  background: transparent;
+  display: grid;
+  place-items: center;
+
+  &--filled {
+    border-color: $text-on-color;
+    background: $text-on-color;
+  }
+}
+
+.dsa-mcq__bullet-dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: $background-brand;
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-fill-blank — inline fill-in-the-blank
+// -----------------------------------------------------------------------------
+.dsa-fill-blank {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.875rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-02;
+}
+
+.dsa-fill-blank__segment {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+}
+
+.dsa-fill-blank__pre { white-space: pre-wrap; }
+.dsa-fill-blank__input { min-width: 8rem; }
+
+
+// -----------------------------------------------------------------------------
+// .dsa-ordering — draggable list
+// -----------------------------------------------------------------------------
+.dsa-ordering {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-02;
+}
+
+.dsa-ordering__hint {
+  margin-bottom: $spacing-02;
+  font-size: 0.6875rem;
+  color: $text-secondary;
+  letter-spacing: 0.04em;
+}
+
+.dsa-ordering__item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  padding: $spacing-03 $spacing-04;
+  background: $layer-01;
+  border: 1px solid $border-subtle-02;
+  font-size: 0.875rem;
+  cursor: grab;
+
+  &--disabled {
+    opacity: 0.8;
+    cursor: default;
+  }
+}
+
+.dsa-ordering__handle {
+  color: $text-helper;
+  flex-shrink: 0;
+}
+
+.dsa-ordering__num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: $text-secondary;
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-challenge — coding challenge block
+// -----------------------------------------------------------------------------
+.dsa-challenge {
+  background: $layer-01;
+  border: 1px solid $border-subtle-01;
+
+  &__head {
+    padding: $spacing-04 $spacing-05;
+    border-bottom: 1px solid $border-subtle-02;
+  }
+
+  &__prompt { margin-top: $spacing-02; }
+
+  &__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $spacing-02;
+    padding: $spacing-03 $spacing-04;
+    border-top: 1px solid $border-subtle-02;
+  }
+
+  &__hints {
+    border-top: 1px solid $border-subtle-02;
+    background: $layer-02;
+    padding: $spacing-03 $spacing-05;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-02;
+  }
+
+  &__hint {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-03;
+    font-size: 0.875rem;
+    color: $text-secondary;
+  }
+
+  &__hint-icon {
+    margin-top: 3px;
+    flex-shrink: 0;
+    color: $support-warning;
+  }
+
+  &__solution {
+    border-top: 1px solid $border-subtle-02;
+    background: $layer-02;
+    padding: $spacing-04 $spacing-05;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-test-results — pass/fail panel
+// -----------------------------------------------------------------------------
+.dsa-test-results {
+  border-top: 1px solid $border-subtle-02;
+
+  &__banner {
+    padding: $spacing-03 $spacing-05;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background: $layer-02;
+    color: $text-primary;
+
+    &--all-pass {
+      background: $support-success;
+      color: $text-on-color;
+    }
+  }
+
+  &__list {
+    max-height: 14rem;
+    overflow-y: auto;
+
+    &--small { max-height: 12rem; }
+  }
+
+  &__item {
+    padding: $spacing-03 $spacing-05;
+    font-size: 0.75rem;
+
+    &:not(:first-child) {
+      border-top: 1px solid $border-subtle-02;
+    }
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-02;
+    font-weight: 500;
+  }
+
+  &__desc {
+    color: $text-secondary;
+    font-weight: 400;
+  }
+
+  &__detail {
+    margin-top: $spacing-02;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: $spacing-03;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    color: $text-secondary;
+  }
+
+  &__field-label { color: $text-helper; }
+  &__field-error { color: $support-error; }
+}
+
+
+// -----------------------------------------------------------------------------
+// Visualizer atoms: array cells, linked list nodes, stacks, queues, bars
+// -----------------------------------------------------------------------------
+.dsa-array-cells {
+  display: flex;
+  gap: $spacing-02;
+  flex-wrap: wrap;
+}
+
+.dsa-array-cell-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-02;
+}
+
+.dsa-array-cell {
+  min-width: 3rem;
+  height: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $border-subtle-02;
+  background: $layer-01;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.875rem;
+  position: relative;
+
+  &--highlight {
+    background: $background-brand;
+    color: $text-on-color;
+    -color:$border-interactive;
+  }
+
+  &--secondary {
+    background: $support-info;
+    color: $text-on-color;
+    border-color: $support-info;
+  }
+
+  &--success {
+    background: $support-success;
+    color: $text-on-color;
+    border-color: $support-success;
+  }
+
+  &__index {
+    position: absolute;
+    top: -1.25rem;
+    font-size: 0.625rem;
+    color: $text-secondary;
+  }
+}
+
+.dsa-array-pad-top { padding-top: $spacing-05; }
+
+.dsa-array-cell-index-below {
+  font-size: 0.625rem;
+  font-family: 'IBM Plex Mono', monospace;
+  color: $text-secondary;
+}
+
+
+.dsa-ll-nodes {
+  display: flex;
+  align-items: center;
+  gap: $spacing-02;
+  flex-wrap: wrap;
+}
+
+.dsa-ll-node {
+  min-width: 3rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid $border-subtle-02;
+  background: $layer-01;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.875rem;
+}
+
+.dsa-ll-arrow { color: $text-secondary; }
+
+.dsa-ll-null {
+  padding: $spacing-02 $spacing-03;
+  border: 1px dashed $border-subtle-02;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: $text-secondary;
+}
+
+.dsa-ll-segment {
+  display: flex;
+  align-items: center;
+  gap: $spacing-02;
+}
+
+.dsa-ll-null-end {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.875rem;
+  color: $text-secondary;
+}
+
+
+.dsa-stack-viz {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0;
+  width: 6rem;
+
+  &--wide { width: 7rem; }
+
+  &__item {
+    height: 2.25rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid $border-subtle-02;
+    background: $layer-01;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.875rem;
+
+    &:not(:first-child) { border-top: 0; }
+
+    &--top {
+      background: $support-info;
+      color: $text-on-color;
+      border-color: $support-info;
+    }
+
+    &--empty {
+      color: $text-helper;
+      font-style: italic;
+    }
+  }
+
+  &__floor {
+    height: 6px;
+    width: 7rem;
+    border-left: 2px solid $border-strong-01;
+    border-right: 2px solid $border-strong-01;
+    border-bottom: 2px solid $border-strong-01;
+    background: $layer-02;
+  }
+}
+
+.dsa-stack-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: $text-secondary;
+  margin-top: $spacing-02;
+}
+
+
+.dsa-queue-viz {
+  display: flex;
+  align-items: center;
+  gap: 0;
+
+  &__item {
+    min-width: 2.5rem;
+    height: 2.25rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid $border-subtle-02;
+    background: $layer-01;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.875rem;
+
+    &:not(:first-child) { border-left: 0; }
+
+    &--front {
+      background: $support-info;
+      color: $text-on-color;
+      border-color: $support-info;
+    }
+
+    &--empty {
+      color: $text-helper;
+      font-style: italic;
+    }
+  }
+}
+
+.dsa-queue-label {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.625rem;
+  color: $text-secondary;
+  margin-bottom: $spacing-03;
+}
+
+
+.dsa-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 18rem;
+}
+
+.dsa-bar {
+  flex: 1;
+  background: $background-brand;
+  min-width: 4px;
+  transition:
+    height $duration-fast-02 motion(standard, productive),
+    background $duration-fast-02 motion(standard, productive);
+
+  &--cmp   { background: $support-warning; }
+  &--swap  { background: $support-error; }
+  &--done  { background: $support-success; }
+  &--pivot { background: $support-info; }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-search-cell — searching-visualizer cell
+// -----------------------------------------------------------------------------
+.dsa-search-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $spacing-02;
+  padding-top: $spacing-04;
+}
+
+.dsa-search-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-02;
+
+  &__box {
+    width: 2.75rem;
+    height: 3rem;
+    display: grid;
+    place-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.875rem;
+    transition: all $duration-fast-02 motion(standard, productive);
+    border: 1px solid $border-subtle-02;
+    background: $layer-01;
+    color: $text-primary;
+
+    &--in-window { opacity: 1; }
+    &--out-window { opacity: 0.35; }
+    &--pointer {
+      -color:$border-interactive;
+      background: $background-brand;
+      color: $text-on-color;
+      transform: scale(1.05);
+    }
+    &--found {
+      border-color: $support-success;
+      background: $support-success;
+      color: $text-on-color;
+      transform: scale(1.1);
+    }
+  }
+
+  &__idx {
+    font-size: 0.625rem;
+    font-family: 'IBM Plex Mono', monospace;
+    color: $text-secondary;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-breadcrumb / .dsa-meta-row / .dsa-activity-row
+// -----------------------------------------------------------------------------
+.dsa-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+  align-items: center;
+}
+
+.dsa-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: $spacing-02;
+  @include type-style('label-01');
+  color: $text-secondary;
+  margin-bottom: $spacing-04;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  a {
+    color: $link-primary;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-02;
+
+    &:hover { text-decoration: underline; }
+  }
+}
+
+.dsa-activity-row {
+  display: flex;
+  align-items: center;
+  gap: $spacing-04;
+  padding: $spacing-04 0;
+  border-bottom: 1px solid $border-subtle-02;
+  text-decoration: none;
+  color: inherit;
+
+  &:last-child { border-bottom: 0; }
+
+  &__icon { flex-shrink: 0; color: $support-success; }
+  &__title { flex: 1; @include type-style('body-compact-01'); }
+  &__meta {
+    @include type-style('label-01');
+    color: $icon-interactive;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-hero — Dashboard hero block
+// -----------------------------------------------------------------------------
+.dsa-hero {
+  padding: $spacing-07;
+
+  &__top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $spacing-06;
+  }
+
+  &__title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: $spacing-04 0 0;
+  }
+
+  &__sub {
+    margin-top: $spacing-04;
+    color: $text-secondary;
+    max-width: 40rem;
+  }
+
+  &__chips {
+    display: flex;
+    gap: $spacing-03;
+    flex-wrap: wrap;
+  }
+
+  &__progress { margin-top: $spacing-06; }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-recommended — "next lesson" tile with button
+// -----------------------------------------------------------------------------
+.dsa-recommended {
+  padding: $spacing-06;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $spacing-06;
+  flex-wrap: wrap;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: $spacing-02;
+    color: $text-primary;
+  }
+
+  &__meta {
+    color: $text-secondary;
+    font-size: 0.875rem;
+    margin-top: $spacing-03;
+  }
+
+  a {
+    flex-shrink: 0;
+    align-self: flex-start;
+
+    @media (max-width: 640px) {
+      align-self: stretch;
+      
+      .cds--btn {
+        width: 100%;
+        max-width: none;
+      }
+    }
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-card-section — generic titled card
+// -----------------------------------------------------------------------------
+.dsa-card-section {
+  padding: $spacing-06;
+  background: $layer-01;
+  border: 1px solid $border-subtle-01;
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-05;
+  }
+
+  &__title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+
+    &--with-icon {
+      display: flex;
+      align-items: center;
+      gap: $spacing-03;
+    }
+
+    svg { flex-shrink: 0; }
+  }
+
+  &__link {
+    font-size: 0.75rem;
+    color: $link-primary;
+  }
+
+  &__empty {
+    padding: $spacing-06 0;
+    text-align: center;
+    color: $text-secondary;
+    font-size: 0.875rem;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-area-row — dashboard strong/weak areas
+// -----------------------------------------------------------------------------
+.dsa-area-row {
+  background: $layer-02;
+  border: 1px solid $border-subtle-02;
+  padding: $spacing-03 $spacing-04;
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  &__meta {
+    margin-top: $spacing-02;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    color: $text-secondary;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-tabs — horizontal tab bar
+// -----------------------------------------------------------------------------
+.dsa-tabs {
+  display: flex;
+  gap: $spacing-02;
+  flex-wrap: wrap;
+  border-bottom: 1px solid $border-subtle-01;
+  margin-bottom: $spacing-05;
+}
+
+.dsa-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-03;
+  padding: $spacing-03 $spacing-05;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  color: $text-secondary;
+  font-size: 0.875rem;
+  transition:
+    color 70ms,
+    border-color 70ms;
+
+  &--active {
+    color: $text-primary;
+    border-bottom-color: $border-interactive;
+    font-weight: 600;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-not-found — 404 page
+// -----------------------------------------------------------------------------
+.dsa-not-found {
+  padding: $spacing-09 $spacing-06;
+  text-align: center;
+
+  &__icon {
+    color: $text-helper;
+    margin-bottom: $spacing-05;
+  }
+
+  &__title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 $spacing-03;
+  }
+
+  &__body {
+    color: $text-secondary;
+    margin: 0 auto $spacing-06;
+    max-width: 32rem;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-problem — problem-detail layout
+// -----------------------------------------------------------------------------
+.dsa-problem {
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-02;
+    font-size: 0.875rem;
+    color: $text-secondary;
+    text-decoration: none;
+
+    &:hover { color: $text-primary; }
+  }
+
+  &__title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-right: $spacing-03;
+  }
+
+  &__desc {
+    line-height: 1.6;
+    white-space: pre-line;
+  }
+
+  &__example {
+    background: $layer-02;
+    border: 1px solid $border-subtle-02;
+    padding: $spacing-04;
+    font-size: 0.875rem;
+
+    &-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: $text-secondary;
+    }
+
+    &-row {
+      &:not(:first-child) { margin-top: $spacing-02; }
+    }
+
+    &-explain {
+      margin-top: $spacing-02;
+      font-size: 0.75rem;
+      color: $text-secondary;
+    }
+  }
+
+  &__hint {
+    border-left: 2px solid $support-warning;
+    background: $layer-02;
+    padding: $spacing-03 $spacing-04;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-03;
+  }
+
+  &__hint-icon {
+    margin-top: 3px;
+    flex-shrink: 0;
+    color: $support-warning;
+  }
+
+  &__hint-empty {
+    font-size: 0.75rem;
+    color: $text-secondary;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-lesson — lesson page chrome
+// -----------------------------------------------------------------------------
+.dsa-lesson {
+  max-width: 48rem;
+  margin: 0 auto;
+
+  &__hero { margin-bottom: $spacing-06; }
+
+  &__title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  &__subtitle {
+    margin: $spacing-02 0 0;
+    font-size: 1.125rem;
+    color: $text-secondary;
+  }
+
+  &__footer {
+    margin-top: $spacing-08;
+    padding: $spacing-06;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $spacing-06;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  &__footer-text {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  &__footer-sub {
+    font-size: 0.875rem;
+    color: $text-secondary;
+    margin-top: $spacing-03;
+    max-width: 32rem;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-section — wrapper for lesson section renderers
+// -----------------------------------------------------------------------------
+.dsa-section {
+  margin: $spacing-07 0;
+
+  &__heading {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 $spacing-04;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-analogy — colored callout
+// -----------------------------------------------------------------------------
+.dsa-analogy {
+  display: flex;
+  gap: $spacing-03;
+  align-items: flex-start;
+
+  &__emoji {
+    font-size: 1.75rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  &__body { min-width: 0; }
+
+  &__title {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: $spacing-02 0;
+  }
+
+  &__text { margin: 0; line-height: 1.6; }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-playground — playground page bits
+// -----------------------------------------------------------------------------
+.dsa-playground {
+  &__presets {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $spacing-02;
+  }
+
+  &__presets-label {
+    display: flex;
+    align-items: center;
+    gap: $spacing-03;
+    margin-right: $spacing-02;
+
+    svg { color: $text-secondary; }
+  }
+
+  &__hint {
+    font-size: 0.75rem;
+    color: $text-secondary;
+    line-height: 1.6;
+
+    strong { color: $text-primary; }
+  }
+
+  &__duration {
+    font-size: 0.625rem;
+    font-family: 'IBM Plex Mono', monospace;
+    color: $text-helper;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__console-head {
+    display: flex;
+    align-items: center;
+    gap: $spacing-03;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-problems-list
+// -----------------------------------------------------------------------------
+.dsa-problems-list {
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-04;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  &__count {
+    background: $layer-01;
+    border: 1px solid $border-subtle-01;
+    padding: $spacing-03 $spacing-04;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+
+    &-label { color: $text-secondary; }
+    &-value { font-weight: 600; }
+  }
+
+  &__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-04;
+    align-items: center;
+  }
+
+  &__search { flex: 1; min-width: 200px; }
+
+  &__difficulty {
+    display: flex;
+    gap: $spacing-02;
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-02;
+  }
+
+  &__list {
+    background: $layer-01;
+    border: 1px solid $border-subtle-01;
+    overflow: hidden;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-04;
+    padding: $spacing-04 $spacing-05;
+    text-decoration: none;
+    color: inherit;
+    transition: background $duration-fast-01 motion(standard, productive);
+
+    &:not(:first-child) { border-top: 1px solid $border-subtle-02; }
+    &:hover { background: $layer-hover-01; }
+  }
+
+  &__row-status {
+    flex-shrink: 0;
+
+    &--done    { color: $support-success; }
+    &--pending { color: $text-helper; }
+  }
+
+  &__row-main { flex: 1; min-width: 0; }
+  &__row-title { font-weight: 500; }
+
+  &__row-tags {
+    margin-top: $spacing-02;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-02;
+  }
+
+  &__row-xp {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: $icon-interactive;
+    flex-shrink: 0;
+  }
+
+  &__empty {
+    padding: $spacing-09 0;
+    text-align: center;
+    font-size: 0.875rem;
+    color: $text-secondary;
+  }
+}
+
+
+
+// -----------------------------------------------------------------------------
+// .dsa-settings — settings page
+// -----------------------------------------------------------------------------
+.dsa-settings {
+  &__group { padding: $spacing-05; }
+
+  &__heading {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 $spacing-04;
+  }
+
+  &__group-extra { margin-top: $spacing-06; }
+
+  &__hint {
+    margin-top: $spacing-03;
+    font-size: 0.75rem;
+    color: $text-secondary;
+  }
+
+  &__radio-with-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-03;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-icon-button — bare icon button
+// -----------------------------------------------------------------------------
+.dsa-icon-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: $text-primary;
+  padding: $spacing-02;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+// -----------------------------------------------------------------------------
+// .dsa-interactive — interactive lesson playgrounds
+// -----------------------------------------------------------------------------
+.dsa-interactive {
+  &__viewport {
+    padding: $spacing-04;
+    margin-bottom: $spacing-04;
+    min-height: 5rem;
+    background: $layer-02;
+    border: 1px solid $border-subtle-02;
+
+    &--stack {
+      min-height: 11rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    &--queue { min-height: 6rem; }
+  }
+
+  &__empty {
+    text-align: center;
+    font-style: italic;
+    color: $text-helper;
+    padding: $spacing-04 0;
+    font-size: 0.875rem;
+
+    &--code { font-family: 'IBM Plex Mono', monospace; }
+  }
+
+  &__row {
+    display: flex;
+    align-items: flex-end;
+    gap: $spacing-02;
+    padding-top: $spacing-03;
+  }
+
+  &__row--center { justify-content: center; }
+
+  &__controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: $spacing-03;
+    margin-bottom: $spacing-04;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-03;
+    margin-bottom: $spacing-04;
+  }
+
+  &__field { margin-bottom: $spacing-04; }
+
+  &__log {
+    padding: $spacing-03 $spacing-04;
+    background: $layer-02;
+    border: 1px solid $border-subtle-02;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// Misc / utility helpers
+// -----------------------------------------------------------------------------
+.dsa-text-helper { color: $text-helper; }
+.dsa-text-secondary { color: $text-secondary; }
+.dsa-text-mono {
+  font-family: 'IBM Plex Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+.dsa-text-mono--xs { font-size: 0.75rem; }
+.dsa-text-mono--xxs { font-size: 0.625rem; }
+
+.dsa-text-arrow-front,
+.dsa-text-arrow-back {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: $text-secondary;
+}
+
+.dsa-flex-1 { flex: 1; }
+.dsa-shrink-0 { flex-shrink: 0; }
+.dsa-min-w-0 { min-width: 0; }
+.dsa-block { display: block; }
+.dsa-inline-block { display: inline-block; }
+.dsa-mt-2 { margin-top: $spacing-02; }
+.dsa-mt-3 { margin-top: $spacing-03; }
+.dsa-mt-4 { margin-top: $spacing-04; }
+.dsa-mt-5 { margin-top: $spacing-05; }
+
+
+// -----------------------------------------------------------------------------
+// .dsa-ascii — ASCII art block
+// -----------------------------------------------------------------------------
+.dsa-ascii {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: $text-primary;
+  background: transparent;
+  margin: 0;
+  white-space: pre;
+  overflow: auto;
+}

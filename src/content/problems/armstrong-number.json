@@ -1,0 +1,66 @@
+{
+  "id": "armstrong-number",
+  "title": "Check if Number is Armstrong Number",
+  "difficulty": "Easy",
+  "tags": [
+    "math"
+  ],
+  "description": "An Armstrong number (also known as narcissistic number) is a number that is equal to the sum of its own digits each raised to the power of the number of digits.\n\nFor example: 153 = 1³ + 5³ + 3³ = 1 + 125 + 27 = 153",
+  "examples": [
+    {
+      "input": "n = 153",
+      "output": "true",
+      "explanation": "1³ + 5³ + 3³ = 153"
+    },
+    {
+      "input": "n = 9474",
+      "output": "true",
+      "explanation": "9⁴ + 4⁴ + 7⁴ + 4⁴ = 9474"
+    },
+    {
+      "input": "n = 123",
+      "output": "false"
+    }
+  ],
+  "starterCode": "function isArmstrong(n) {\n  // your code here\n}",
+  "solution": "function isArmstrong(n) {\n  const str = String(n);\n  const len = str.length;\n  let sum = 0;\n  \n  for (const digit of str) {\n    sum += Math.pow(parseInt(digit), len);\n  }\n  \n  return sum === n;\n}",
+  "hints": [
+    "Convert the number to a string to easily access each digit.",
+    "Count the number of digits.",
+    "Sum each digit raised to the power of the digit count."
+  ],
+  "testCases": [
+    {
+      "input": [
+        153
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        9474
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        123
+      ],
+      "expected": false
+    },
+    {
+      "input": [
+        1
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        370
+      ],
+      "expected": true
+    }
+  ],
+  "functionName": "isArmstrong",
+  "xpReward": 80
+}

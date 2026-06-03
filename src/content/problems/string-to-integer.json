@@ -1,0 +1,48 @@
+{
+  "id": "string-to-integer",
+  "title": "Convert String to Integer (ATOI)",
+  "difficulty": "Medium",
+  "tags": [
+    "string"
+  ],
+  "description": "Implement atoi which converts a string to an integer. Handle whitespace, sign, overflow.",
+  "examples": [
+    {
+      "input": "s = \"42\"",
+      "output": "42"
+    },
+    {
+      "input": "s = \"   -42\"",
+      "output": "-42"
+    }
+  ],
+  "starterCode": "function myAtoi(s) {\n  // your code here\n}",
+  "solution": "function myAtoi(s) {\n  s = s.trim();\n  if (!s) return 0;\n  \n  let sign = 1, i = 0;\n  if (s[0] === '-' || s[0] === '+') {\n    sign = s[0] === '-' ? -1 : 1;\n    i++;\n  }\n  \n  let result = 0;\n  while (i < s.length && s[i] >= '0' && s[i] <= '9') {\n    result = result * 10 + (s[i] - '0');\n    i++;\n  }\n  \n  result *= sign;\n  const INT_MAX = 2**31 - 1, INT_MIN = -(2**31);\n  if (result > INT_MAX) return INT_MAX;\n  if (result < INT_MIN) return INT_MIN;\n  return result;\n}",
+  "hints": [
+    "Trim whitespace",
+    "Handle sign",
+    "Parse digits, handle overflow"
+  ],
+  "testCases": [
+    {
+      "input": [
+        "42"
+      ],
+      "expected": 42
+    },
+    {
+      "input": [
+        "   -42"
+      ],
+      "expected": -42
+    },
+    {
+      "input": [
+        "4193 with words"
+      ],
+      "expected": 4193
+    }
+  ],
+  "functionName": "myAtoi",
+  "xpReward": 120
+}

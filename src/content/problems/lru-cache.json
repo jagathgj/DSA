@@ -1,0 +1,91 @@
+{
+  "id": "lru-cache",
+  "title": "LRU Cache",
+  "difficulty": "Medium",
+  "tags": [
+    "design",
+    "hash-map",
+    "linked-list"
+  ],
+  "description": "Design a data structure for Least Recently Used (LRU) cache. Support get and put in O(1) time.",
+  "examples": [
+    {
+      "input": "LRUCache(2), put(1,1), put(2,2), get(1), put(3,3), get(2)",
+      "output": "1, -1"
+    }
+  ],
+  "starterCode": "class LRUCache {\n  constructor(capacity) {\n    // your code here\n  }\n  \n  get(key) {\n    // your code here\n  }\n  \n  put(key, value) {\n    // your code here\n  }\n}",
+  "solution": "class LRUCache {\n  constructor(capacity) {\n    this.capacity = capacity;\n    this.cache = new Map();\n  }\n  \n  get(key) {\n    if (!this.cache.has(key)) return -1;\n    const val = this.cache.get(key);\n    this.cache.delete(key);\n    this.cache.set(key, val);\n    return val;\n  }\n  \n  put(key, value) {\n    if (this.cache.has(key)) this.cache.delete(key);\n    this.cache.set(key, value);\n    if (this.cache.size > this.capacity) {\n      this.cache.delete(this.cache.keys().next().value);\n    }\n  }\n}",
+  "hints": [
+    "Use Map to maintain insertion order",
+    "On get, move to end (delete and re-add)",
+    "On put, if at capacity, remove oldest (first key)"
+  ],
+  "testCases": [
+    {
+      "input": [
+        [
+          2
+        ],
+        [
+          "put",
+          "put",
+          "get",
+          "put",
+          "get",
+          "put",
+          "get",
+          "get",
+          "get"
+        ],
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            1
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ]
+        ]
+      ],
+      "expected": [
+        null,
+        null,
+        null,
+        1,
+        null,
+        -1,
+        null,
+        -1,
+        3,
+        4
+      ]
+    }
+  ],
+  "functionName": "LRUCache",
+  "xpReward": 160
+}

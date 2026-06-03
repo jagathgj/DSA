@@ -1,0 +1,67 @@
+{
+  "id": "largest-prime-factor",
+  "title": "Find Largest Prime Factor",
+  "difficulty": "Medium",
+  "tags": [
+    "math"
+  ],
+  "description": "Given a positive integer `n`, find its largest prime factor.",
+  "examples": [
+    {
+      "input": "n = 13195",
+      "output": "29",
+      "explanation": "Prime factors: 5, 7, 13, 29"
+    },
+    {
+      "input": "n = 15",
+      "output": "5",
+      "explanation": "Prime factors: 3, 5"
+    },
+    {
+      "input": "n = 17",
+      "output": "17",
+      "explanation": "17 is prime"
+    }
+  ],
+  "starterCode": "function largestPrimeFactor(n) {\n  // your code here\n}",
+  "solution": "function largestPrimeFactor(n) {\n  let largest = -1;\n  \n  // Remove all factors of 2\n  while (n % 2 === 0) {\n    largest = 2;\n    n = n / 2;\n  }\n  \n  // Check odd factors from 3 onwards\n  for (let i = 3; i * i <= n; i += 2) {\n    while (n % i === 0) {\n      largest = i;\n      n = n / i;\n    }\n  }\n  \n  // If n is still > 1, then it's a prime factor\n  if (n > 1) largest = n;\n  \n  return largest;\n}",
+  "hints": [
+    "Divide out all factors of 2 first.",
+    "Then check odd numbers starting from 3.",
+    "If n > 1 after all divisions, n itself is the largest prime factor."
+  ],
+  "testCases": [
+    {
+      "input": [
+        13195
+      ],
+      "expected": 29
+    },
+    {
+      "input": [
+        15
+      ],
+      "expected": 5
+    },
+    {
+      "input": [
+        17
+      ],
+      "expected": 17
+    },
+    {
+      "input": [
+        100
+      ],
+      "expected": 5
+    },
+    {
+      "input": [
+        2
+      ],
+      "expected": 2
+    }
+  ],
+  "functionName": "largestPrimeFactor",
+  "xpReward": 120
+}

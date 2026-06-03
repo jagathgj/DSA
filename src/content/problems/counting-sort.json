@@ -1,0 +1,49 @@
+{
+  "id": "counting-sort",
+  "title": "Counting Sort",
+  "difficulty": "Medium",
+  "tags": [
+    "sorting",
+    "array"
+  ],
+  "description": "Implement counting sort for non-negative integers. Count occurrences, calculate positions, place elements.\n\nTime: O(n+k), Space: O(k) where k is range",
+  "examples": [
+    {
+      "input": "arr = [4, 2, 2, 8, 3, 3, 1]",
+      "output": "[1, 2, 2, 3, 3, 4, 8]"
+    }
+  ],
+  "starterCode": "function countingSort(arr) {\n  // your code here\n}",
+  "solution": "function countingSort(arr) {\n  const max = Math.max(...arr);\n  const count = new Array(max + 1).fill(0);\n  const output = new Array(arr.length);\n  \n  for (const num of arr) count[num]++;\n  for (let i = 1; i <= max; i++) count[i] += count[i - 1];\n  \n  for (let i = arr.length - 1; i >= 0; i--) {\n    output[count[arr[i]] - 1] = arr[i];\n    count[arr[i]]--;\n  }\n  \n  return output;\n}",
+  "hints": [
+    "Count frequency of each element",
+    "Calculate cumulative counts",
+    "Place elements in sorted order"
+  ],
+  "testCases": [
+    {
+      "input": [
+        [
+          4,
+          2,
+          2,
+          8,
+          3,
+          3,
+          1
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        8
+      ]
+    }
+  ],
+  "functionName": "countingSort",
+  "xpReward": 120
+}

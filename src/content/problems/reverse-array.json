@@ -1,0 +1,81 @@
+{
+  "id": "reverse-array",
+  "title": "Reverse an Array",
+  "difficulty": "Easy",
+  "tags": [
+    "array",
+    "two-pointers"
+  ],
+  "description": "Given an array, reverse it in-place and return it.",
+  "examples": [
+    {
+      "input": "arr = [1, 2, 3, 4, 5]",
+      "output": "[5, 4, 3, 2, 1]"
+    },
+    {
+      "input": "arr = [10, 20]",
+      "output": "[20, 10]"
+    },
+    {
+      "input": "arr = [1]",
+      "output": "[1]"
+    }
+  ],
+  "starterCode": "function reverseArray(arr) {\n  // your code here\n}",
+  "solution": "function reverseArray(arr) {\n  let left = 0, right = arr.length - 1;\n  \n  while (left < right) {\n    [arr[left], arr[right]] = [arr[right], arr[left]];\n    left++;\n    right--;\n  }\n  \n  return arr;\n}",
+  "hints": [
+    "Use two pointers approach.",
+    "Swap elements at left and right pointers.",
+    "Move pointers toward center."
+  ],
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      ],
+      "expected": [
+        5,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          10,
+          20
+        ]
+      ],
+      "expected": [
+        20,
+        10
+      ]
+    },
+    {
+      "input": [
+        [
+          1
+        ]
+      ],
+      "expected": [
+        1
+      ]
+    },
+    {
+      "input": [
+        []
+      ],
+      "expected": []
+    }
+  ],
+  "functionName": "reverseArray",
+  "xpReward": 50
+}

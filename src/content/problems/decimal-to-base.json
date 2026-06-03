@@ -1,0 +1,28 @@
+{
+  "id": "decimal-to-base",
+  "title": "Convert Decimal to Binary, Octal or Hexadecimal",
+  "difficulty": "Easy",
+  "tags": ["math", "string"],
+  "description": "Given a decimal number and a base (2 for binary, 8 for octal, 16 for hexadecimal), convert the decimal number to the specified base.\n\nReturn the result as a string.",
+  "examples": [
+    { "input": "num = 10, base = 2", "output": "\"1010\"" },
+    { "input": "num = 255, base = 16", "output": "\"ff\"" },
+    { "input": "num = 64, base = 8", "output": "\"100\"" }
+  ],
+  "starterCode": "function convertToBase(num, base) {\n  // your code here\n}",
+  "solution": "function convertToBase(num, base) {\n  if (num === 0) return '0';\n  \n  const digits = '0123456789abcdef';\n  let result = '';\n  \n  while (num > 0) {\n    result = digits[num % base] + result;\n    num = Math.floor(num / base);\n  }\n  \n  return result;\n}",
+  "hints": [
+    "Use the modulo operator (%) to get the remainder when dividing by the base.",
+    "Build the result string from right to left by prepending each digit.",
+    "For bases > 10, use letters a-f for digits 10-15."
+  ],
+  "testCases": [
+    { "input": [10, 2], "expected": "1010" },
+    { "input": [255, 16], "expected": "ff" },
+    { "input": [64, 8], "expected": "100" },
+    { "input": [0, 2], "expected": "0" },
+    { "input": [15, 16], "expected": "f" }
+  ],
+  "functionName": "convertToBase",
+  "xpReward": 70
+}

@@ -1,0 +1,91 @@
+{
+  "id": "big-o-comparison",
+  "moduleId": "big-o",
+  "title": "Comparing Growth Rates",
+  "subtitle": "From O(1) to O(n!) — what each one feels like",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 16,
+  "xpReward": 90,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "Why this lesson matters",
+      "body": "Two algorithms that both 'work' can behave wildly differently as inputs grow. The difference between O(n) and O(n²) might be invisible at 10 items, but at a million items O(n) finishes while O(n²) is still running when the sun explodes. This lesson burns those scales into your head."
+    },
+    {
+      "type": "diagram",
+      "variant": "ascii",
+      "caption": "Concrete operation counts for n = 10, 100, 1000, 10000",
+      "data": {
+        "text": "    Complexity   | n=10    | n=100      | n=1,000      | n=10,000\n    -------------+---------+------------+--------------+-------------\n    O(1)         | 1       | 1          | 1            | 1\n    O(log n)     | 3       | 7          | 10           | 13\n    O(n)         | 10      | 100        | 1,000        | 10,000\n    O(n log n)   | 33      | 664        | 9,966        | 132,877\n    O(n²)        | 100     | 10,000     | 1,000,000    | 100,000,000\n    O(n³)        | 1,000   | 1,000,000  | 1,000,000,000| 10¹²\n    O(2ⁿ)        | 1,024   | 10³⁰       | ∞ (heat death)| ∞\n    O(n!)        | 3.6 M   | 10¹⁵⁸      | ∞             | ∞\n"
+      }
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Let's compute real numbers. Assume 100 million ops/second (a fast CPU).\n//\n// We'll print how long each complexity takes at n = 100,000.\n\nconst n = 100000;\nconst OPS_PER_SEC = 1e8;\n\nfunction fmt(ops) {\n  const sec = ops / OPS_PER_SEC;\n  if (sec < 1)              return (sec * 1000).toFixed(2) + ' ms';\n  if (sec < 60)             return sec.toFixed(2) + ' s';\n  if (sec < 3600)           return (sec / 60).toFixed(1) + ' min';\n  if (sec < 86400)          return (sec / 3600).toFixed(1) + ' h';\n  if (sec < 86400 * 365)    return (sec / 86400).toFixed(1) + ' days';\n  if (sec < 1e15)           return (sec / (86400 * 365)).toExponential(2) + ' years';\n  return 'longer than the universe is old';\n}\n\nconst log2n = Math.log2(n);\nconst rows = [\n  ['O(1)',         1],\n  ['O(log n)',     log2n],\n  ['O(n)',         n],\n  ['O(n log n)',   n * log2n],\n  ['O(n²)',        n * n],\n  ['O(n³)',        n * n * n],\n  // O(2ⁿ) at n=100k would overflow — skip\n];\nconsole.log(`At n = ${n.toLocaleString()}, assuming ${OPS_PER_SEC.toExponential()} ops/sec:\\n`);\nfor (const [label, ops] of rows) {\n  console.log(`  ${label.padEnd(12)} ${fmt(ops)}`);\n}",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "The rough ranking developers memorize",
+      "body": "From fastest (best) to slowest (worst):\n\n* **O(1)** — Excellent. Hash map lookup, array index.\n* **O(log n)** — Very good. Binary search, balanced tree operations.\n* **O(n)** — Fair. A single pass through the data.\n* **O(n log n)** — Acceptable. Most efficient sorts.\n* **O(n²)** — Bad for large inputs. Nested loops, bubble sort.\n* **O(2ⁿ)** — Horrible. Brute-force subsets, naive Fibonacci recursion.\n* **O(n!)** — Worst. Brute-force permutations, the traveling salesman.\n\nIf you find your code dropping into a worse bucket, that's usually the moment to redesign."
+    },
+    {
+      "type": "diagram",
+      "variant": "ascii",
+      "caption": "Visual sense of how the curves split",
+      "data": {
+        "text": "  operations\n      ^         O(n!) ↗\n      |       O(2ⁿ) ↗\n      |     O(n³)\n      |   O(n²)\n      |  O(n log n)\n      |O(n)\n      |O(log n)\n      |O(1) ───────────────────────────\n      +-------------------------------> n\n\n      O(1) and O(log n) hug the bottom no matter how big n gets.\n      O(n²) curves upward sharply.\n      O(2ⁿ) and O(n!) shoot off the chart almost immediately.\n"
+      }
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Concrete demo: compare actual runtimes.\n//\n// Sum of an array three different ways. Same answer; very different speeds.\n\nfunction makeArr(n) {\n  return Array.from({ length: n }, (_, i) => i + 1);\n}\n\n// O(n) — single pass\nfunction sumLinear(arr) {\n  let total = 0;\n  for (const x of arr) total += x;\n  return total;\n}\n\n// O(n²) — nested for no good reason (demo)\nfunction sumQuadratic(arr) {\n  let total = 0;\n  for (let i = 0; i < arr.length; i++) {\n    for (let j = 0; j <= i; j++) {\n      // pretend we have to revisit\n      if (j === i) total += arr[i];\n    }\n  }\n  return total;\n}\n\n// O(1) — closed-form! Gauss's trick: 1 + 2 + ... + n = n(n+1)/2\nfunction sumConstant(n) {\n  return (n * (n + 1)) / 2;\n}\n\nconst n = 5000;\nconst arr = makeArr(n);\n\nconst t1 = performance.now();\nsumLinear(arr);\nconst t2 = performance.now();\nsumQuadratic(arr);\nconst t3 = performance.now();\nsumConstant(n);\nconst t4 = performance.now();\n\nconsole.log(`n = ${n}`);\nconsole.log(`O(n)    sum: ${(t2 - t1).toFixed(2)} ms`);\nconsole.log(`O(n²)   sum: ${(t3 - t2).toFixed(2)} ms`);\nconsole.log(`O(1)    sum: ${(t4 - t3).toFixed(3)} ms`);\nconsole.log('All three return the same answer.');",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "Rule of thumb for n",
+      "body": "A handy mental table for 'will this finish in 1 second?' (1 second ≈ 10⁸ basic operations):\n\n* **n up to 10⁸**: O(n) is fine\n* **n up to 10⁶**: O(n log n) is fine\n* **n up to 10⁴**: O(n²) is fine\n* **n up to ~500**: O(n³) is fine\n* **n up to ~25**: O(2ⁿ) is fine\n* **n up to ~10**: O(n!) is fine\n\nIf your competitive-programming problem says n ≤ 10⁵, you need O(n log n) or better. If n ≤ 20, brute-force exponential is on the table."
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "boc1",
+          "type": "mcq",
+          "question": "Which is the FASTEST-growing function?",
+          "options": ["O(n²)", "O(n!)", "O(n log n)", "O(2ⁿ)"],
+          "correct": 1,
+          "explanation": "Factorial outpaces exponential, which outpaces polynomial. n! > 2ⁿ > n² > n log n."
+        },
+        {
+          "id": "boc2",
+          "type": "mcq",
+          "question": "For n = 1,000,000, which complexity gives the fewest operations?",
+          "options": ["O(log n) ≈ 20", "O(n) = 10⁶", "O(n log n) ≈ 2·10⁷", "O(n²) = 10¹²"],
+          "correct": 0,
+          "explanation": "log₂(10⁶) ≈ 20. Logarithmic absolutely crushes everything else at this scale."
+        },
+        {
+          "id": "boc3",
+          "type": "predict-output",
+          "question": "What roughly does this print for n = 1000?",
+          "code": "let count = 0;\nfor (let i = 0; i < n; i++) {\n  for (let j = 0; j < n; j++) {\n    count++;\n  }\n}\nconsole.log(count);",
+          "options": ["1,000", "10,000", "1,000,000", "1,000,000,000"],
+          "correct": 2,
+          "explanation": "Two nested loops over n each → n² = 10⁶ = 1,000,000 iterations. Classic O(n²)."
+        },
+        {
+          "id": "boc4",
+          "type": "fill-blank",
+          "question": "An algorithm processes n=10⁵ items. You want it to finish in 1 second (≈10⁸ ops). The slowest acceptable complexity is O(n ___).",
+          "answers": ["log n"],
+          "explanation": "n log n at n=10⁵ is about 10⁵ · 17 ≈ 1.7 · 10⁶ — comfortably under 10⁸."
+        }
+      ]
+    }
+  ]
+}

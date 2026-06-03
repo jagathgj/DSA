@@ -1,0 +1,41 @@
+{
+  "id": "heaps-intro",
+  "moduleId": "heaps",
+  "title": "Heaps: Priority First",
+  "subtitle": "Always grab the most important item",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 12,
+  "xpReward": 90,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "What's a heap?",
+      "body": "A **heap** is a tree where the root is always the smallest (**min-heap**) or biggest (**max-heap**) value. It's how priority queues are built. Inserting and removing the top: O(log n)."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🏥",
+      "title": "Hospital triage",
+      "body": "Most urgent patient is treated first, regardless of arrival time. A new patient comes in, gets ranked, and slots into the right priority. The most critical case is always on top — that's a heap."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Simple min-heap built on an array\nclass MinHeap {\n  constructor() { this.h = []; }\n  push(x) {\n    this.h.push(x);\n    let i = this.h.length - 1;\n    while (i > 0) {\n      const p = (i - 1) >> 1;\n      if (this.h[p] <= this.h[i]) break;\n      [this.h[p], this.h[i]] = [this.h[i], this.h[p]];\n      i = p;\n    }\n  }\n  peek() { return this.h[0]; }\n}\n\nconst pq = new MinHeap();\npq.push(5); pq.push(1); pq.push(3);\nconsole.log(pq.peek()); // 1",
+      "runnable": true
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "hp1",
+          "type": "mcq",
+          "question": "In a min-heap, what's always at the root?",
+          "options": ["The largest value", "The smallest value", "The median", "The latest insert"],
+          "correct": 1,
+          "explanation": "Min-heap = smallest on top. Max-heap = largest on top."
+        }
+      ]
+    }
+  ]
+}

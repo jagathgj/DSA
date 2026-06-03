@@ -1,0 +1,86 @@
+{
+  "id": "js-functions",
+  "moduleId": "js-basics",
+  "title": "Functions: Reusable Recipes",
+  "subtitle": "Write code once, run it many times",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 12,
+  "xpReward": 60,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "What's a function?",
+      "body": "A **function** is a named recipe. You write the steps once. Then you can run those steps as many times as you want, with different ingredients."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🍳",
+      "title": "Like a recipe card",
+      "body": "A recipe says: 'Take eggs, mix, cook 3 minutes.' You can use the same recipe with chicken eggs, duck eggs, or quail eggs. The recipe doesn't change — only the input does. A function works the same way."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "function greet(name) {\n  return \"Hello, \" + name + \"!\";\n}\n\nconsole.log(greet(\"Aria\"));   // \"Hello, Aria!\"\nconsole.log(greet(\"Sam\"));    // \"Hello, Sam!\"",
+      "caption": "Define once, call many times.",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "Parameters and return values",
+      "body": "What you pass in (`name`) is called a **parameter**. What comes back out is the **return value**. A function without a `return` returns `undefined` — JavaScript's way of saying 'nothing was given back'."
+    },
+    {
+      "type": "walkthrough",
+      "title": "Tracing a function call",
+      "steps": [
+        { "text": "JS sees greet(\"Aria\"). It looks up the function.", "highlight": "greet(\"Aria\")" },
+        { "text": "It binds the parameter: name = \"Aria\".", "code": "name = \"Aria\"" },
+        { "text": "It runs the body, building \"Hello, Aria!\"" },
+        { "text": "It returns that string. console.log prints it." }
+      ]
+    },
+    {
+      "type": "challenge",
+      "prompt": "Write a function `double` that takes a number and returns it multiplied by 2.",
+      "starterCode": "function double(n) {\n  // your code here\n}",
+      "solution": "function double(n) {\n  return n * 2;\n}",
+      "testCases": [
+        { "input": [3], "expected": 6 },
+        { "input": [0], "expected": 0 },
+        { "input": [-5], "expected": -10 },
+        { "input": [100], "expected": 200 }
+      ],
+      "hints": [
+        "Use the `return` keyword to send a value back.",
+        "Multiply n by 2 using the `*` operator."
+      ]
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "f1",
+          "type": "mcq",
+          "question": "What does a function return if there's no `return` statement?",
+          "options": ["null", "undefined", "0", "An error"],
+          "correct": 1,
+          "explanation": "JavaScript implicitly returns `undefined` when no return statement runs."
+        },
+        {
+          "id": "f2",
+          "type": "ordering",
+          "question": "Order these steps in how a function call works:",
+          "items": [
+            "JS finds the function definition",
+            "Parameters get their values",
+            "The body runs",
+            "A value is returned"
+          ],
+          "correctOrder": [0, 1, 2, 3],
+          "explanation": "JavaScript looks up the function, binds arguments to parameters, runs the body, then returns."
+        }
+      ]
+    }
+  ]
+}

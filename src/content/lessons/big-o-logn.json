@@ -1,0 +1,151 @@
+{
+  "id": "big-o-logn",
+  "moduleId": "big-o",
+  "title": "O(log n): Halving the Problem",
+  "subtitle": "Why logarithmic time feels almost free",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 18,
+  "xpReward": 100,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "What does 'logarithmic' actually mean?",
+      "body": "Take a number and ask: 'how many times do I have to halve it before I get to 1?' That count is **log₂(n)**.\n\n* n = 8 → 8, 4, 2, 1. Three halvings. log₂(8) = 3.\n* n = 1024 → 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1. Ten halvings. log₂(1024) = 10.\n* n = 1,000,000 → about 20 halvings.\n* n = 1,000,000,000 → about 30 halvings.\n\nAn algorithm that **halves the problem** at each step is O(log n) — and *staggeringly* fast even for huge n."
+    },
+    {
+      "type": "analogy",
+      "emoji": "📖",
+      "title": "Finding a word in a dictionary",
+      "body": "Flip to the middle. The word is alphabetically before? Throw away the right half. After? Throw away the left half. Repeat. A 1000-page dictionary needs at most 10 flips to land on the right page."
+    },
+    {
+      "type": "diagram",
+      "variant": "ascii",
+      "caption": "Binary search visualized",
+      "data": {
+        "text": "  Looking for 23 in [3, 7, 12, 18, 23, 31, 47, 56, 71, 89]\n\n  step 1:  [3, 7, 12, 18, 23, 31, 47, 56, 71, 89]\n                            ↑ mid = 31  (too big, go left)\n\n  step 2:  [3, 7, 12, 18, 23]\n                   ↑ mid = 12 (too small, go right)\n\n  step 3:           [18, 23]\n                     ↑ mid = 18 (too small, go right)\n\n  step 4:               [23]\n                         ↑ FOUND at original index 4\n\n  4 steps to search 10 items. For 1,000,000 items: ~20 steps.\n"
+      }
+    },
+    {
+      "type": "explanation",
+      "heading": "The pre-requisite: the data must be sorted",
+      "body": "Binary search only works on **sorted** data. If the array isn't sorted, halving tells you nothing: the value could be in either half.\n\nThis is the trade-off. Sorting costs O(n log n) up front. After that, you can do thousands of O(log n) lookups for almost nothing. If you'll search the same data many times, sort once."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// ============================================================\n// Binary search — ITERATIVE version\n// ============================================================\n// Loop instead of recursion. O(log n) time, O(1) space.\n\nfunction binarySearchIterative(arr, target) {\n  let lo = 0;\n  let hi = arr.length - 1;\n\n  while (lo <= hi) {\n    // Avoid (lo + hi) / 2 — can overflow in other languages.\n    // In JS the safer expression is lo + Math.floor((hi - lo) / 2).\n    const mid = lo + Math.floor((hi - lo) / 2);\n\n    if (arr[mid] === target) return mid;\n    if (arr[mid] <  target) lo = mid + 1;  // throw away left half\n    else                    hi = mid - 1;  // throw away right half\n  }\n  return -1;  // not found\n}\n\nconst data = [3, 7, 12, 18, 23, 31, 47, 56, 71, 89];\nconsole.log('found 23 at index:', binarySearchIterative(data, 23));   // 4\nconsole.log('found 89 at index:', binarySearchIterative(data, 89));   // 9\nconsole.log('found 99 at index:', binarySearchIterative(data, 99));   // -1\nconsole.log('found 3  at index:', binarySearchIterative(data, 3));    // 0",
+      "runnable": true
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// ============================================================\n// Binary search — RECURSIVE version\n// ============================================================\n// O(log n) time, O(log n) space (recursion stack).\n//\n// The recursion is 'tail-like' — we recurse exactly once per level.\n// Each call shrinks the [lo..hi] window by half.\n\nfunction binarySearchRecursive(arr, target, lo = 0, hi = arr.length - 1) {\n  // Base case: window is empty → not found\n  if (lo > hi) return -1;\n\n  const mid = lo + Math.floor((hi - lo) / 2);\n\n  if (arr[mid] === target) return mid;\n\n  if (arr[mid] < target) {\n    // Search right half\n    return binarySearchRecursive(arr, target, mid + 1, hi);\n  } else {\n    // Search left half\n    return binarySearchRecursive(arr, target, lo, mid - 1);\n  }\n}\n\nconst data = [3, 7, 12, 18, 23, 31, 47, 56, 71, 89];\nconsole.log('found 23 at index:', binarySearchRecursive(data, 23));   // 4\nconsole.log('found 99 at index:', binarySearchRecursive(data, 99));   // -1\n\n// Both versions return identical results.\n// Prefer iterative when possible — no stack overflow risk.",
+      "runnable": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Why is binary search O(log n)?",
+      "steps": [
+        {
+          "text": "We start with n items in our search window.",
+          "code": "window size = n"
+        },
+        {
+          "text": "After one comparison, the window shrinks to at most n/2.",
+          "code": "after 1 step: n/2"
+        },
+        {
+          "text": "After another step, n/4. Then n/8. We keep halving.",
+          "code": "after k steps: n / 2ᵏ"
+        },
+        {
+          "text": "We stop when the window has at most 1 item left. So we want the smallest k where n / 2ᵏ ≤ 1, which gives k = log₂(n).",
+          "highlight": "Number of steps ≤ log₂(n). That's the definition of O(log n)."
+        }
+      ]
+    },
+    {
+      "type": "explanation",
+      "heading": "log base doesn't matter (constants drop)",
+      "body": "Whether you halve, third-third, or fourth-fourth, all logarithms differ only by a constant factor: `log₂(n) = log₁₀(n) / log₁₀(2)`. So we just write **O(log n)** with no base — the base is absorbed into the constant.\n\nIn algorithms, log usually means log base 2, because we're usually halving. In other domains, log might mean ln or log₁₀. The Big O is the same."
+    },
+    {
+      "type": "diagram",
+      "variant": "ascii",
+      "caption": "How tame log n is, compared to n",
+      "data": {
+        "text": "  n          | log₂(n)\n  -----------+---------\n  10         | 3.3\n  1,000      | 10\n  1,000,000  | 20\n  10⁹        | 30\n  10¹²       | 40\n  10¹⁵       | 50\n  10¹⁸       | 60\n  10²¹       | 70\n\n  A binary-search-style algorithm on a trillion items needs 40 comparisons.\n"
+      }
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Where do you find O(log n) in real code?\n//\n// 1. Binary search (shown above)\n// 2. Operations on balanced binary search trees (insert, delete, find)\n// 3. Heap insert/extract (priority queues)\n// 4. Recursing by halving — divide-and-conquer like exponentiation\n\n// Fast exponentiation: a^n in O(log n) instead of O(n).\n// Idea: a^10 = (a^5)² = (a · a^4)² = ...\nfunction power(a, n) {\n  if (n === 0) return 1;\n  const half = power(a, Math.floor(n / 2));\n  if (n % 2 === 0) return half * half;\n  else             return half * half * a;\n}\n\nconsole.log('2^10 =', power(2, 10));     // 1024\nconsole.log('2^20 =', power(2, 20));     // 1,048,576\nconsole.log('3^15 =', power(3, 15));     // 14,348,907\n\n// Each recursive call halves n. log₂(20) ≈ 4 calls for 2^20.",
+      "runnable": true
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "bol1",
+          "type": "mcq",
+          "question": "If binary search on 1,024 items takes 10 comparisons, roughly how many does it take on 2,048 items?",
+          "options": ["10", "11", "20", "1,000"],
+          "correct": 1,
+          "explanation": "Doubling the input adds exactly 1 more comparison. That's the magic of log."
+        },
+        {
+          "id": "bol2",
+          "type": "mcq",
+          "question": "Binary search requires the array to be:",
+          "options": ["Unique", "Sorted", "Hashed", "Of even length"],
+          "correct": 1,
+          "explanation": "Without sorting, halving gives no information — the target could be in either half."
+        },
+        {
+          "id": "bol3",
+          "type": "predict-output",
+          "question": "What does this print?",
+          "code": "function f(n) {\n  let steps = 0;\n  while (n > 1) {\n    n = Math.floor(n / 2);\n    steps++;\n  }\n  return steps;\n}\nconsole.log(f(1024));",
+          "options": ["1", "10", "512", "1023"],
+          "correct": 1,
+          "explanation": "Halving 1024 takes 10 steps to reach 1. log₂(1024) = 10."
+        },
+        {
+          "id": "bol4",
+          "type": "mcq",
+          "question": "Iterative binary search has O(__) space; recursive has O(__) space.",
+          "options": [
+            "O(1) and O(1)",
+            "O(1) and O(log n)",
+            "O(n) and O(n)",
+            "O(log n) and O(1)"
+          ],
+          "correct": 1,
+          "explanation": "Iterative uses constant variables; recursive adds a stack frame per level (log n deep)."
+        }
+      ]
+    },
+    {
+      "type": "challenge",
+      "prompt": "Write a `firstOccurrence(arr, target)` that returns the **first** index where target appears in a sorted array (with possible duplicates), or -1 if not present. Must run in O(log n).",
+      "starterCode": "function firstOccurrence(arr, target) {\n  // Tip: do a binary search, but when you find a match,\n  // keep searching the LEFT half to see if there's an earlier one.\n  // Hint: track the best-so-far index.\n}\n",
+      "solution": "function firstOccurrence(arr, target) {\n  let lo = 0, hi = arr.length - 1, ans = -1;\n  while (lo <= hi) {\n    const mid = lo + Math.floor((hi - lo) / 2);\n    if (arr[mid] === target) {\n      ans = mid;\n      hi = mid - 1;          // keep looking left for an earlier match\n    } else if (arr[mid] < target) {\n      lo = mid + 1;\n    } else {\n      hi = mid - 1;\n    }\n  }\n  return ans;\n}\n",
+      "hints": [
+        "Plain binary search returns the FIRST hit it encounters — that's not necessarily the leftmost.",
+        "When arr[mid] === target, save mid as a candidate answer, but keep searching the left half by setting hi = mid - 1.",
+        "If you exit the loop with ans still -1, the target wasn't there."
+      ],
+      "testCases": [
+        { "input": [[1, 2, 2, 2, 3, 4, 5], 2], "expected": 1, "description": "first 2 is at index 1" },
+        { "input": [[1, 1, 1, 1], 1], "expected": 0, "description": "all duplicates, first is index 0" },
+        { "input": [[1, 2, 3, 4, 5], 6], "expected": -1, "description": "not present" },
+        { "input": [[1, 2, 3, 4, 5], 1], "expected": 0, "description": "first element" },
+        { "input": [[1, 2, 3, 4, 5], 5], "expected": 4, "description": "last element, unique" },
+        { "input": [[], 1], "expected": -1, "description": "empty array" },
+        { "input": [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], 2], "expected": 0, "description": "all same value" }
+      ]
+    }
+  ]
+}

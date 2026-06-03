@@ -1,0 +1,63 @@
+{
+  "id": "caesar-cipher",
+  "title": "Caesar Cipher",
+  "difficulty": "Easy",
+  "tags": [
+    "string"
+  ],
+  "description": "Implement a Caesar cipher that shifts each letter in a string by a given number of positions.\n\nOnly shift alphabetic characters, preserve case, and leave other characters unchanged.",
+  "examples": [
+    {
+      "input": "s = \"abc\", shift = 3",
+      "output": "\"def\""
+    },
+    {
+      "input": "s = \"Hello, World!\", shift = 5",
+      "output": "\"Mjqqt, Btwqi!\""
+    },
+    {
+      "input": "s = \"xyz\", shift = 3",
+      "output": "\"abc\"",
+      "explanation": "Wraps around"
+    }
+  ],
+  "starterCode": "function caesarCipher(s, shift) {\n  // your code here\n}",
+  "solution": "function caesarCipher(s, shift) {\n  shift = ((shift % 26) + 26) % 26; // Normalize shift\n  \n  return s.split('').map(char => {\n    if (char >= 'a' && char <= 'z') {\n      return String.fromCharCode((char.charCodeAt(0) - 97 + shift) % 26 + 97);\n    } else if (char >= 'A' && char <= 'Z') {\n      return String.fromCharCode((char.charCodeAt(0) - 65 + shift) % 26 + 65);\n    }\n    return char;\n  }).join('');\n}",
+  "hints": [
+    "Use charCodeAt() to get ASCII values and String.fromCharCode() to convert back.",
+    "Handle lowercase (a-z) and uppercase (A-Z) separately.",
+    "Use modulo 26 to wrap around the alphabet."
+  ],
+  "testCases": [
+    {
+      "input": [
+        "abc",
+        3
+      ],
+      "expected": "def"
+    },
+    {
+      "input": [
+        "Hello, World!",
+        5
+      ],
+      "expected": "Mjqqt, Btwqi!"
+    },
+    {
+      "input": [
+        "xyz",
+        3
+      ],
+      "expected": "abc"
+    },
+    {
+      "input": [
+        "ABC",
+        -1
+      ],
+      "expected": "ZAB"
+    }
+  ],
+  "functionName": "caesarCipher",
+  "xpReward": 90
+}

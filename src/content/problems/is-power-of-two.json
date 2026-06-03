@@ -1,0 +1,31 @@
+{
+  "id": "is-power-of-two",
+  "title": "Power of Two — O(1) Bit Trick",
+  "difficulty": "Easy",
+  "tags": ["big-o", "bit-manipulation", "math"],
+  "description": "Return true if n is a positive power of two (1, 2, 4, 8, 16, …), false otherwise.\n\n**The point**: a naive solution loops dividing by 2 (O(log n)). A bit-manipulation trick does it in **O(1)**: a power of two has exactly one bit set.",
+  "examples": [
+    { "input": "n = 16", "output": "true" },
+    { "input": "n = 18", "output": "false" },
+    { "input": "n = 1", "output": "true", "explanation": "1 = 2⁰." }
+  ],
+  "starterCode": "function isPowerOfTwo(n) {\n  // Bit trick: a power of two looks like   00..010..00.\n  // Subtract 1: it looks like              00..001..11.\n  // AND them together → 0  iff  n is a power of two (and n > 0).\n}\n",
+  "solution": "// O(1) time, O(1) space.\n// Power of two: exactly one bit set → n & (n-1) === 0 (and n > 0).\nfunction isPowerOfTwo(n) {\n  return n > 0 && (n & (n - 1)) === 0;\n}\n\n// Loop alternative — O(log n) — also correct:\n// function isPowerOfTwo(n) {\n//   if (n < 1) return false;\n//   while (n % 2 === 0) n /= 2;\n//   return n === 1;\n// }\n",
+  "hints": [
+    "First make sure n is positive — 0 and negatives can't be powers of two.",
+    "Write a few powers of two in binary: 1, 10, 100, 1000. Each has exactly ONE bit set.",
+    "n & (n-1) clears the lowest set bit. If that result is 0 and n is positive, n had only one bit set."
+  ],
+  "testCases": [
+    { "input": [1], "expected": true },
+    { "input": [2], "expected": true },
+    { "input": [16], "expected": true },
+    { "input": [1024], "expected": true },
+    { "input": [0], "expected": false },
+    { "input": [-4], "expected": false, "description": "negatives are not powers of two" },
+    { "input": [18], "expected": false },
+    { "input": [3], "expected": false }
+  ],
+  "functionName": "isPowerOfTwo",
+  "xpReward": 80
+}

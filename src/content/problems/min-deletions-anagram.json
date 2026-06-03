@@ -1,0 +1,66 @@
+{
+  "id": "min-deletions-anagram",
+  "title": "Minimum Characters to Delete to Make Anagram",
+  "difficulty": "Medium",
+  "tags": [
+    "string",
+    "hash-map"
+  ],
+  "description": "Given two strings, find the minimum number of characters that need to be deleted from both strings to make them anagrams.",
+  "examples": [
+    {
+      "input": "s1 = \"abc\", s2 = \"def\"",
+      "output": "6",
+      "explanation": "Delete all characters"
+    },
+    {
+      "input": "s1 = \"listen\", s2 = \"silent\"",
+      "output": "0",
+      "explanation": "Already anagrams"
+    },
+    {
+      "input": "s1 = \"abc\", s2 = \"acd\"",
+      "output": "2",
+      "explanation": "Delete 'b' and 'd'"
+    }
+  ],
+  "starterCode": "function minDeletionsForAnagram(s1, s2) {\n  // your code here\n}",
+  "solution": "function minDeletionsForAnagram(s1, s2) {\n  const freq = {};\n  \n  for (const char of s1) {\n    freq[char] = (freq[char] || 0) + 1;\n  }\n  \n  for (const char of s2) {\n    freq[char] = (freq[char] || 0) - 1;\n  }\n  \n  return Object.values(freq).reduce((sum, val) => sum + Math.abs(val), 0);\n}",
+  "hints": [
+    "Count character frequencies for both strings.",
+    "The difference in frequencies tells you what to delete.",
+    "Sum the absolute values of all frequency differences."
+  ],
+  "testCases": [
+    {
+      "input": [
+        "abc",
+        "def"
+      ],
+      "expected": 6
+    },
+    {
+      "input": [
+        "listen",
+        "silent"
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        "abc",
+        "acd"
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        "aab",
+        "abb"
+      ],
+      "expected": 2
+    }
+  ],
+  "functionName": "minDeletionsForAnagram",
+  "xpReward": 100
+}

@@ -1,0 +1,59 @@
+{
+  "id": "add-binary",
+  "title": "Add Two Binary Numbers",
+  "difficulty": "Easy",
+  "tags": [
+    "string",
+    "math"
+  ],
+  "description": "Given two binary strings, return their sum as a binary string.",
+  "examples": [
+    {
+      "input": "a = \"11\", b = \"1\"",
+      "output": "\"100\""
+    },
+    {
+      "input": "a = \"1010\", b = \"1011\"",
+      "output": "\"10101\""
+    }
+  ],
+  "starterCode": "function addBinary(a, b) {\n  // your code here\n}",
+  "solution": "function addBinary(a, b) {\n  let result = '';\n  let carry = 0;\n  let i = a.length - 1;\n  let j = b.length - 1;\n  \n  while (i >= 0 || j >= 0 || carry) {\n    const sum = (i >= 0 ? parseInt(a[i--]) : 0) + \n                (j >= 0 ? parseInt(b[j--]) : 0) + carry;\n    result = (sum % 2) + result;\n    carry = Math.floor(sum / 2);\n  }\n  \n  return result;\n}",
+  "hints": [
+    "Process from right to left like manual addition.",
+    "Keep track of carry.",
+    "Continue until both strings are processed and no carry remains."
+  ],
+  "testCases": [
+    {
+      "input": [
+        "11",
+        "1"
+      ],
+      "expected": "100"
+    },
+    {
+      "input": [
+        "1010",
+        "1011"
+      ],
+      "expected": "10101"
+    },
+    {
+      "input": [
+        "0",
+        "0"
+      ],
+      "expected": "0"
+    },
+    {
+      "input": [
+        "1111",
+        "1111"
+      ],
+      "expected": "11110"
+    }
+  ],
+  "functionName": "addBinary",
+  "xpReward": 90
+}

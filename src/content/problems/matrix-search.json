@@ -1,0 +1,29 @@
+{
+  "id": "matrix-search",
+  "title": "Search a Sorted Matrix",
+  "difficulty": "Medium",
+  "tags": ["big-o", "binary-search", "matrix", "log-n"],
+  "description": "Given an `m × n` matrix where each row is sorted ascending AND the first integer of each row is greater than the last integer of the previous row (so the flattened matrix is sorted), return true if target is in the matrix.\n\n**The point**: a row-by-row linear scan is O(m·n). Treating the matrix as one big sorted array and doing binary search gives **O(log(m·n))** — for a 1000×1000 matrix, that's ~20 comparisons vs a million.",
+  "examples": [
+    { "input": "matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3", "output": "true" },
+    { "input": "same matrix, target = 13", "output": "false" }
+  ],
+  "starterCode": "function searchMatrix(matrix, target) {\n  // Treat the matrix as a flat sorted array of length m*n.\n  // Index k in the flat array maps to matrix[Math.floor(k/n)][k % n].\n  // Now do standard binary search.\n}\n",
+  "solution": "// O(log(m·n)) time, O(1) space.\nfunction searchMatrix(matrix, target) {\n  if (matrix.length === 0 || matrix[0].length === 0) return false;\n  const m = matrix.length;\n  const n = matrix[0].length;\n  let lo = 0, hi = m * n - 1;\n  while (lo <= hi) {\n    const mid = lo + Math.floor((hi - lo) / 2);\n    const v = matrix[Math.floor(mid / n)][mid % n];\n    if (v === target) return true;\n    if (v < target) lo = mid + 1;\n    else            hi = mid - 1;\n  }\n  return false;\n}\n",
+  "hints": [
+    "Don't search row by row — that throws away half the constraint.",
+    "Because the matrix is 'fully sorted in row-major order', you can pretend it's a single sorted array of length m·n.",
+    "Convert flat index k → row = k/n, col = k%n. Binary search over k in 0..m·n-1."
+  ],
+  "testCases": [
+    { "input": [[[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], 3], "expected": true },
+    { "input": [[[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], 13], "expected": false },
+    { "input": [[[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], 60], "expected": true, "description": "last element" },
+    { "input": [[[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], 1], "expected": true, "description": "first element" },
+    { "input": [[[1]], 1], "expected": true, "description": "1x1" },
+    { "input": [[[1]], 2], "expected": false },
+    { "input": [[], 5], "expected": false, "description": "empty matrix" }
+  ],
+  "functionName": "searchMatrix",
+  "xpReward": 140
+}

@@ -1,0 +1,72 @@
+{
+  "id": "array-palindrome",
+  "title": "Check if Array is Palindrome",
+  "difficulty": "Easy",
+  "tags": [
+    "array",
+    "two-pointers"
+  ],
+  "description": "Given an array, determine if it is a palindrome.\n\nAn array is a palindrome if it reads the same forwards and backwards.",
+  "examples": [
+    {
+      "input": "arr = [1, 2, 3, 2, 1]",
+      "output": "true"
+    },
+    {
+      "input": "arr = [1, 2, 3, 4]",
+      "output": "false"
+    },
+    {
+      "input": "arr = [1]",
+      "output": "true"
+    }
+  ],
+  "starterCode": "function isArrayPalindrome(arr) {\n  // your code here\n}",
+  "solution": "function isArrayPalindrome(arr) {\n  let left = 0, right = arr.length - 1;\n  \n  while (left < right) {\n    if (arr[left] !== arr[right]) return false;\n    left++;\n    right--;\n  }\n  \n  return true;\n}",
+  "hints": [
+    "Use two pointers: one at start, one at end.",
+    "Compare elements and move pointers inward.",
+    "Return false if any mismatch is found."
+  ],
+  "testCases": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expected": false
+    },
+    {
+      "input": [
+        [
+          1
+        ]
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        []
+      ],
+      "expected": true
+    }
+  ],
+  "functionName": "isArrayPalindrome",
+  "xpReward": 60
+}

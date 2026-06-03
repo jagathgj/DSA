@@ -1,0 +1,38 @@
+{
+  "id": "reverse-words",
+  "title": "Reverse Words in a String",
+  "difficulty": "Medium",
+  "tags": [
+    "string"
+  ],
+  "description": "Given an input string, reverse the order of words. Words are separated by spaces. Remove extra spaces.",
+  "examples": [
+    {
+      "input": "s = \"the sky is blue\"",
+      "output": "\"blue is sky the\""
+    }
+  ],
+  "starterCode": "function reverseWords(s) {\n  // your code here\n}",
+  "solution": "function reverseWords(s) {\n  return s.trim().split(/\\s+/).reverse().join(' ');\n}",
+  "hints": [
+    "Trim leading/trailing spaces",
+    "Split by one or more spaces",
+    "Reverse array and join"
+  ],
+  "testCases": [
+    {
+      "input": [
+        "the sky is blue"
+      ],
+      "expected": "blue is sky the"
+    },
+    {
+      "input": [
+        "  hello world  "
+      ],
+      "expected": "world hello"
+    }
+  ],
+  "functionName": "reverseWords",
+  "xpReward": 80
+}

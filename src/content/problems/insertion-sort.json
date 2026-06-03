@@ -1,0 +1,45 @@
+{
+  "id": "insertion-sort",
+  "title": "Insertion Sort",
+  "difficulty": "Easy",
+  "tags": [
+    "sorting",
+    "array"
+  ],
+  "description": "Implement insertion sort. Build sorted array one element at a time by inserting each element into its correct position.\n\nTime: O(n²), Space: O(1)",
+  "examples": [
+    {
+      "input": "arr = [12, 11, 13, 5, 6]",
+      "output": "[5, 6, 11, 12, 13]"
+    }
+  ],
+  "starterCode": "function insertionSort(arr) {\n  // your code here\n}",
+  "solution": "function insertionSort(arr) {\n  for (let i = 1; i < arr.length; i++) {\n    let key = arr[i], j = i - 1;\n    while (j >= 0 && arr[j] > key) {\n      arr[j + 1] = arr[j];\n      j--;\n    }\n    arr[j + 1] = key;\n  }\n  return arr;\n}",
+  "hints": [
+    "Start from second element",
+    "Compare with sorted portion",
+    "Shift larger elements right"
+  ],
+  "testCases": [
+    {
+      "input": [
+        [
+          12,
+          11,
+          13,
+          5,
+          6
+        ]
+      ],
+      "expected": [
+        5,
+        6,
+        11,
+        12,
+        13
+      ]
+    }
+  ],
+  "functionName": "insertionSort",
+  "xpReward": 80
+}

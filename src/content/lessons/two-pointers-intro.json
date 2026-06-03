@@ -1,0 +1,28 @@
+{
+  "id": "two-pointers-intro",
+  "moduleId": "two-pointers",
+  "title": "Two Pointers",
+  "subtitle": "Walk an array with two indexes",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 12,
+  "xpReward": 90,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "The pattern",
+      "body": "Many array problems get easier when you walk with **two indexes** instead of one. Often one starts at the front, one at the back, and they move toward each other based on what they see."
+    },
+    {
+      "type": "analogy",
+      "emoji": "👯",
+      "title": "Two friends meeting in the middle",
+      "body": "Two friends start at opposite ends of a street. Each takes a step based on a rule. They keep walking until they meet — and along the way they've checked every important pair."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Two-sum in a SORTED array — O(n) instead of O(n²)\nfunction twoSum(arr, target) {\n  let l = 0, r = arr.length - 1;\n  while (l < r) {\n    const s = arr[l] + arr[r];\n    if (s === target) return [l, r];\n    if (s < target) l++;\n    else r--;\n  }\n  return null;\n}\n\nconsole.log(twoSum([1, 2, 4, 6, 8, 11], 10)); // [1, 4]",
+      "runnable": true
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "backtracking-intro",
+  "moduleId": "backtracking",
+  "title": "Backtracking",
+  "subtitle": "Try, fail, undo, try something else",
+  "difficulty": "Advanced",
+  "estimatedMinutes": 15,
+  "xpReward": 110,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "What's backtracking?",
+      "body": "**Backtracking** explores all options by making a choice, recursing, and **undoing** if it doesn't work. It's how you generate permutations, solve mazes, sudoku, and the classic N-queens puzzle."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🧩",
+      "title": "Solving a maze with breadcrumbs",
+      "body": "You walk down a path. Hit a dead end. Backtrack to the last fork. Try a different path. Drop breadcrumbs so you don't re-enter what you've already explored. Repeat until you find the exit — or prove there isn't one."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Generate all permutations of an array\nfunction permutations(arr) {\n  const result = [];\n  function backtrack(current, remaining) {\n    if (remaining.length === 0) {\n      result.push([...current]);\n      return;\n    }\n    for (let i = 0; i < remaining.length; i++) {\n      current.push(remaining[i]);                                // choose\n      backtrack(current, [...remaining.slice(0, i), ...remaining.slice(i + 1)]); // explore\n      current.pop();                                              // un-choose\n    }\n  }\n  backtrack([], arr);\n  return result;\n}\n\nconsole.log(permutations([1, 2, 3]));",
+      "runnable": true
+    }
+  ]
+}

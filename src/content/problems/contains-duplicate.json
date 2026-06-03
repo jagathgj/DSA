@@ -1,0 +1,25 @@
+{
+  "id": "contains-duplicate",
+  "title": "Contains Duplicate",
+  "difficulty": "Easy",
+  "tags": ["array", "hash-map", "set"],
+  "description": "Given an integer array `nums`, return `true` if any value appears at least twice, otherwise return `false`.",
+  "examples": [
+    { "input": "nums = [1,2,3,1]", "output": "true" },
+    { "input": "nums = [1,2,3,4]", "output": "false" }
+  ],
+  "starterCode": "function containsDuplicate(nums) {\n  // your code here\n}",
+  "solution": "function containsDuplicate(nums) {\n  return new Set(nums).size !== nums.length;\n}",
+  "hints": [
+    "Sets automatically dedupe — if the Set is smaller than the array, there was a duplicate.",
+    "Alternatively: walk through and track seen values in a Set."
+  ],
+  "testCases": [
+    { "input": [[1, 2, 3, 1]], "expected": true },
+    { "input": [[1, 2, 3, 4]], "expected": false },
+    { "input": [[]], "expected": false },
+    { "input": [[1, 1, 1, 1]], "expected": true }
+  ],
+  "functionName": "containsDuplicate",
+  "xpReward": 50
+}

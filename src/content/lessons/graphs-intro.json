@@ -1,0 +1,46 @@
+{
+  "id": "graphs-intro",
+  "moduleId": "graphs",
+  "title": "Graphs: Networks of Things",
+  "subtitle": "Nodes plus edges. That's it.",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 16,
+  "xpReward": 110,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "What's a graph?",
+      "body": "A **graph** is just **nodes** (also called vertices) connected by **edges**. Unlike trees, there's no root and connections can form loops. Edges can point one way (**directed**) or both (**undirected**)."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🌐",
+      "title": "Social network",
+      "body": "Every person is a node. Every friendship is an edge. Cities connected by roads, web pages connected by links, computers connected by cables — all graphs."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Adjacency list — most common representation\nconst graph = {\n  A: [\"B\", \"C\"],\n  B: [\"A\", \"D\"],\n  C: [\"A\", \"D\"],\n  D: [\"B\", \"C\"],\n};\n\nconsole.log(graph.A); // [\"B\", \"C\"] — A's neighbors",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "The two great explorations",
+      "body": "**BFS (Breadth-First Search)** explores level by level using a queue. **DFS (Depth-First Search)** dives deep first using a stack (or recursion). You'll use one of these to solve most graph problems."
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "g1",
+          "type": "mcq",
+          "question": "BFS typically uses which data structure?",
+          "options": ["Stack", "Queue", "Heap", "Hash map"],
+          "correct": 1,
+          "explanation": "Queue gives BFS its level-by-level order. Stack gives DFS its depth-first behavior."
+        }
+      ]
+    }
+  ]
+}

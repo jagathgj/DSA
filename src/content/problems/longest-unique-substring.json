@@ -1,0 +1,30 @@
+{
+  "id": "longest-unique-substring",
+  "title": "Longest Substring Without Repeats",
+  "difficulty": "Medium",
+  "tags": ["big-o", "sliding-window", "string"],
+  "description": "Given a string `s`, return the length of the longest contiguous substring with all unique characters.\n\n**The point**: naive O(n³) checks every substring. Sliding window + a Map of last-seen indices gets you to **O(n)**.",
+  "examples": [
+    { "input": "s = \"abcabcbb\"", "output": "3", "explanation": "'abc' has length 3." },
+    { "input": "s = \"bbbbb\"", "output": "1", "explanation": "'b'." },
+    { "input": "s = \"pwwkew\"", "output": "3", "explanation": "'wke'." }
+  ],
+  "starterCode": "function longestUnique(s) {\n  // Two pointers: left and right.\n  // Walk right through the string.\n  //   If s[right] is already in the window, move left past the previous occurrence.\n  // Track max window length.\n  // A Map<char, lastIndex> lets you jump left in O(1).\n}\n",
+  "solution": "// O(n) time, O(min(n, alphabet)) space.\nfunction longestUnique(s) {\n  const lastSeen = new Map();\n  let left = 0;\n  let best = 0;\n  for (let right = 0; right < s.length; right++) {\n    const ch = s[right];\n    // If we've seen this char inside the current window, move left past it\n    if (lastSeen.has(ch) && lastSeen.get(ch) >= left) {\n      left = lastSeen.get(ch) + 1;\n    }\n    lastSeen.set(ch, right);\n    best = Math.max(best, right - left + 1);\n  }\n  return best;\n}\n",
+  "hints": [
+    "Brute force: try every (i, j), check if substring i..j has all unique chars. O(n³).",
+    "Better: a sliding window. Extend right; when you hit a duplicate, retract left.",
+    "Use a Map to remember the most recent index of each character. Then 'retract left' is O(1)."
+  ],
+  "testCases": [
+    { "input": ["abcabcbb"], "expected": 3, "description": "classic" },
+    { "input": ["bbbbb"], "expected": 1, "description": "all same character" },
+    { "input": ["pwwkew"], "expected": 3, "description": "non-contiguous duplicates" },
+    { "input": [""], "expected": 0, "description": "empty string" },
+    { "input": ["a"], "expected": 1, "description": "single char" },
+    { "input": ["abcdefg"], "expected": 7, "description": "entire string is unique" },
+    { "input": ["dvdf"], "expected": 3, "description": "tricky: 'vdf'" }
+  ],
+  "functionName": "longestUnique",
+  "xpReward": 140
+}

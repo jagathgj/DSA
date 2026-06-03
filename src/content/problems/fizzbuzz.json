@@ -1,0 +1,25 @@
+{
+  "id": "fizzbuzz",
+  "title": "Fizz Buzz",
+  "difficulty": "Easy",
+  "tags": ["array", "math"],
+  "description": "Given an integer `n`, return an array `answer` (1-indexed) where:\n\n- answer[i] = \"FizzBuzz\" if i is divisible by 3 and 5\n- answer[i] = \"Fizz\" if i is divisible by 3\n- answer[i] = \"Buzz\" if i is divisible by 5\n- answer[i] = i (as a string) otherwise",
+  "examples": [
+    { "input": "n = 3", "output": "[\"1\",\"2\",\"Fizz\"]" },
+    { "input": "n = 5", "output": "[\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\"]" }
+  ],
+  "starterCode": "function fizzBuzz(n) {\n  // your code here\n}",
+  "solution": "function fizzBuzz(n) {\n  const out = [];\n  for (let i = 1; i <= n; i++) {\n    if (i % 15 === 0) out.push('FizzBuzz');\n    else if (i % 3 === 0) out.push('Fizz');\n    else if (i % 5 === 0) out.push('Buzz');\n    else out.push(String(i));\n  }\n  return out;\n}",
+  "hints": [
+    "Check divisibility by 15 FIRST — otherwise you'll catch threes before fizzbuzzes.",
+    "Use % (modulo) — it returns 0 when divisible.",
+    "Push the result as a string. Even the numbers."
+  ],
+  "testCases": [
+    { "input": [3], "expected": ["1", "2", "Fizz"] },
+    { "input": [5], "expected": ["1", "2", "Fizz", "4", "Buzz"] },
+    { "input": [15], "expected": ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz"] }
+  ],
+  "functionName": "fizzBuzz",
+  "xpReward": 60
+}

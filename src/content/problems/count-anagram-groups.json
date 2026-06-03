@@ -1,0 +1,28 @@
+{
+  "id": "count-anagram-groups",
+  "title": "Count Anagram Groups",
+  "difficulty": "Medium",
+  "tags": ["big-o", "hash-map", "string"],
+  "description": "Given an array of strings, count how many distinct groups of anagrams there are.\n\nExample: `['eat', 'tea', 'tan', 'ate', 'nat', 'bat']` has 3 groups — {eat,tea,ate}, {tan,nat}, {bat}.\n\n**The point**: brute-force pair comparison is O(n²·k). Hash on a canonical signature → **O(n·k log k)** with sorted-letter key, or **O(n·k)** with count signature.",
+  "examples": [
+    { "input": "[\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]", "output": "3" },
+    { "input": "[\"abc\",\"bca\",\"cab\"]", "output": "1", "explanation": "All three are anagrams." }
+  ],
+  "starterCode": "function countAnagramGroups(strs) {\n  // For each word, compute a canonical 'signature' that all its anagrams share.\n  // Put signatures into a Set. The answer is the Set's size.\n  // Sorting letters works as a signature. Counting letters does too (and is faster for long words).\n}\n",
+  "solution": "// O(n · k log k) time using sorted-letter signature.\nfunction countAnagramGroups(strs) {\n  const signatures = new Set();\n  for (const s of strs) {\n    signatures.add([...s].sort().join(''));\n  }\n  return signatures.size;\n}\n\n// O(n · k) with count signature:\n// function countAnagramGroups(strs) {\n//   const signatures = new Set();\n//   for (const s of strs) {\n//     const counts = new Array(26).fill(0);\n//     for (const c of s) counts[c.charCodeAt(0) - 97]++;\n//     signatures.add(counts.join(','));\n//   }\n//   return signatures.size;\n// }\n",
+  "hints": [
+    "Anagrams share the same letters in the same counts. You need a signature that's identical for any two anagrams.",
+    "Sorting the letters: 'eat' → 'aet', 'tea' → 'aet'. Use the sorted form.",
+    "Put signatures in a Set, then return its size."
+  ],
+  "testCases": [
+    { "input": [["eat", "tea", "tan", "ate", "nat", "bat"]], "expected": 3 },
+    { "input": [["abc", "bca", "cab"]], "expected": 1 },
+    { "input": [[]], "expected": 0 },
+    { "input": [[""]], "expected": 1 },
+    { "input": [["a", "b", "c"]], "expected": 3 },
+    { "input": [["aabb", "abab", "baba", "bbaa"]], "expected": 1 }
+  ],
+  "functionName": "countAnagramGroups",
+  "xpReward": 130
+}

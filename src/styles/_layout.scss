@@ -1,0 +1,230 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/motion' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
+
+// =============================================================================
+// App shell
+// =============================================================================
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  background: $background;
+  color: $text-primary;
+}
+
+// --- Sidebar ---------------------------------------------------------------
+.app-sidenav {
+  width: 16rem;
+  flex-shrink: 0;
+  background: $layer-01;
+  border-right: 1px solid $border-subtle-01;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+
+  @include breakpoint-down(md) {
+    display: none;
+  }
+}
+
+.app-sidenav__brand {
+  padding: $spacing-05 $spacing-05;
+  border-bottom: 1px solid $border-subtle-01;
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  text-decoration: none;
+}
+
+.app-sidenav__brand-mark {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 4px;
+  background: $background-brand;
+  color: $text-on-color;
+  display: grid;
+  place-items: center;
+}
+
+.app-sidenav__brand-name {
+  @include type-style('heading-compact-02');
+  color: $text-primary;
+  font-family: 'IBM Plex Serif', serif;
+  font-weight: 600;
+}
+
+.app-sidenav__brand-tag {
+  @include type-style('label-01');
+  color: $text-secondary;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.app-sidenav__section-label {
+  @include type-style('label-01');
+  color: $text-secondary;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: $spacing-05 $spacing-05 $spacing-02;
+}
+
+.app-sidenav__nav {
+  display: flex;
+  flex-direction: column;
+  padding: 0 $spacing-03 $spacing-05;
+  gap: 2px;
+}
+
+.app-sidenav__link {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  padding: $spacing-03 $spacing-04;
+  text-decoration: none;
+  color: $text-secondary;
+  @include type-style('body-compact-01');
+  border-radius: 2px;
+  transition:
+    background $duration-fast-02 motion(standard, productive),
+    color $duration-fast-02 motion(standard, productive);
+
+  &:hover {
+    background: $layer-hover-01;
+    color: $text-primary;
+  }
+
+  &--active {
+    background: $layer-selected-01;
+    color: $text-primary;
+    font-weight: 600;
+    box-shadow: inset 3px 0 0 $border-interactive;
+  }
+
+  svg {
+    color: inherit;
+    flex-shrink: 0;
+  }
+}
+
+.app-sidenav__footer {
+  margin-top: auto;
+  padding: $spacing-05;
+  border-top: 1px solid $border-subtle-01;
+  @include type-style('label-01');
+  color: $text-helper;
+}
+
+// --- Main area -------------------------------------------------------------
+.app-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-topbar {
+  height: 3rem;
+  background: $layer-01;
+  border-bottom: 1px solid $border-subtle-01;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $spacing-05;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.app-topbar__title {
+  @include type-style('heading-compact-01');
+  color: $text-primary;
+  font-family: 'IBM Plex Serif', serif;
+}
+
+.app-topbar__meta {
+  display: flex;
+  align-items: center;
+  gap: $spacing-05;
+  @include type-style('body-compact-01');
+  color: $text-secondary;
+
+  @include breakpoint-down(sm) {
+    gap: $spacing-04;
+  }
+}
+
+.app-topbar__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+  color: $text-primary;
+  font-variant-numeric: tabular-nums;
+
+  svg {
+    color: $icon-interactive;
+  }
+}
+
+.app-topbar__mobile-toggle {
+  display: none;
+  @include breakpoint-down(md) {
+    display: inline-flex;
+  }
+}
+
+.app-content {
+  padding: $spacing-07 $spacing-07;
+  max-width: 80rem;
+  width: 100%;
+  margin: 0 auto;
+
+  @include breakpoint-down(md) {
+    padding: $spacing-05;
+  }
+}
+
+// --- Mobile drawer ---------------------------------------------------------
+.app-mobile-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: $overlay;
+  z-index: 50;
+
+  @include breakpoint-up(md) {
+    display: none;
+  }
+}
+
+.app-mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 16rem;
+  background: $layer-01;
+  border-right: 1px solid $border-subtle-01;
+  z-index: 51;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  animation: drawerSlide $duration-fast-02 motion(standard, productive);
+
+  @include breakpoint-up(md) {
+    display: none;
+  }
+}
+
+@keyframes drawerSlide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

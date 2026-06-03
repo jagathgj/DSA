@@ -1,0 +1,70 @@
+{
+  "id": "merge-sorted-lists",
+  "title": "Merge Two Sorted Linked Lists",
+  "difficulty": "Easy",
+  "tags": [
+    "linked-list",
+    "two-pointers"
+  ],
+  "description": "Merge two sorted linked lists into one sorted list.",
+  "examples": [
+    {
+      "input": "l1 = 1->2->4, l2 = 1->3->4",
+      "output": "1->1->2->3->4->4"
+    }
+  ],
+  "starterCode": "function mergeTwoLists(l1, l2) {\n  // your code here\n}",
+  "solution": "function mergeTwoLists(l1, l2) {\n  const dummy = { next: null };\n  let curr = dummy;\n  \n  while (l1 && l2) {\n    if (l1.val <= l2.val) {\n      curr.next = l1;\n      l1 = l1.next;\n    } else {\n      curr.next = l2;\n      l2 = l2.next;\n    }\n    curr = curr.next;\n  }\n  \n  curr.next = l1 || l2;\n  return dummy.next;\n}",
+  "hints": [
+    "Use dummy node",
+    "Compare values and attach smaller",
+    "Attach remaining list at end"
+  ],
+  "testCases": [
+    {
+      "input": [
+        {
+          "val": 1,
+          "next": {
+            "val": 2,
+            "next": {
+              "val": 4,
+              "next": null
+            }
+          }
+        },
+        {
+          "val": 1,
+          "next": {
+            "val": 3,
+            "next": {
+              "val": 4,
+              "next": null
+            }
+          }
+        }
+      ],
+      "expected": {
+        "val": 1,
+        "next": {
+          "val": 1,
+          "next": {
+            "val": 2,
+            "next": {
+              "val": 3,
+              "next": {
+                "val": 4,
+                "next": {
+                  "val": 4,
+                  "next": null
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "functionName": "mergeTwoLists",
+  "xpReward": 90
+}

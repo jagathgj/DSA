@@ -1,0 +1,62 @@
+{
+  "id": "hash-maps-intro",
+  "moduleId": "hash-maps",
+  "title": "Hash Maps: Lightning-Fast Lookups",
+  "subtitle": "Find anything by name in constant time",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 14,
+  "xpReward": 90,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "The superpower",
+      "body": "A **hash map** (or **object** or **Map** in JS) stores key-value pairs. The magic: looking up a value by its key is **O(1)** — almost instant — no matter how many keys you have."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🗄️",
+      "title": "A filing cabinet with labeled drawers",
+      "body": "Imagine a cabinet where every drawer has a unique name on it. You don't search drawer by drawer — you walk straight to 'TaxReturns2024' and pull it open. That's how a hash map feels."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Object syntax\nconst ages = { maya: 28, liam: 32, zoe: 25 };\nconsole.log(ages.maya);     // 28\nconsole.log(ages[\"liam\"]);  // 32\n\n// Map (better for non-string keys, preserves insertion order)\nconst scores = new Map();\nscores.set(\"high\", 100);\nscores.set(\"mid\", 50);\nconsole.log(scores.get(\"high\")); // 100\nconsole.log(scores.has(\"low\"));  // false",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "Classic use: count things",
+      "body": "Hash maps are perfect for counting. Walk through a list, use each item as a key, increment its value. Need to find duplicates, frequencies, or anagrams? Reach for a hash map."
+    },
+    {
+      "type": "challenge",
+      "prompt": "Write `firstDuplicate(arr)` that returns the first value that appears twice, or -1 if none.",
+      "starterCode": "function firstDuplicate(arr) {\n  // your code here\n}",
+      "solution": "function firstDuplicate(arr) {\n  const seen = new Set();\n  for (const x of arr) {\n    if (seen.has(x)) return x;\n    seen.add(x);\n  }\n  return -1;\n}",
+      "testCases": [
+        { "input": [[1, 2, 3, 2, 1]], "expected": 2 },
+        { "input": [[1, 2, 3, 4]], "expected": -1 },
+        { "input": [[5, 5]], "expected": 5 },
+        { "input": [[]], "expected": -1 }
+      ],
+      "hints": [
+        "Use a Set to remember which values you've already seen.",
+        "Walk through the array once. The first repeat is your answer."
+      ]
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "h1",
+          "type": "mcq",
+          "question": "Average time to look up a value by key in a hash map?",
+          "options": ["O(n)", "O(log n)", "O(1)", "O(n²)"],
+          "correct": 2,
+          "explanation": "Hash maps offer average O(1) lookups — that's their defining feature."
+        }
+      ]
+    }
+  ]
+}

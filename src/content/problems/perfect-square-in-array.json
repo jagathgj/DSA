@@ -1,0 +1,28 @@
+{
+  "id": "perfect-square-in-array",
+  "title": "Find Biggest Perfect Square in Array",
+  "difficulty": "Easy",
+  "tags": ["array", "math"],
+  "description": "Given an array of integers, find the biggest perfect square number in the array.\n\nReturn -1 if no perfect square exists.",
+  "examples": [
+    { "input": "arr = [16, 20, 25, 2, 3, 10]", "output": "25" },
+    { "input": "arr = [36, 64, 10, 16, 29, 25]", "output": "64" },
+    { "input": "arr = [2, 3, 5, 7]", "output": "-1" }
+  ],
+  "starterCode": "function biggestPerfectSquare(arr) {\n  // your code here\n}",
+  "solution": "function biggestPerfectSquare(arr) {\n  let maxSquare = -1;\n  \n  for (const num of arr) {\n    if (num > 0) {\n      const sqrt = Math.sqrt(num);\n      if (Number.isInteger(sqrt)) {\n        maxSquare = Math.max(maxSquare, num);\n      }\n    }\n  }\n  \n  return maxSquare;\n}",
+  "hints": [
+    "A perfect square has an integer square root.",
+    "Use Math.sqrt() to find the square root.",
+    "Check if the square root is an integer using Number.isInteger()."
+  ],
+  "testCases": [
+    { "input": [[16, 20, 25, 2, 3, 10]], "expected": 25 },
+    { "input": [[36, 64, 10, 16, 29, 25]], "expected": 64 },
+    { "input": [[2, 3, 5, 7]], "expected": -1 },
+    { "input": [[1, 4, 9, 16]], "expected": 16 },
+    { "input": [[100]], "expected": 100 }
+  ],
+  "functionName": "biggestPerfectSquare",
+  "xpReward": 70
+}

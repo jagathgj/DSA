@@ -1,0 +1,72 @@
+{
+  "id": "stacks-intro",
+  "moduleId": "stacks",
+  "title": "Stacks: Last In, First Out",
+  "subtitle": "Like a stack of plates",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 10,
+  "xpReward": 70,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "What's a stack?",
+      "body": "A **stack** lets you do two things: **push** something on top, or **pop** the top thing off. That's it. You can't reach into the middle. The last thing in is the first thing out — we call that **LIFO**."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🥞",
+      "title": "Pancakes",
+      "body": "You stack pancakes from the bottom up. To eat one, you take from the top. The one you cooked last gets eaten first. The first pancake you cooked is buried under everything."
+    },
+    {
+      "type": "diagram",
+      "variant": "stack",
+      "caption": "Push adds to the top. Pop removes from the top.",
+      "data": {
+        "values": [10, 20, 30]
+      }
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "const stack = [];\n\nstack.push(\"A\");   // [A]\nstack.push(\"B\");   // [A, B]\nstack.push(\"C\");   // [A, B, C]\n\nconst top = stack.pop();  // \"C\"\nconsole.log(top);          // \"C\"\nconsole.log(stack);        // [\"A\", \"B\"]",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "Where stacks show up",
+      "body": "Your browser's back button is a stack. Pressing back pops the current page. Function calls in JavaScript live on a **call stack**. The 'undo' feature in any editor — also a stack."
+    },
+    {
+      "type": "challenge",
+      "prompt": "Write `isBalanced(s)` that returns true if every opening bracket `(` has a matching `)` and they're nested correctly.",
+      "starterCode": "function isBalanced(s) {\n  // your code here\n}",
+      "solution": "function isBalanced(s) {\n  const stack = [];\n  for (const c of s) {\n    if (c === '(') stack.push(c);\n    else if (c === ')') {\n      if (stack.length === 0) return false;\n      stack.pop();\n    }\n  }\n  return stack.length === 0;\n}",
+      "testCases": [
+        { "input": ["(())"], "expected": true },
+        { "input": ["()()"], "expected": true },
+        { "input": ["((("], "expected": false },
+        { "input": [")("], "expected": false },
+        { "input": [""], "expected": true }
+      ],
+      "hints": [
+        "Push opening brackets onto a stack.",
+        "When you see a closing bracket, pop the stack. If it's empty, mismatch.",
+        "At the end, the stack should be empty."
+      ]
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "st1",
+          "type": "mcq",
+          "question": "Stack ordering is:",
+          "options": ["FIFO", "LIFO", "Random", "Sorted"],
+          "correct": 1,
+          "explanation": "LIFO = Last In, First Out. The most recently added item is the first to come out."
+        }
+      ]
+    }
+  ]
+}

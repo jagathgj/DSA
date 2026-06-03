@@ -1,0 +1,28 @@
+{
+  "id": "loop-counter",
+  "title": "Count Loop Operations",
+  "difficulty": "Easy",
+  "tags": ["big-o", "analysis"],
+  "description": "Return how many times the `count++` line would execute for this loop nest with input n:\n\n```\nfor (let i = 0; i < n; i++) {\n  for (let j = i; j < n; j++) {\n    count++;\n  }\n}\n```\n\nThe analytical answer is **n(n+1)/2** — confirm by writing a function that returns it directly (no actual nested loop, please — that's the whole point).\n\n**The point**: estimate complexity by counting iterations. Outer i runs n times. Inner j runs n-i times. Total = n + (n-1) + ... + 1 = n(n+1)/2. Even though it looks like 'half' the work, it's still O(n²).",
+  "examples": [
+    { "input": "n = 1", "output": "1" },
+    { "input": "n = 4", "output": "10", "explanation": "4 + 3 + 2 + 1 = 10." }
+  ],
+  "starterCode": "function loopCount(n) {\n  // Don't actually run the nested loop — too slow for large n.\n  // Return the closed-form n(n+1)/2 in O(1) time.\n}\n",
+  "solution": "// O(1) time — direct formula.\nfunction loopCount(n) {\n  return (n * (n + 1)) / 2;\n}\n\n// Why the loop is n(n+1)/2:\n// outer i = 0: inner runs n   times\n// outer i = 1: inner runs n-1 times\n// ...\n// outer i = n-1: inner runs 1 time\n// Total: 1 + 2 + ... + n = n(n+1)/2.  Big O: O(n²).\n",
+  "hints": [
+    "Sum the inner-loop counts across all outer iterations.",
+    "When i = 0, inner runs n times. When i = 1, n-1 times. ... When i = n-1, 1 time.",
+    "Sum of 1+2+...+n is n(n+1)/2 — Gauss's formula."
+  ],
+  "testCases": [
+    { "input": [1], "expected": 1 },
+    { "input": [4], "expected": 10 },
+    { "input": [10], "expected": 55 },
+    { "input": [100], "expected": 5050 },
+    { "input": [0], "expected": 0 },
+    { "input": [1000], "expected": 500500 }
+  ],
+  "functionName": "loopCount",
+  "xpReward": 70
+}

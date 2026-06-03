@@ -1,0 +1,49 @@
+{
+  "id": "palindrome-linked-list",
+  "title": "Check if Linked List is Palindrome",
+  "difficulty": "Easy",
+  "tags": [
+    "linked-list",
+    "two-pointers"
+  ],
+  "description": "Given the head of a singly linked list, determine if it is a palindrome.",
+  "examples": [
+    {
+      "input": "head = 1->2->2->1",
+      "output": "true"
+    },
+    {
+      "input": "head = 1->2",
+      "output": "false"
+    }
+  ],
+  "starterCode": "function isPalindromeList(head) {\n  // your code here\n}",
+  "solution": "function isPalindromeList(head) {\n  const vals = [];\n  let curr = head;\n  \n  while (curr) {\n    vals.push(curr.val);\n    curr = curr.next;\n  }\n  \n  let left = 0, right = vals.length - 1;\n  while (left < right) {\n    if (vals[left++] !== vals[right--]) return false;\n  }\n  \n  return true;\n}",
+  "hints": [
+    "Convert to array",
+    "Use two pointers to check palindrome",
+    "Or find middle and reverse second half"
+  ],
+  "testCases": [
+    {
+      "input": [
+        {
+          "val": 1,
+          "next": {
+            "val": 2,
+            "next": {
+              "val": 2,
+              "next": {
+                "val": 1,
+                "next": null
+              }
+            }
+          }
+        }
+      ],
+      "expected": true
+    }
+  ],
+  "functionName": "isPalindromeList",
+  "xpReward": 90
+}

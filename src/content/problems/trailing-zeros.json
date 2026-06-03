@@ -1,0 +1,29 @@
+{
+  "id": "trailing-zeros",
+  "title": "Trailing Zeros of n!",
+  "difficulty": "Medium",
+  "tags": ["big-o", "math", "log-n"],
+  "description": "Count how many trailing zeros appear at the end of n! (n factorial).\n\nFor n=5, 5! = 120 → 1 trailing zero. For n=10, 10! = 3,628,800 → 2 trailing zeros.\n\n**The point of this problem**: don't compute n! directly (it'd overflow for n>20 and be O(n) work per multiplication). There's a beautiful O(log n) trick: count the factors of 5 in 1·2·3·...·n.",
+  "examples": [
+    { "input": "n = 5", "output": "1", "explanation": "5! = 120 ends in one zero." },
+    { "input": "n = 25", "output": "6", "explanation": "Six factors of 5 contribute (and 25 contributes two of them)." }
+  ],
+  "starterCode": "function trailingZeros(n) {\n  // Each trailing zero comes from a factor of 10 = 2 × 5 in n!.\n  // Factors of 2 are plentiful — the bottleneck is factors of 5.\n  // Count: how many multiples of 5 are in 1..n?  Plus multiples of 25,\n  // plus multiples of 125, etc.\n}\n",
+  "solution": "// O(log n) — we divide n by 5 each iteration.\n//   n=100: 100/5=20, 20/5=4, 4/5=0 → 20 + 4 = 24 trailing zeros\n// We never compute the factorial itself.\nfunction trailingZeros(n) {\n  let count = 0;\n  while (n > 0) {\n    n = Math.floor(n / 5);\n    count += n;\n  }\n  return count;\n}\n",
+  "hints": [
+    "Trailing zeros come from factors of 10 in the product. 10 = 2 × 5.",
+    "There are always more factors of 2 than factors of 5 — so count the 5s.",
+    "Every 5th number contributes a factor of 5. Every 25th contributes an extra one. Every 125th contributes another. → n/5 + n/25 + n/125 + …"
+  ],
+  "testCases": [
+    { "input": [5], "expected": 1, "description": "5! = 120" },
+    { "input": [10], "expected": 2, "description": "10! = 3,628,800" },
+    { "input": [25], "expected": 6, "description": "extra factor from 25 = 5²" },
+    { "input": [100], "expected": 24, "description": "20 + 4" },
+    { "input": [0], "expected": 0, "description": "0! = 1" },
+    { "input": [4], "expected": 0, "description": "no factor of 5 yet" },
+    { "input": [1000], "expected": 249, "description": "200+40+8+1" }
+  ],
+  "functionName": "trailingZeros",
+  "xpReward": 130
+}

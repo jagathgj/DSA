@@ -1,0 +1,54 @@
+{
+  "id": "queues-intro",
+  "moduleId": "queues",
+  "title": "Queues: First In, First Out",
+  "subtitle": "Like people waiting in line",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 10,
+  "xpReward": 70,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "What's a queue?",
+      "body": "A **queue** is like a stack's polite twin. You **enqueue** items at the back. You **dequeue** them from the front. First in, first out — **FIFO**."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🧑‍🤝‍🧑",
+      "title": "The grocery line",
+      "body": "You walk into the store, see five people ahead of you, and join the back. When the cashier is ready, the person at the front goes — not you. Everyone moves up. That's a queue."
+    },
+    {
+      "type": "diagram",
+      "variant": "queue",
+      "caption": "Enter at the back. Leave from the front.",
+      "data": {
+        "values": [10, 20, 30, 40]
+      }
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "const queue = [];\n\nqueue.push(\"Maya\");    // back\nqueue.push(\"Liam\");\nqueue.push(\"Zoe\");\n\nconst served = queue.shift();  // front\nconsole.log(served);            // \"Maya\"\nconsole.log(queue);             // [\"Liam\", \"Zoe\"]",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "Where queues show up",
+      "body": "Print jobs. Customer support tickets. Tasks waiting for a CPU. Most importantly for DSA: **BFS (breadth-first search)** on trees and graphs uses a queue to explore level by level."
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "q1",
+          "type": "mcq",
+          "question": "Queue ordering is:",
+          "options": ["LIFO", "FIFO", "Random", "Sorted"],
+          "correct": 1,
+          "explanation": "FIFO = First In, First Out. The earliest arrival leaves first."
+        }
+      ]
+    }
+  ]
+}

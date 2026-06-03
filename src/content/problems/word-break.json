@@ -1,0 +1,47 @@
+{
+  "id": "word-break",
+  "title": "Word Break Problem",
+  "difficulty": "Medium",
+  "tags": [
+    "string",
+    "dynamic-programming"
+  ],
+  "description": "Given a string and a dictionary of words, determine if the string can be segmented into space-separated sequence of dictionary words.",
+  "examples": [
+    {
+      "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+      "output": "true"
+    }
+  ],
+  "starterCode": "function wordBreak(s, wordDict) {\n  // your code here\n}",
+  "solution": "function wordBreak(s, wordDict) {\n  const wordSet = new Set(wordDict);\n  const dp = new Array(s.length + 1).fill(false);\n  dp[0] = true;\n  \n  for (let i = 1; i <= s.length; i++) {\n    for (let j = 0; j < i; j++) {\n      if (dp[j] && wordSet.has(s.substring(j, i))) {\n        dp[i] = true;\n        break;\n      }\n    }\n  }\n  \n  return dp[s.length];\n}",
+  "hints": [
+    "Use DP: dp[i] = can we break s[0...i]",
+    "For each position, check all possible word endings",
+    "Use set for O(1) word lookup"
+  ],
+  "testCases": [
+    {
+      "input": [
+        "leetcode",
+        [
+          "leet",
+          "code"
+        ]
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "applepenapple",
+        [
+          "apple",
+          "pen"
+        ]
+      ],
+      "expected": true
+    }
+  ],
+  "functionName": "wordBreak",
+  "xpReward": 140
+}

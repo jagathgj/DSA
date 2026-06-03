@@ -1,0 +1,27 @@
+{
+  "id": "find-duplicate-set",
+  "title": "Find the Duplicate (O(n))",
+  "difficulty": "Easy",
+  "tags": ["big-o", "set", "array"],
+  "description": "Given an array of integers, return the FIRST value that appears more than once. If no duplicate exists, return -1.\n\n**The point of this problem**: a naive nested-loop solution is O(n²). Using a Set, you can do it in O(n) time with O(n) extra space — a classic time/space trade.",
+  "examples": [
+    { "input": "nums = [1, 2, 3, 2, 4]", "output": "2", "explanation": "2 appears at indices 1 and 3 — the first repeat we encounter is 2." },
+    { "input": "nums = [1, 2, 3, 4]", "output": "-1", "explanation": "All unique." }
+  ],
+  "starterCode": "function findDuplicate(nums) {\n  // Aim for O(n) time. Hint: a Set lets you ask 'have I seen this?' in O(1).\n}\n",
+  "solution": "// O(n) time, O(n) space.\n// We walk the array once. For each value, ask: 'has the Set seen it?'.\n// If yes → return it. If no → add and continue.\nfunction findDuplicate(nums) {\n  const seen = new Set();\n  for (const x of nums) {\n    if (seen.has(x)) return x;  // first repeat encountered\n    seen.add(x);\n  }\n  return -1;\n}\n",
+  "hints": [
+    "Brute force: for each i, check every j > i. That's O(n²).",
+    "Could you remember every number you've seen as you go?",
+    "A JavaScript Set has O(1) average has() and add()."
+  ],
+  "testCases": [
+    { "input": [[1, 2, 3, 2, 4]], "expected": 2, "description": "first duplicate is 2" },
+    { "input": [[1, 2, 3, 4]], "expected": -1, "description": "no duplicates" },
+    { "input": [[5, 5]], "expected": 5, "description": "two-element array" },
+    { "input": [[]], "expected": -1, "description": "empty" },
+    { "input": [[3, 1, 4, 1, 5, 9, 2, 6, 5]], "expected": 1, "description": "1 comes before 5 as a repeat" }
+  ],
+  "functionName": "findDuplicate",
+  "xpReward": 80
+}

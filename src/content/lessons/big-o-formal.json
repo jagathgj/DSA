@@ -1,0 +1,124 @@
+{
+  "id": "big-o-formal",
+  "moduleId": "big-o",
+  "title": "The Formal Definition",
+  "subtitle": "What 'O(f(n))' actually means",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 18,
+  "xpReward": 100,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "Beyond intuition",
+      "body": "We've been describing Big O loosely — 'how time grows'. That's fine for daily use, but Big O has a precise mathematical definition. Knowing it lets you reason about borderline cases and answer questions like *'is O(n²+ n) really the same as O(n²)?'*"
+    },
+    {
+      "type": "explanation",
+      "heading": "The definition",
+      "body": "**f(n) = O(g(n))** if there exist positive constants **c** and **n₀** such that:\n\n`0 ≤ f(n) ≤ c · g(n)` for all **n ≥ n₀**.\n\nIn plain English: from some input size onwards, `f(n)` never grows faster than a constant multiple of `g(n)`. The constant `c` lets us ignore small wobbles. The starting point `n₀` lets us ignore weird behavior at small inputs."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🏎️",
+      "title": "Two cars on a long highway",
+      "body": "Car A might be a bit faster off the line, but for the rest of the trip Car B keeps up — never going more than 2× Car A's speed. Then we say Car B is O(Car A). The first few seconds don't matter; what matters is the long-run behavior."
+    },
+    {
+      "type": "diagram",
+      "variant": "ascii",
+      "caption": "Visualizing the definition: c·g(n) eventually bounds f(n)",
+      "data": {
+        "text": "      ^\n      |              c·g(n)  ───────\n      |          ╱──╱\n      |        ╱─╱      f(n) ─────\n  cost|      ╱╱      ╱──\n      |    ╱╱    ╱──╱\n      |   ╱   ╱─╱\n      |  ╱ ╱─╱\n      | ╱─╱        ← from n₀ onwards, c·g(n) ≥ f(n)\n      |╱     n₀\n      +-------|---------------------> n\n"
+      }
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Worked example: prove that f(n) = 3n + 5 is O(n).\n//\n// We want constants c and n₀ such that 3n + 5 ≤ c · n for all n ≥ n₀.\n//\n// Try c = 4. Then we need 3n + 5 ≤ 4n, i.e. 5 ≤ n.\n// So n₀ = 5 works:\n//\n//    n   3n+5    4n\n//    5    20     20  ✓ equal\n//    6    23     24  ✓\n//    7    26     28  ✓\n//   10    35     40  ✓\n//\n// Therefore 3n + 5 = O(n), with c = 4, n₀ = 5.\n\nfunction f(n) { return 3 * n + 5; }\nfunction cg(n) { return 4 * n; }\n\nfor (let n = 1; n <= 10; n++) {\n  console.log(`n=${n}  f=${f(n)}  c·g=${cg(n)}  ${f(n) <= cg(n) ? 'OK' : 'NO'}`);\n}",
+      "runnable": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Proving n² + 1000n = O(n²)",
+      "steps": [
+        {
+          "text": "We want to show that n² + 1000n grows no faster than n². It feels like the 1000n term should matter, but it doesn't for large n.",
+          "code": "f(n) = n² + 1000n\nWe want: f(n) ≤ c · n²  for n ≥ n₀"
+        },
+        {
+          "text": "Pick c = 2. We need n² + 1000n ≤ 2n², which simplifies to 1000n ≤ n², or n ≥ 1000.",
+          "code": "1000n ≤ n²\n   ⇒ 1000 ≤ n\n   ⇒ n₀ = 1000"
+        },
+        {
+          "text": "Check at n = 1000: f(1000) = 1,000,000 + 1,000,000 = 2,000,000 and 2 · 1000² = 2,000,000. Equal.",
+          "highlight": "For any n ≥ 1000, f(n) ≤ 2n². So f(n) = O(n²)."
+        },
+        {
+          "text": "Notice how big n had to get before the n² term dominated. This is why Big O is about asymptotic behavior — what happens 'eventually'."
+        }
+      ]
+    },
+    {
+      "type": "explanation",
+      "heading": "Why we drop constants and lower-order terms",
+      "body": "Once you have the definition, the simplifications fall out for free:\n\n* **Drop constants**: O(5n) = O(n). Pick c' = 5c.\n* **Drop lower-order terms**: O(n² + n) = O(n²). For large n, n is dwarfed by n², and we can absorb it into a bigger c.\n* **Drop logs vs constants**: O(log n) ≪ O(n) because log grows arbitrarily slowly.\n\nThe definition gives you license to be sloppy about details that vanish at scale."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "// Sometimes the constant DOES matter — but Big O hides it.\n//\n// Algorithm A: 100n operations  → O(n)\n// Algorithm B:   n² operations   → O(n²)\n//\n// When is B actually faster?  When n² < 100n, i.e. n < 100.\n//\n// For small n, the 'worse' algorithm can win.\n// That's a real engineering consideration — but Big O notation\n// intentionally ignores it.\n\nconst sizes = [10, 50, 100, 500, 1000];\nconsole.log('  n  |  100n   |   n²   | which wins');\nconsole.log('-----+---------+--------+------------');\nfor (const n of sizes) {\n  const a = 100 * n;\n  const b = n * n;\n  const winner = a < b ? 'A (100n)' : 'B (n²)';\n  console.log(`${String(n).padStart(4)}  | ${String(a).padStart(7)} | ${String(b).padStart(6)} | ${winner}`);\n}",
+      "runnable": true
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "bof1",
+          "type": "mcq",
+          "question": "Which constants c and n₀ prove 2n + 100 = O(n)?",
+          "options": [
+            "c = 1, n₀ = 1",
+            "c = 3, n₀ = 100",
+            "c = 100, n₀ = 1",
+            "There are no valid constants"
+          ],
+          "correct": 1,
+          "explanation": "We need 2n + 100 ≤ 3n, which gives 100 ≤ n. So c = 3, n₀ = 100 works."
+        },
+        {
+          "id": "bof2",
+          "type": "mcq",
+          "question": "Is O(n² + 1000) the same as O(n²)?",
+          "options": [
+            "No, the 1000 makes a difference",
+            "Only for small n",
+            "Yes, constants and lower-order terms drop",
+            "Only if we add log n to both sides"
+          ],
+          "correct": 2,
+          "explanation": "The definition lets us absorb any constant into a bigger c. The 1000 vanishes."
+        },
+        {
+          "id": "bof3",
+          "type": "fill-blank",
+          "question": "If f(n) = O(g(n)), it means f grows no faster than a constant times g — for all sufficiently large ___.",
+          "answers": ["n"],
+          "explanation": "Big O is an asymptotic statement: it holds for all n ≥ some threshold n₀."
+        },
+        {
+          "id": "bof4",
+          "type": "mcq",
+          "question": "Is f(n) = n a valid bound for f(n) = log n? (i.e. is log n = O(n)?)",
+          "options": [
+            "No, log is faster",
+            "Yes, log grows slower than linear",
+            "Only when n < 100",
+            "Only with c = log 2"
+          ],
+          "correct": 1,
+          "explanation": "log n grows much slower than n, so n is an upper bound. log n = O(n) is correct but loose."
+        }
+      ]
+    }
+  ]
+}

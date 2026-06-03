@@ -1,0 +1,41 @@
+{
+  "id": "sorting-intro",
+  "moduleId": "sorting",
+  "title": "Sorting: The Big Picture",
+  "subtitle": "Many algorithms, one goal",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 10,
+  "xpReward": 70,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "Why so many sorting algorithms?",
+      "body": "Every sorting algorithm orders a list — but they take different paths. Some are simple and slow. Some are clever and fast. Some are good for small lists, others for huge ones, and some preserve the original order of equal items (**stable** sorts)."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🃏",
+      "title": "Sorting a hand of cards",
+      "body": "Bubble sort: swap neighbors until done. Selection sort: find the lowest, set it aside, repeat. Insertion sort: pick up each card and slide it into the right place — like sorting cards in your hand."
+    },
+    {
+      "type": "diagram",
+      "variant": "ascii",
+      "caption": "Time complexities of the classics",
+      "data": {
+        "rows": [
+          ["Bubble Sort", "O(n²)"],
+          ["Selection Sort", "O(n²)"],
+          ["Insertion Sort", "O(n²)"],
+          ["Merge Sort", "O(n log n)"],
+          ["Quick Sort", "O(n log n) avg"]
+        ]
+      }
+    },
+    {
+      "type": "explanation",
+      "heading": "Up next",
+      "body": "Use the **Sorting Visualizer** in the sidebar to watch each algorithm work step by step. Seeing the comparisons and swaps is the fastest way to understand."
+    }
+  ]
+}

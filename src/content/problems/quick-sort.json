@@ -1,0 +1,48 @@
+{
+  "id": "quick-sort",
+  "title": "Quick Sort",
+  "difficulty": "Medium",
+  "tags": [
+    "sorting",
+    "array",
+    "recursion"
+  ],
+  "description": "Implement quicksort using divide-and-conquer. Pick pivot, partition array, recursively sort subarrays.\n\nAverage Time: O(n log n), Worst: O(n²)",
+  "examples": [
+    {
+      "input": "arr = [10, 7, 8, 9, 1, 5]",
+      "output": "[1, 5, 7, 8, 9, 10]"
+    }
+  ],
+  "starterCode": "function quickSort(arr) {\n  // your code here\n}",
+  "solution": "function quickSort(arr, low = 0, high = arr.length - 1) {\n  if (low < high) {\n    const pi = partition(arr, low, high);\n    quickSort(arr, low, pi - 1);\n    quickSort(arr, pi + 1, high);\n  }\n  return arr;\n}\n\nfunction partition(arr, low, high) {\n  const pivot = arr[high];\n  let i = low - 1;\n  for (let j = low; j < high; j++) {\n    if (arr[j] < pivot) {\n      i++;\n      [arr[i], arr[j]] = [arr[j], arr[i]];\n    }\n  }\n  [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];\n  return i + 1;\n}",
+  "hints": [
+    "Choose pivot element",
+    "Partition around pivot",
+    "Recursively sort partitions"
+  ],
+  "testCases": [
+    {
+      "input": [
+        [
+          10,
+          7,
+          8,
+          9,
+          1,
+          5
+        ]
+      ],
+      "expected": [
+        1,
+        5,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  ],
+  "functionName": "quickSort",
+  "xpReward": 140
+}

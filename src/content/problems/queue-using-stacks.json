@@ -1,0 +1,57 @@
+{
+  "id": "queue-using-stacks",
+  "title": "Implement Queue Using Two Stacks",
+  "difficulty": "Easy",
+  "tags": [
+    "queue",
+    "stack",
+    "design"
+  ],
+  "description": "Implement a queue using two stacks. Support enqueue, dequeue, peek, and empty operations.",
+  "examples": [
+    {
+      "input": "enqueue(1), enqueue(2), peek(), dequeue(), empty()",
+      "output": "1, 1, false"
+    }
+  ],
+  "starterCode": "class MyQueue {\n  constructor() {\n    // your code here\n  }\n  \n  enqueue(x) {\n    // your code here\n  }\n  \n  dequeue() {\n    // your code here\n  }\n  \n  peek() {\n    // your code here\n  }\n  \n  empty() {\n    // your code here\n  }\n}",
+  "solution": "class MyQueue {\n  constructor() {\n    this.s1 = [];\n    this.s2 = [];\n  }\n  \n  enqueue(x) {\n    this.s1.push(x);\n  }\n  \n  dequeue() {\n    this.peek();\n    return this.s2.pop();\n  }\n  \n  peek() {\n    if (!this.s2.length) {\n      while (this.s1.length) this.s2.push(this.s1.pop());\n    }\n    return this.s2[this.s2.length - 1];\n  }\n  \n  empty() {\n    return !this.s1.length && !this.s2.length;\n  }\n}",
+  "hints": [
+    "Use two stacks: s1 for enqueue, s2 for dequeue",
+    "Transfer from s1 to s2 when s2 is empty",
+    "s2 maintains queue order"
+  ],
+  "testCases": [
+    {
+      "input": [
+        [
+          "enqueue",
+          "enqueue",
+          "peek",
+          "dequeue",
+          "empty"
+        ],
+        [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [],
+          [],
+          []
+        ]
+      ],
+      "expected": [
+        null,
+        null,
+        1,
+        1,
+        false
+      ]
+    }
+  ],
+  "functionName": "MyQueue",
+  "xpReward": 100
+}

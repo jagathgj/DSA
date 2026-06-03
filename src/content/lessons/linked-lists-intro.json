@@ -1,0 +1,62 @@
+{
+  "id": "linked-lists-intro",
+  "moduleId": "linked-lists",
+  "title": "Linked Lists: Boxes with Arrows",
+  "subtitle": "Data without a fixed seating chart",
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 16,
+  "xpReward": 90,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "A linked list is different from an array",
+      "body": "Arrays sit next to each other in memory. Linked list nodes don't — they live anywhere, but each one carries a pointer to the next one. To get to position 5, you have to *walk* from the start, following arrows."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🚂",
+      "title": "A train of cars",
+      "body": "Picture a train. Each car holds cargo and a hook connecting to the next car. To reach the caboose, you walk car by car. You can easily add or remove cars in the middle — just unhook and re-hook. But there's no 'jump to car 12'. You walk."
+    },
+    {
+      "type": "diagram",
+      "variant": "linked-list",
+      "caption": "Each node holds a value and a pointer to the next.",
+      "data": {
+        "values": [10, 20, 30, 40]
+      }
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "class Node {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\n// Build: 10 → 20 → 30 → null\nconst head = new Node(10);\nhead.next = new Node(20);\nhead.next.next = new Node(30);\n\n// Walk the list\nlet cur = head;\nwhile (cur) {\n  console.log(cur.value);\n  cur = cur.next;\n}",
+      "runnable": true
+    },
+    {
+      "type": "explanation",
+      "heading": "Trade-offs",
+      "body": "**Insert/delete at the front:** O(1). Just re-point one arrow.\n**Access by index:** O(n). You have to walk.\n\nUse a linked list when you do lots of inserting and removing at the ends. Use an array when you need fast random access."
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "ll1",
+          "type": "mcq",
+          "question": "What's the time complexity of getting the 50th element of a linked list?",
+          "options": ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+          "correct": 2,
+          "explanation": "You must walk from the head, following 50 pointers — that's linear time."
+        },
+        {
+          "id": "ll2",
+          "type": "mcq",
+          "question": "What does the LAST node in a singly linked list point to?",
+          "options": ["The first node", "Itself", "null", "undefined"],
+          "correct": 2,
+          "explanation": "By convention, the last node's `next` is null — signaling end of list."
+        }
+      ]
+    }
+  ]
+}

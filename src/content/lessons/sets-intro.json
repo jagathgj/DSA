@@ -1,0 +1,41 @@
+{
+  "id": "sets-intro",
+  "moduleId": "sets",
+  "title": "Sets: Collections Without Duplicates",
+  "subtitle": "When you only care about uniqueness",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 8,
+  "xpReward": 60,
+  "sections": [
+    {
+      "type": "explanation",
+      "heading": "What's a Set?",
+      "body": "A **Set** is a collection where every value is unique. Try to add a duplicate, and it's silently ignored. Like a hash map without the values."
+    },
+    {
+      "type": "analogy",
+      "emoji": "🎟️",
+      "title": "A guest list",
+      "body": "You write each name once. If Aria shows up twice, you don't write her name again. You just want to know — is she invited? Set says yes or no, instantly."
+    },
+    {
+      "type": "code",
+      "language": "javascript",
+      "code": "const seen = new Set();\nseen.add(\"apple\");\nseen.add(\"banana\");\nseen.add(\"apple\");\n\nconsole.log(seen.size);          // 2\nconsole.log(seen.has(\"apple\"));  // true\nconsole.log(seen.has(\"cherry\")); // false\n\n// Quick way to dedupe an array\nconst unique = [...new Set([1, 1, 2, 3, 3, 4])];\nconsole.log(unique); // [1, 2, 3, 4]",
+      "runnable": true
+    },
+    {
+      "type": "quiz",
+      "questions": [
+        {
+          "id": "set1",
+          "type": "mcq",
+          "question": "What happens when you add a duplicate to a Set?",
+          "options": ["It throws an error", "It's silently ignored", "It replaces the old one", "The Set grows"],
+          "correct": 1,
+          "explanation": "Sets enforce uniqueness silently. Duplicates are simply not added."
+        }
+      ]
+    }
+  ]
+}
