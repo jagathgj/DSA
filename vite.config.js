@@ -5,7 +5,7 @@ import path from 'node:path';
 // `base` must match the GitHub Pages path. Change this when forking.
 // Example: for `github.com/your-name/dsa-quest`, base is `/dsa-quest/`.
 export default defineConfig({
-    base: '/dsa-quest/',
+    base: '/DSA/',
     plugins: [react()],
     resolve: {
         alias: {
